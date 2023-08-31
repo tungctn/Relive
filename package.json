@@ -1,0 +1,34 @@
+{
+  "name": "backend_fit_worker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tungctn/backend_fit_worker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tungctn/backend_fit_worker/issues"
+  },
+  "homepage": "https://github.com/tungctn/backend_fit_worker#readme",
+  "dependencies": {
+    "agenda": "^5.0.0",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "firebase-admin": "^11.10.1",
+    "jsonwebtoken": "^9.0.1",
+    "mongoose": "^7.4.5",
+    "node-schedule": "^2.1.1",
+    "nodemon": "^3.0.1",
+    "winston": "^3.10.0"
+  }
+}
