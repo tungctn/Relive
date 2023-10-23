@@ -18,13 +18,13 @@ jobs:
         working-directory: ./web/client
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js 18
-        run: cd web/client
-      - uses: actions/setup-node@v3
+      - name: Use Node.js18
+        uses: actions/setup-node@v3
         with:
-          node-version: 18
-          cache: "npm"
-      - run: npm ci
+          node-version: 18.x
+      - run: |
+          cd ./web/client
+          npm ci
       - name: Change directory
         run: |
           cd ./web
