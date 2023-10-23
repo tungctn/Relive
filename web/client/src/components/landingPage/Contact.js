@@ -1,4 +1,3 @@
-import Footer from "./Footer";
 import Navbar from "./Navbar";
 import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
@@ -123,9 +122,7 @@ const Contact = (props) => {
             </div>
           </div>
         </div>
-        <div className="mt-auto relative bottom-0">
-          <Footer></Footer>
-        </div>
+
       </div>
     </div>
   );

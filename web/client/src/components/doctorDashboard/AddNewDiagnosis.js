@@ -1,4 +1,3 @@
-import Footer from "../landingPage/Footer";
 import plus_logo from "../../assets/img/dashboard/add2_pbl.png";
 import minus_logo from "../../assets/img/dashboard/minus2_pbl.png";
 import React, { useEffect, useState } from "react";
@@ -649,7 +648,6 @@ const AddNewDiagnosis = (props) => {
           </form>
         </div>
       </div>
-      <Footer></Footer>
     </div>
   );
 };

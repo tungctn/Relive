@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import patient_profile from "../../assets/img/dashboard/patient2_pbl.png";
-import Footer from "../landingPage/Footer";
 import doctor_profile from "../../assets/img/dashboard/doctor2.png";
 import { useEffect, useState } from "react";
 
@@ -259,7 +258,7 @@ const PreviewPrescriptionDoctorView = (props) => {
           </div>
         </div>
       </div>
-      <Footer />
+
     </div>
   );
 };

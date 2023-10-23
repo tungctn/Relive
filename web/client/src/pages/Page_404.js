@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import img_404 from "../assets/img/dashboard/404_page.png";
-import Footer from "../components/landingPage/Footer";
 
 const Page_404 = () => {
   return (
@@ -15,9 +14,7 @@ const Page_404 = () => {
         </Link>
       </div>
 
-      <div className="h-2/12 mt-2">
-        <Footer />
-      </div>
+
     </div>
   );
 };

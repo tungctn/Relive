@@ -2,7 +2,6 @@ import doctor_profile from "../assets/img/dashboard/doctor2.png";
 import reports from "../assets/img/dashboard/report2_pbl.png";
 import search from "../assets/img/dashboard/search2.png";
 import add_pre_logo from "../assets/img/dashboard/add_prescription_logo.png";
-import Footer from "../components/landingPage/Footer";
 import eye from "../assets/img/dashboard/eye.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -440,9 +439,7 @@ const DoctorDashboard = (props) => {
           )}
         </div>
       </div>
-      <div className="mt-16 mb-0">
-        <Footer></Footer>
-      </div>
+
     </div>
   );
 };

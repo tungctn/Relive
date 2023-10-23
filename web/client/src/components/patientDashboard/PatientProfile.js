@@ -1,4 +1,3 @@
-import Footer from "../landingPage/Footer";
 import patient_card_profile from "../../assets/img/dashboard/admin-card-profile.png";
 import name from "../../assets/img/dashboard/patient-profile-name.png";
 import birth from "../../assets/img/dashboard/patient-profile-birth.png";

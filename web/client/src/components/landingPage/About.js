@@ -1,4 +1,3 @@
-import Footer from "./Footer";
 import Navbar from "./Navbar";
 import name from "../../assets/img/dashboard/admin-user.png";
 import email from "../../assets/img/dashboard/admin-email.png";
@@ -178,7 +177,6 @@ const About = () => {
           </div>
         </div>
       </div>
-      <Footer></Footer>
     </div>
   );
 };

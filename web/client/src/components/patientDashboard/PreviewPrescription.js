@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import patient_profile from "../../assets/img/dashboard/patient2_pbl.png";
-import Footer from "../landingPage/Footer";
 const PreviewPrescription = (props) => {
   //   function printPrescription() {
   //     var mywindow = window.open("", "PRINT", "height=full,width=full");
@@ -258,7 +257,7 @@ const PreviewPrescription = (props) => {
           </div>
         </div>
       </div>
-      <Footer />
+
     </div>
   );
 };

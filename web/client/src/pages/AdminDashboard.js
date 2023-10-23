@@ -1,7 +1,6 @@
 import admin_profile from "../assets/img/dashboard/admin_profile.png";
 
 import search from "../assets/img/dashboard/search2.png";
-import Footer from "../components/landingPage/Footer";
 import PatientList from "../components/adminDashboard/PatientList";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -73,7 +72,6 @@ const AdminDashboard = (props) => {
         </div>
       </div>
 
-      <Footer></Footer>
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Footer from "./Footer";
 import Navbar from "./Navbar";
 import plus_logo from "../../assets/img/dashboard/add2_pbl.png";
 import minus_logo from "../../assets/img/dashboard/minus2_pbl.png";
@@ -680,9 +679,7 @@ export default function Register(props) {
             </div>
           </form>
 
-          <div className="mt-auto relative bottom-0">
-            <Footer></Footer>
-          </div>
+
         </div>
       </div>
     </div>

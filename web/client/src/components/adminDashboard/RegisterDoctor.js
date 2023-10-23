@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Footer from "../landingPage/Footer";
 import plus_logo from "../../assets/img/dashboard/add2_pbl.png";
 import minus_logo from "../../assets/img/dashboard/minus2_pbl.png";
 import { useNavigate } from "react-router-dom";
@@ -640,9 +639,7 @@ export default function Register(props) {
             </div>
           </form>
 
-          <div className="mt-auto relative bottom-0">
-            <Footer></Footer>
-          </div>
+
         </div>
       </div>
     </div>

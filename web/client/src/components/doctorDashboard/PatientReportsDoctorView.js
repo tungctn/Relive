@@ -1,4 +1,3 @@
-import Footer from "../landingPage/Footer";
 import patient_profile from "../../assets/img/dashboard/patient2_pbl.png";
 import PatientReportCompoDoctorView from "./PatientReportCompoDoctorView";
 import { Link, useNavigate } from "react-router-dom";
@@ -178,9 +177,7 @@ const PatientReportsDoctorView = (props) => {
           </Link>
         </div>
       )}
-      <div className="-mt-20 mb-0">
-        <Footer></Footer>
-      </div>
+
     </div>
   );
 };
