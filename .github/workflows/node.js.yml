@@ -31,6 +31,17 @@ jobs:
           touch config.env
           echo "${{ secrets.PROD_ENV_FILE }}" > config.env
           npm ci
-      # - run: |
-      #     touch .env
-      #     echo "${{ secrets.PROD_ENV_FILE }}" > .env
+  
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Use Node.js18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Deploy to production
+        run: |
+          npm install -g pm2
+          pm2 start react-app
+          pm2 start backend
