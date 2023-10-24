@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-      
+
       - name: Change directory
         run: |
           cd ./web
@@ -32,7 +32,9 @@ jobs:
       - run: |
           cd ./web/client
           npm ci
-    
+          touch .env
+          echo "${{ secrets.FRONT_ENV_FILE }}" > .env
+
   deploy:
     needs: build
     runs-on: self-hosted
