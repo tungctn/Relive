@@ -69,7 +69,7 @@ const PatientReportsDoctorView = (props) => {
       }
     }
     async function getpatient() {
-      if (props.healthID.length === 12) {
+      if (props.healthID.length > 1) {
         const res = await fetch(`/searchpatient/${props.healthID}`);
         const data = await res.json();
 
@@ -96,7 +96,7 @@ const PatientReportsDoctorView = (props) => {
   }, [dob]);
   return (
     <div className="col-span-10">
-      {props.healthID.length === 12 ? (
+      {props.healthID ? (
         <div className=" px-12">
           <div className="h-screen">
             <div className="font-poppins   mainf">
@@ -177,7 +177,6 @@ const PatientReportsDoctorView = (props) => {
           </Link>
         </div>
       )}
-
     </div>
   );
 };

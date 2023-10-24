@@ -1,12 +1,16 @@
 const Patient = require("../models/patient");
+const Report = require("../models/report");
 
 module.exports.search_patient = async (req, res) => {
   const healthID = req.params.healthID;
   try {
     const patient = await Patient.findOne({ healthID });
-    res.status(200).json({ patient });
+    const report = await Report.find({ patient: patient._id })
+      .populate("doctor")
+      .populate("patient");
+    res.status(200).json({ patient, report: report });
   } catch (err) {
-    res.status(500).json({ error: "Something went wrong..." });
+    res.status(500).json({ error: err.message });
   }
 };
 

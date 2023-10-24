@@ -14,6 +14,7 @@ const DoctorDashboard = (props) => {
   const [patient, setPatient] = useState({});
   const [prescriptions, setPrescriptions] = useState([{}]);
   const [problems, setProblems] = useState({});
+  const [reports, setReports] = useState([]);
   const [doctor, setDoctor] = useState({
     name: {
       firstName: "",
@@ -108,6 +109,9 @@ const DoctorDashboard = (props) => {
             upperProblem: data.patient.upperProblem,
           });
         }
+        if (data.report) {
+          setReports(data.report.reverse());
+        }
         setDob(convertDatetoString(patient.dob));
         setLoading(false);
       }
@@ -156,6 +160,9 @@ const DoctorDashboard = (props) => {
             upperProblem: data.patient.upperProblem,
           });
         }
+        if (data.report) {
+          setReports(data.report.reverse());
+        }
         setDob(convertDatetoString(patient.dob));
         setLoading(false);
       }
@@ -188,7 +195,7 @@ const DoctorDashboard = (props) => {
   };
 
   return (
-    <div className="full-body col-span-10 h-screen">
+    <div className="full-body col-span-10 overflow-y-auto">
       <div className="body-without-footer   bg-bgprimary ">
         <div className="main    m-2  ">
           {/* dashboard today start */}
@@ -469,12 +476,12 @@ const DoctorDashboard = (props) => {
                       alt="adddiagno"
                     ></img>
 
-                    <button className="font-semibold">Add New Diagnosis</button>
+                    <button className="font-semibold">Add New Advice</button>
                   </div>
                 </Link>
               </div>
-              <div className="bg-white m-4 rounded-lg ">
-                <div className="grid grid-rows-2 p-6 gap-2 shadow">
+              <div className="bg-white m-4 rounded-lg overflow-y-auto">
+                <div className="grid grid-rows-2 p-6 gap-2 shadow overflow-y-auto">
                   <div className="grid grid-cols-4 font-bold  border-b-2">
                     <div>
                       <h1>Date</h1>
@@ -483,33 +490,35 @@ const DoctorDashboard = (props) => {
                       <h1>Doctor Name</h1>
                     </div>
                     <div>
-                      <h1>Diagnosis</h1>
+                      <h1>Advice</h1>
                     </div>
                     <div>
-                      <h1>Prescription</h1>
+                      <h1>Preview</h1>
                     </div>
                   </div>
-
-                  {prescriptions.length > 0 ? (
-                    prescriptions.slice(1, 3).map((prescription) => {
+                  {/* <div> */}
+                  {reports.length > 0 ? (
+                    reports.map((report) => {
+                      console.log(report);
                       return (
                         <div className="grid grid-cols-4">
                           <div>
-                            <h1>
-                              {convertDatetoString(prescription.createdAt)}
-                            </h1>
+                            <h1>{convertDatetoString(report?.createdAt)}</h1>
                           </div>
                           <div className="flex">
                             <h1>Dr. </h1>
-                            <h1>{prescription.doctor}</h1>
+                            <h1> {report?.doctor.name.firstName}</h1>
                           </div>
                           <div>
-                            <h1>{prescription.diagnosis}</h1>
+                            {report?.advice.map((advice) => {
+                              return <h1>{advice}</h1>;
+                            })}
                           </div>
                           <Link
                             to="/doctor/prescription"
                             onClick={() =>
-                              props.setPrescriptionID(prescription._id)
+                              // props.setPrescriptionID(prescription._id)
+                              console.log("prescription._id")
                             }
                           >
                             <div className=" flex  justify-center bg-primary py-1 px-3 rounded font-semibold font-poppins shadow-sm hover:bg-bgsecondary w-2/5   ">
@@ -533,6 +542,7 @@ const DoctorDashboard = (props) => {
               </div>
             </div>
           ) : (
+            // </div>
             <div></div>
           )}
         </div>

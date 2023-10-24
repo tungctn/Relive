@@ -108,33 +108,49 @@ const AddNewDiagnosis = (props) => {
     getDoctor();
   }, [doctor]);
 
-  const handleAddPrescription = async (e) => {
+  const handleAddReport = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    const res = await fetch(`/prescription/${props.healthID}`, {
+    // setLoading(true);
+    // const res = await fetch(`/prescription/${props.healthID}`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(prescription),
+    // });
+    // const data = await res.json();
+    // if (data.AuthError) {
+    //   props.settoastCondition({
+    //     status: "info",
+    //     message: "Please Login to proceed!!!",
+    //   });
+    //   props.setToastShow(true);
+    //   navigate("/");
+    // }
+    // if (data.msg) {
+    //   props.settoastCondition({
+    //     status: "error",
+    //     message: "Please fill all fields properly!!!",
+    //   });
+    //   props.setToastShow(true);
+    // }
+    // setLoading(false);
+    console.log({ advice: advices.map((advice) => advice.advice) });
+    console.log(props.healthID);
+    console.log(doctor._id);
+    const res = await fetch(`/addreport`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(prescription),
+      body: JSON.stringify({
+        healthID: props.healthID,
+        doctor: doctor._id,
+        advice: advices.map((advice) => advice.advice),
+      }),
     });
     const data = await res.json();
-    if (data.AuthError) {
-      props.settoastCondition({
-        status: "info",
-        message: "Please Login to proceed!!!",
-      });
-      props.setToastShow(true);
-      navigate("/");
-    }
-    if (data.msg) {
-      props.settoastCondition({
-        status: "error",
-        message: "Please fill all fields properly!!!",
-      });
-      props.setToastShow(true);
-    }
-    setLoading(false);
+    console.log({ data });
     props.settoastCondition({
       status: "success",
       message: "Prescription Added Successfully!!!",
@@ -153,9 +169,9 @@ const AddNewDiagnosis = (props) => {
 
           <form
             className="bg-white shadow p-6 m-2 ml-2 mt-8 lg:font-bold  "
-            onSubmit={handleAddPrescription}
+            onSubmit={handleAddReport}
           >
-            <div className="mt-3">
+            {/* <div className="mt-3">
               {chiefComplaints.map((chiefComplaint, index) => (
                 <div className="grid grid-cols-6 mt-2">
                   <h1 className="col-span-1">Chief Complaints </h1>
@@ -248,7 +264,7 @@ const AddNewDiagnosis = (props) => {
                   tempprescription.notes = e.target.value;
                   setPrescription(tempprescription);
                 }}
-              ></input> */}
+              ></input>
               <input
                 placeholder=" Note "
                 className=" bg-blue-100 rounded mx-2 px-2 py-1.5 outline-none col-span-2"
@@ -260,8 +276,8 @@ const AddNewDiagnosis = (props) => {
                   setPrescription(tempprescription);
                 }}
               ></input>
-            </div>
-            <div className="grid grid-cols-6 mt-3  ">
+            </div> */}
+            {/* <div className="grid grid-cols-6 mt-3  ">
               <h1 className="">Diagnosis</h1>
 
               <input
@@ -522,9 +538,9 @@ const AddNewDiagnosis = (props) => {
                   </div>
                 </div>
               ))}
-            </div>
+            </div> */}
             <div>
-              {investigations.map((Investigation, index) => (
+              {/* {investigations.map((Investigation, index) => (
                 <div className="grid grid-cols-6 mt-6">
                   <h1 className="col-span-1">Investigations </h1>
 
@@ -574,7 +590,7 @@ const AddNewDiagnosis = (props) => {
                     )}
                   </div>
                 </div>
-              ))}
+              ))} */}
 
               {advices.map((Advice, index) => (
                 <div className="grid grid-cols-6 mt-2">

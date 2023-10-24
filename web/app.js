@@ -9,6 +9,7 @@ const doctorRoute = require("./routes/doctorRoute");
 const adminRoutes = require("./routes/adminRoutes");
 const logoutRoute = require("./routes/logoutRoute");
 const exerciseRoute = require("./routes/exerciseRoute");
+const reportRoute = require("./routes/reportRoute");
 const cors = require("cors");
 const app = express();
 
@@ -44,6 +45,7 @@ app.use(patientRoutes);
 app.use(exerciseRoute);
 app.use(adminRoutes);
 app.use(logoutRoute);
+app.use(reportRoute);
 
 if (process.env.NODE_ENV == "production") {
   app.use(express.static("client/build"));
