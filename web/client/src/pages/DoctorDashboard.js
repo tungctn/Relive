@@ -8,10 +8,12 @@ import { useEffect, useState } from "react";
 import ReactLoading from "react-loading";
 const DoctorDashboard = (props) => {
   const [Loading, setLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
   const [dob, setDob] = useState("01/01/2006");
   const [patient, setPatient] = useState({});
   const [prescriptions, setPrescriptions] = useState([{}]);
+  const [problems, setProblems] = useState({});
   const [doctor, setDoctor] = useState({
     name: {
       firstName: "",
@@ -73,37 +75,46 @@ const DoctorDashboard = (props) => {
     }
     async function getpatient() {
       setLoading(true);
-      if (props.healthID.length === 12) {
+      if (props.healthID.length > 1) {
         const res = await fetch(`/searchpatient/${props.healthID}`);
         const data = await res.json();
 
-        if (data.AuthError) {
-          setLoading(false);
-          props.settoastCondition({
-            status: "info",
-            message: "Please Login to proceed!!!",
-          });
-          props.setToastShow(true);
-          navigate("/");
-        } else if (data.error) {
-          setLoading(false);
-          props.settoastCondition({
-            status: "error",
-            message: "This HealthID doesn't exist!!!",
-          });
-          props.setToastShow(true);
-        } else {
-          setPatient(data.patient);
-          if (data.patient.prescriptions) {
-            setPrescriptions(data.patient.prescriptions.reverse());
-          }
-          setDob(convertDatetoString(patient.dob));
-          setLoading(false);
+        // if (data.AuthError) {
+        //   setLoading(false);
+        //   props.settoastCondition({
+        //     status: "info",
+        //     message: "Please Login to proceed!!!",
+        //   });
+        //   props.setToastShow(true);
+        //   navigate("/");
+        // } else if (data.error) {
+        //   setLoading(false);
+        //   props.settoastCondition({
+        //     status: "error",
+        //     message: "This HealthID doesn't exist!!!",
+        //   });
+        //   props.setToastShow(true);
+        // } else {
+        console.log({ patient: data.patient });
+        setPatient(data.patient);
+
+        if (data.patient.prescriptions) {
+          setPrescriptions(data.patient.prescriptions.reverse());
         }
-      } else if (props.healthID.length === 0) {
+        if (data.patient.lowerProblem || data.patient.upperProblem) {
+          setProblems({
+            ...problems,
+            lowerProblem: data.patient.lowerProblem,
+            upperProblem: data.patient.upperProblem,
+          });
+        }
+        setDob(convertDatetoString(patient.dob));
         setLoading(false);
-        setPatient({});
       }
+      // } else if (props.healthID.length === 0) {
+      //   setLoading(false);
+      //   setPatient({});
+      // }
       setLoading(false);
     }
     getdoctor();
@@ -112,7 +123,7 @@ const DoctorDashboard = (props) => {
 
   const searchPatient = async (e) => {
     e.preventDefault();
-    if (props.healthID.length === 12) {
+    if (props.healthID.length > 1) {
       setLoading(true);
       const res = await fetch(`/searchpatient/${props.healthID}`);
       const data = await res.json();
@@ -134,8 +145,16 @@ const DoctorDashboard = (props) => {
         props.setToastShow(true);
       } else {
         setPatient(data.patient);
+
         if (data.patient.prescriptions) {
           setPrescriptions(data.patient.prescriptions.reverse());
+        }
+        if (data.patient.lowerProblem || data.patient.upperProblem) {
+          setProblems({
+            ...problems,
+            lowerProblem: data.patient.lowerProblem,
+            upperProblem: data.patient.upperProblem,
+          });
         }
         setDob(convertDatetoString(patient.dob));
         setLoading(false);
@@ -147,6 +166,25 @@ const DoctorDashboard = (props) => {
       });
       props.setToastShow(true);
     }
+  };
+
+  const changeProblem = async () => {
+    console.log(problems);
+    console.log(patient.healthID);
+    const res = await fetch(`/changeproblem/${patient.healthID}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ problems }),
+    });
+    const data = await res.json();
+    console.log({ patient: data.patient });
+    setPatient(data.patient);
+    setProblems({
+      ...problems,
+      lowerProblem: data.patient.lowerProblem,
+      upperProblem: data.patient.upperProblem,
+    });
+    setIsEditing(false);
   };
 
   return (
@@ -210,7 +248,7 @@ const DoctorDashboard = (props) => {
               <input
                 placeholder="Health ID"
                 className="bg-bgsecondary rounded border-2 text-xl   pl-4  focus:outline-none"
-                type="number"
+                type="text"
                 value={props.healthID}
                 onChange={(e) => {
                   props.setHealthID(e.target.value);
@@ -277,17 +315,17 @@ const DoctorDashboard = (props) => {
                       <h1>{dob}</h1>
                     </div>
                   </div>
-                  <div className="flex">
+                  {/* <div className="flex">
                     <div>
                       <h1>Blood group : </h1>
                     </div>
                     <div className="ml-2">
                       <h1>{patient.bloodGroup}</h1>
                     </div>
-                  </div>
+                  </div> */}
                   <div>
                     <h1 className="font-bold mt-4">Past Health History</h1>
-                    <div>{`${patient.diseases[0].disease} (${patient.diseases[0].yrs} yrs.)`}</div>
+                    {/* <div>{`${patient.diseases[0].disease} (${patient.diseases[0].yrs} yrs.)`}</div> */}
                   </div>
                 </div>
               </div>
@@ -296,50 +334,110 @@ const DoctorDashboard = (props) => {
                 <div>
                   <h1 className="font-bold font-poppins text-xl ">
                     Recent Health Checkup
+                    <img
+                      src={add_pre_logo}
+                      className="h-3 mx-3"
+                      alt="adddiagno"
+                      onClick={() => {
+                        setIsEditing(!isEditing);
+                      }}
+                    />
                   </h1>
                 </div>
-                {prescriptions.length > 0 ? (
+                {Object.keys(problems).length > 0 ? (
                   <div className="bg-white mt-4 font-poppins p-4 rounded-xl shadow px-8">
                     <div className="flex ">
                       <div>
-                        <h1>Consultant Doctor :</h1>
+                        <h1>Upper Problems:</h1>
                       </div>
-                      <div className="ml-2">
-                        <h1>{`Dr. ${prescriptions[0].doctor}`}</h1>
-                      </div>
+                      {problems.upperProblem?.map((upperProblem, index) => (
+                        <div className="ml-2" key={index}>
+                          {isEditing ? (
+                            <div>
+                              <input
+                                placeholder="Search"
+                                className="w-96 rounded ml-4 text-xl pl-4 border focus:outline-none"
+                                defaultValue={upperProblem.problem}
+                                onChange={(e) => {
+                                  let temp = problems.upperProblem;
+                                  temp[index].problem = e.target.value;
+                                  setProblems({
+                                    ...problems,
+                                    upperProblem: temp,
+                                  });
+                                }}
+                              />
+                              <input
+                                placeholder="Search"
+                                className="w-96 rounded ml-4 text-xl pl-4 border focus:outline-none"
+                                defaultValue={upperProblem.level}
+                                onChange={(e) => {
+                                  let temp = problems.upperProblem;
+                                  temp[index].level = e.target.value;
+                                  setProblems({
+                                    ...problems,
+                                    upperProblem: temp,
+                                  });
+                                }}
+                              />
+                            </div>
+                          ) : (
+                            <h1>{`${upperProblem.problem} (Level ${upperProblem.level})`}</h1>
+                          )}
+                        </div>
+                      ))}
                     </div>
-                    <div className="flex">
+                    <div className="flex ">
                       <div>
-                        <h1>Date :</h1>
+                        <h1>Lower Problems:</h1>
                       </div>
-                      <div className="ml-2">
-                        <h1>
-                          {convertDatetoString(prescriptions[0].createdAt)}
-                        </h1>
-                      </div>
+                      {problems.lowerProblem?.map((lowerProblem, index) => (
+                        <div className="ml-2" key={index}>
+                          {isEditing ? (
+                            <div>
+                              <input
+                                placeholder="Search"
+                                className="w-96 rounded ml-4 text-xl pl-4 border focus:outline-none"
+                                defaultValue={lowerProblem.problem}
+                                onChange={(e) => {
+                                  let temp = problems.lowerProblem;
+                                  temp[index].problem = e.target.value;
+                                  setProblems({
+                                    ...problems,
+                                    lowerProblem: temp,
+                                  });
+                                }}
+                              />
+                              <input
+                                placeholder="Search"
+                                className="w-96 rounded ml-4 text-xl pl-4 border focus:outline-none"
+                                defaultValue={lowerProblem.level}
+                                onChange={(e) => {
+                                  let temp = problems.lowerProblem;
+                                  temp[index].level = e.target.value;
+                                  setProblems({
+                                    ...problems,
+                                    lowerProblem: temp,
+                                  });
+                                }}
+                              />
+                            </div>
+                          ) : (
+                            <h1>{`${lowerProblem.problem} (Level ${lowerProblem.level})`}</h1>
+                          )}
+                        </div>
+                      ))}
                     </div>
-                    <div className="flex">
-                      <div>
-                        <h1>Diagnosis : </h1>
-                      </div>
-                      <div className="ml-2">
-                        <h1>{prescriptions[0].diagnosis}</h1>
-                      </div>
-                    </div>
-                    <Link
-                      to="/doctor/prescription"
-                      onClick={() => {
-                        props.setPrescriptionID(prescriptions[0]._id);
-                      }}
-                    >
-                      <div className=" mt-2 flex items-center justify-evenly text-base bg-primary py-1 px-2 rounded font-semibold font-poppins shadow-sm hover:bg-bgsecondary w-5/12  ">
-                        <img src={reports} className="h-4" alt="report"></img>
-
-                        <button className=" font-semibold pl-1">
-                          Preview Prescription
+                    {isEditing && (
+                      <div className=" flex  bg-primary pl-0 pr-3 py-1 items-center justify-items-center  rounded font-semibold font-poppins shadow-sm hover:bg-bgsecondary">
+                        <button
+                          className="font-semibold text-white"
+                          onClick={changeProblem}
+                        >
+                          Edit problem
                         </button>
                       </div>
-                    </Link>
+                    )}
                   </div>
                 ) : (
                   <div className="bg-white mt-4 font-poppins p-4 rounded-xl shadow px-8 flex justify-center font-bold">
@@ -439,7 +537,6 @@ const DoctorDashboard = (props) => {
           )}
         </div>
       </div>
-
     </div>
   );
 };

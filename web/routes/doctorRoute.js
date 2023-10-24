@@ -12,6 +12,7 @@ const { requireAdminAuth } = require("../middlewares/adminAuthMiddleware");
 const {
   search_patient,
   get_doctor,
+  change_problem,
 } = require("../controllers/doctorControllers");
 
 const router = Router();
@@ -25,6 +26,8 @@ router.get(
   requireDoctorAuth,
   view_prescription
 );
+
 router.get("/getdoctor", requireDoctorAuth, get_doctor);
+router.post("/changeproblem/:healthID", requireDoctorAuth, change_problem);
 
 module.exports = router;

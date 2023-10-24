@@ -81,7 +81,7 @@ const patientSchema = new mongoose.Schema({
       },
     },
   ],
-  
+
   prescriptions: [prescriptionSchema],
 });
 
