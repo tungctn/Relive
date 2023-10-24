@@ -4,5 +4,5 @@ async function genPassword(password) {
   password = await bcrypt.hash(password, salt);
   console.log(password);
 }
-const password = "test1234";
+const password = "tung2002";
 genPassword(password);

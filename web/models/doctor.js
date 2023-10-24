@@ -64,7 +64,7 @@ const doctorSchema = new mongoose.Schema({
   },
   adharCard: {
     type: Number,
-    unique: [true, "This AdharCard is already Registerd on System."],
+    // unique: [true, "This AdharCard is already Registerd on System."],
     required: [true, "Pleasee enter AdharCard Number"],
     minlength: [12, "Please enter an valid AdharCard Number"],
   },

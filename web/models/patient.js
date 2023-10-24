@@ -83,6 +83,12 @@ const patientSchema = new mongoose.Schema({
   ],
 
   prescriptions: [prescriptionSchema],
+  exercise: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Exercise",
+    },
+  ],
 });
 
 patientSchema.pre("save", async function (next) {

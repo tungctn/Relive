@@ -8,6 +8,7 @@ const registerRoute = require("./routes/registerRoute");
 const doctorRoute = require("./routes/doctorRoute");
 const adminRoutes = require("./routes/adminRoutes");
 const logoutRoute = require("./routes/logoutRoute");
+const exerciseRoute = require("./routes/exerciseRoute");
 const cors = require("cors");
 const app = express();
 
@@ -40,6 +41,7 @@ app.use(authRoutes);
 app.use(registerRoute);
 app.use(doctorRoute);
 app.use(patientRoutes);
+app.use(exerciseRoute);
 app.use(adminRoutes);
 app.use(logoutRoute);
 
