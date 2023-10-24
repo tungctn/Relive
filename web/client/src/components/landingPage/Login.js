@@ -121,16 +121,16 @@ export default function Login(props) {
     }
   };
   return (
-    <div className="bg-white flex flex-col justify-items-center items-center py-4 px-4 rounded shadow-md lg:w-3/4 w-full my-7 ml-auto ">
-      <h1 className="text-3xl font-bold font-poppins text-primary py-5">
+    <div className="bg-white flex flex-col justify-items-center items-center py-4 px-4 rounded-2xl shadow-md lg:w-3/4 w-full my-7 ml-auto border-1 mt-20">
+      <h1 className="text-3xl font-bold font-plusExtraBold text-primary py-5">
         Login
       </h1>
-      <div className="flex bg-bgsecondary w-fit justify-between rounded">
+      <div className="flex w-fit justify-between rounded">
         <button
           className={
             Toggle === "Patient"
-              ? "py-2 px-8 text-lg font-poppins font-semibold cursor-pointer rounded bg-primary"
-              : "py-2 px-8 text-lg font-poppins font-medium text-primary cursor-pointer rounded"
+              ? "py-2 px-8 mr-2 text-lg font-plusBold text-white cursor-pointer rounded-xl bg-primary"
+              : "py-2 px-8 mr-2 text-lg font-plusBold text-primary cursor-pointer rounded-xl hover:bg-secondary"
           }
           onClick={() => {
             setToggle("Patient");
@@ -152,8 +152,8 @@ export default function Login(props) {
           }}
           className={
             Toggle === "Doctor"
-              ? "py-2 px-8 text-lg font-poppins font-semibold cursor-pointer rounded bg-primary"
-              : "py-2 px-8 text-lg font-poppins font-medium text-primary cursor-pointer rounded"
+              ? "py-2 px-8 mr-2 text-lg font-plusBold text-white cursor-pointer rounded-xl bg-primary "
+              : "py-2 px-8 mr-2 text-lg font-plusBold text-primary cursor-pointer rounded-xl hover:bg-secondary"
           }
         >
           Doctor
@@ -168,22 +168,17 @@ export default function Login(props) {
           }}
           className={
             Toggle === "Admin"
-              ? "py-2 px-8 text-lg font-poppins font-semibold cursor-pointer rounded bg-primary"
-              : "py-2 px-8 text-lg font-poppins font-medium text-primary cursor-pointer rounded"
+              ? "py-2 px-8 mr-2 text-lg font-plusBold text-white cursor-pointer rounded-xl bg-primary"
+              : "py-2 px-8 mr-2 text-lg font-plusBold text-primary cursor-pointer rounded-xl hover:bg-secondary"
           }
         >
           Admin
         </button>
       </div>
-      <img
-        src={profile}
-        alt="profile pic"
-        className="h-20 my-6 border-2 rounded-full"
-      />
-      <form className="flex flex-col w-full px-8" onSubmit={handleLogin}>
+      <form className="flex flex-col w-full px-8 my-10" onSubmit={handleLogin}>
         <label
           htmlFor="email"
-          className="font-poppins pt-2 pb-1 text-lg font-bold"
+          className="font-plus pt-2 pb-1 text-lg font-bold"
         >
           {Toggle === "Patient" ? "Health Id" : "Email"}
         </label>
@@ -191,7 +186,8 @@ export default function Login(props) {
           type="text"
           name="username"
           id="username"
-          className="font-poppins px-3 py-2 bg-bgsecondary rounded outline-none"
+          className="font-plus px-3 py-2 rounded-md border-2 outline-1"
+          placeholder="Enter Health Id"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
@@ -199,7 +195,7 @@ export default function Login(props) {
         <span className="text-sm text-red-500">{usernameError}</span>
         <label
           htmlFor="password"
-          className="font-poppins pt-6 pb-1 text-lg font-bold"
+          className="font-plus pt-6 pb-1 text-lg font-bold"
         >
           Password
         </label>
@@ -207,7 +203,8 @@ export default function Login(props) {
           type="password"
           name="password"
           id="password"
-          className="font-poppins px-3 py-2 bg-bgsecondary rounded outline-none"
+          className="font-plus px-3 py-2 bg-bgsecondary rounded-md border-2 outline-1"
+          placeholder="Enter Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -226,14 +223,14 @@ export default function Login(props) {
         ) : (
           <button
             type="submit"
-            className="text-lg mt-10  bg-primary py-1 px-3 rounded font-semibold font-poppins shadow-sm hover:bg-bgsecondary"
+            className="text-lg mt-10 bg-primary py-3 px-3 rounded-xl text-white font-plusBold shadow-sm hover:bg-secondary ease-in-out duration-300 hover:text-primary"
           >
             Login
           </button>
         )}
       </form>
-      <h1 className="font-poppins text-base pt-5">
-        New User, <Link to="/Register">Register here</Link>
+      <h1 className="font-plus text-base pt-5">
+        New User? <Link to="/Register"><span className="text-primary font-plusBold hover:text-secondary">Register Here</span></Link>
       </h1>
     </div>
   );
