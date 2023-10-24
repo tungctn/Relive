@@ -36,19 +36,8 @@ const patientSchema = new mongoose.Schema({
     required: [true, "Please enter email"],
     validate: [isEmail, "Please Enter a valid Email"],
   },
-  adharCard: {
-    type: Number,
-    // min: [100000000000, "Please enter an valid AdharCard Number"],
-    // max: [999999999999, "Please enter an valid AdharCard Number"],
-    unique: [true, "This AdharCard is already Registerd on System."],
-    required: [true, "Please enter AdharCard Number"],
-  },
-  bloodGroup: {
-    type: String,
-    required: [true, "Please enter Blood Group"],
-  },
   address: {
-    building: {
+    address: {
       type: String,
       required: [true, "Please enter complete Address"],
     },
@@ -56,15 +45,7 @@ const patientSchema = new mongoose.Schema({
       type: String,
       required: [true, "Please enter complete Address"],
     },
-    taluka: {
-      type: String,
-      required: [true, "Please enter complete Address"],
-    },
     district: {
-      type: String,
-      required: [true, "Please enter complete Address"],
-    },
-    state: {
       type: String,
       required: [true, "Please enter complete Address"],
     },
@@ -80,71 +61,27 @@ const patientSchema = new mongoose.Schema({
     required: [true, "Please enter password"],
     minlength: [8, "Minimum length of password should must be 8 characters"],
   },
-  diseases: [
+  upperProblem: [
     {
-      disease: {
+      problem: {
         type: String,
       },
-      yrs: {
+      level: {
         type: Number,
       },
     },
   ],
-  contactPerson: {
-    name: {
-      firstName: {
+  lowerProblem: [
+    {
+      problem: {
         type: String,
-        required: [true, "Name of contact person is required"],
       },
-      surName: {
-        type: String,
-        required: [true, "Name of contact person is required"],
-      },
-    },
-    mobile: {
-      type: String,
-      required: [true, "Mobile Number of contact person is required"],
-      minlength: [10, "Please Enter a valid Mobile Phone"],
-    },
-    email: {
-      type: String,
-      lowercase: true,
-      validate: [isEmail, "Please enter a valid email."],
-    },
-    relation: {
-      type: String,
-    },
-    address: {
-      building: {
-        type: String,
-        required: [true, "Please enter complete Address of contact person"],
-      },
-      city: {
-        type: String,
-        required: [true, "Please enter complete Address of contact person"],
-      },
-      taluka: {
-        type: String,
-        required: [true, "Please enter complete Address of contact person"],
-      },
-      district: {
-        type: String,
-        required: [true, "Please enter complete Address of contact person"],
-      },
-      state: {
-        type: String,
-        required: [true, "Please enter complete Address of contact person"],
-
-      },
-      pincode: {
+      level: {
         type: Number,
-        // min: [100000, "Please enter a valid pincode"],
-        // max: [999999, "Please enter a valid pincode"],
-        required: [true, "Please Enter complete Address of contact person"],
-        default: 0,
       },
     },
-  },
+  ],
+  
   prescriptions: [prescriptionSchema],
 });
 

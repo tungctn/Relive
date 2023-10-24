@@ -3,11 +3,11 @@ import Navbar from "./Navbar";
 import plus_logo from "../../assets/img/dashboard/add2_pbl.png";
 import minus_logo from "../../assets/img/dashboard/minus2_pbl.png";
 import { useNavigate } from "react-router-dom";
-import ReactLoading from "react-loading";
+import Reactloading from "react-loading";
 
 export default function Register(props) {
   const navigate = useNavigate();
-  const [Loading, setLoading] = useState(false);
+  const [loading, setloading] = useState(false);
   const [Toggle, setToggle] = useState("Patient");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({
@@ -15,13 +15,20 @@ export default function Register(props) {
     address: {},
     contactPerson: { address: {} },
   });
-  const [diseaseList, setDiseaseList] = useState([{ disease: "", yrs: "" }]);
+  const [upperproblemlist, setupperproblemlist] = useState([{ problem: "", level: "" }]);
+  const [lowerproblemlist, setlowerproblemlist] = useState([{ problem: "", level: "" }]);
   const [passwordError, setPasswordError] = useState("");
-  const addDisease = () => {
-    const diseaseList1 = [...diseaseList];
-    diseaseList1.push({ disease: "", yrs: "" });
-    setDiseaseList(diseaseList1);
+  const addupperproblem = () => {
+    const upperproblemlist1 = [...upperproblemlist];
+    upperproblemlist1.push({ problem: "", level: "" });
+    setupperproblemlist(upperproblemlist1);
   };
+
+  const addlowerproblem = () => {
+    const lowerproblemlist1 = [...lowerproblemlist];
+    lowerproblemlist1.push({ lowerproblem: "", level: "" });
+    setlowerproblemlist(lowerproblemlist1);
+  }
 
   const [patient, setPatient] = useState({
     name: {
@@ -32,18 +39,16 @@ export default function Register(props) {
     dob: "",
     mobile: "",
     email: "",
-    adharCard: "",
     bloodGroup: "",
     address: {
-      building: "",
+      address: "",
       city: "",
-      taluka: "",
       district: "",
-      state: "",
       pincode: "",
     },
     password: "",
-    diseases: diseaseList,
+    upperProblem: upperproblemlist,
+    lowerProblem: lowerproblemlist,
     contactPerson: {
       name: {
         firstName: "",
@@ -67,13 +72,13 @@ export default function Register(props) {
     const auth = async () => {
       const res = await fetch("/auth");
       const data = await res.json();
-      if (data.msg === "Doctor Login Found") {
+      if (data.msg === "Doctor login Found") {
         navigate("/doctor/dashboard");
       }
-      if (data.msg === "Admin Login Found") {
+      if (data.msg === "Admin login Found") {
         navigate("/admin/dashboard");
       }
-      if (data.msg === "Patient Login Found") {
+      if (data.msg === "Patient login Found") {
         navigate("/patient/dashboard");
       }
     };
@@ -84,7 +89,7 @@ export default function Register(props) {
     e.preventDefault();
     setPasswordError("");
     if (patient.password === confirmPassword) {
-      setLoading(true);
+      setloading(true);
       e.preventDefault();
       const res = await fetch("/register/patient", {
         method: "POST",
@@ -97,18 +102,18 @@ export default function Register(props) {
       const data = await res.json();
 
       if (data.errors) {
-        setLoading(false);
+        setloading(false);
         setErrors(data.errors);
         props.settoastCondition({
           status: "error",
-          message: "Please Enter all fields correctly!",
+          message: "Please Enter al fields correctly!",
         });
         props.setToastShow(true);
       } else {
-        setLoading(false);
+        setloading(false);
         props.settoastCondition({
           status: "success",
-          message: "Your Registration done Successfully!",
+          message: "Your Registration done Successfuly!",
         });
         props.setToastShow(true);
         navigate("/patient/dashboard");
@@ -120,23 +125,23 @@ export default function Register(props) {
   return (
     <div className="body overflow-hidden">
       <Navbar></Navbar>
-      <div className="bg-secoundry w-full">
+      <div className="bg-secoundry w-ful">
         <div className="">
-          <div className=" flex justify-center mt-4">
-            <h1 className="  p-2 px-8 rounded font-bold text-5xl">Register</h1>
+          <div className=" flex justify-center mt-10">
+            <h1 className="p-2 px-8 rounded font-plusExtraBold text-5xl">Register</h1>
           </div>
 
           <form
-            className="font-poppins lg:ml-60  lg:px-8 lg:py-4 bg-white shadow-lg rounded max-w-screen-lg mt-8 mb-4 "
+            className="font-plus lg:ml-60  lg:px-8 lg:py-4 bg-white shadow-lg rounded max-w-screen-lg mt-8 mb-4 "
             onSubmit={handleRegisterPatient}
           >
-            <div className="flex   mt-2 bg-bgsecondary w-fit  justify-between rounded mx-auto">
+            <div className="flex mt-2 bg-bgsecondary w-fit justify-between rounded mx-auto">
               <button
                 onClick={() => setToggle("Patient")}
                 className={
                   Toggle === "Patient"
-                    ? "py-2 px-8 text-lg font-poppins font-semibold cursor-pointer rounded bg-primary"
-                    : "py-2 px-8 text-lg font-poppins font-semibold cursor-pointer rounded bg-bgsecondary"
+                    ? "py-2 px-8 mr-2 text-lg font-plusBold text-white cursor-pointer rounded-xl bg-primary"
+                    : "py-2 px-8 mr-2 text-lg font-plusBold cursor-pointer rounded-xl bg-bgsecondary"
                 }
               >
                 Patient
@@ -145,8 +150,8 @@ export default function Register(props) {
                 onClick={() => setToggle("Doctor")}
                 className={
                   Toggle === "Doctor"
-                    ? "py-2 px-8 text-lg font-poppins font-semibold cursor-pointer rounded bg-primary"
-                    : "py-2 px-8 text-lg font-poppins font-semibold cursor-pointer rounded bg-bgsecondary"
+                    ? "py-2 px-8 text-lg font-plusBold font-semibold cursor-pointer rounded-xl bg-primary"
+                    : "py-2 px-8 text-lg font-plusBold font-semibold cursor-pointer rounded-xl bg-bgsecondary"
                 }
               >
                 Doctor
@@ -160,10 +165,10 @@ export default function Register(props) {
               }
             >
               <h1 className="font-bold flex justify-center mt-6">
-                For register as doctor contact to admin with you all information
+                For register as doctor contact to admin with you al information
               </h1>
               <div className="border-4 p-4 mx-auto w-1/2 rounded-xl mt-8  ">
-                <h1>send your all information</h1>
+                <h1>send your al information</h1>
                 <div>
                   <div className=" rounded-xl p-4 mt-4 ">
                     <h1 className="font-bold">Email :</h1>
@@ -175,7 +180,7 @@ export default function Register(props) {
 
             <div className={Toggle === "Patient" ? "" : "hidden"}>
               <div className="lg:grid lg:grid-cols-4 lg:gap-2 mt-4 mr-4 grid grid-cols-4 gap-2">
-                <label className="font-bold lg:text-xl font-poppins px-4 my-4 ">
+                <label className="font-bold lg:text-xl font-plus px-4 my-4 pt-2">
                   Name
                 </label>
                 <div>
@@ -215,7 +220,7 @@ export default function Register(props) {
                 ></input>
               </div>
               <div className="lg:grid grid-cols-4 gap-2 mt-4 mr-4">
-                <label className="font-bold lg:text-xl px-4 ">Birthdate</label>
+                <label className="font-bold lg:text-xl px-4 pt-2">Birthdate</label>
                 <input
                   type="date"
                   className=" bg-blue-100 lg:h-10 rounded pl-4 h-8"
@@ -229,7 +234,7 @@ export default function Register(props) {
                 ></input>
               </div>
               <div className="lg:grid grid-cols-4 gap-2 mt-4 mr-4">
-                <label className="font-bold lg:text-xl px-4 ">
+                <label className="font-bold lg:text-xl px-4 pt-2">
                   Mobile No.{" "}
                 </label>
 
@@ -247,31 +252,9 @@ export default function Register(props) {
                 ></input>
               </div>
 
-              <div className=" aadhar lg:grid grid-cols-4 gap-2 mt-4 mr-4">
-                <label className="font-bold lg:text-xl px-4 ">
-                  Aadhar Card No.{" "}
-                </label>
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Aadhar card No."
-                    // required
-                    className="pl-4 bg-blue-100 lg:h-10  rounded h-8"
-                    value={patient.adharCard}
-                    onChange={(e) => {
-                      let temppatient = { ...patient };
-                      temppatient.adharCard = e.target.value;
-                      setPatient(temppatient);
-                    }}
-                  ></input>
-                  <span className="text-xs text-red-500 py-1">
-                    {errors.adharCard}
-                  </span>
-                </div>
-              </div>
 
               <div className="grid grid-cols-4 gap-2 mt-4 mr-4">
-                <label className="  lg:text-xl font-bold px-4 ">Email</label>
+                <label className="  lg:text-xl font-bold px-4  pt-2">Email</label>
                 <input
                   type="email"
                   id="email"
@@ -287,72 +270,33 @@ export default function Register(props) {
                 ></input>
               </div>
 
-              <div className="grid grid-cols-4 gap-2 mt-4 mr-4">
-                <label className="  lg:text-xl font-bold px-4">
-                  Blood Group
-                </label>
-                <div className="">
-                  <select
-                    className="pl-4 lg:w-1/2 bg-blue-100 lg:h-10  rounded  h-8"
-                    id="blood-group"
-                    value={patient.bloodGroup}
-                    onChange={(e) => {
-                      let temppatient = { ...patient };
-                      temppatient.bloodGroup = e.target.value;
-                      setPatient(temppatient);
-                    }}
-                  >
-                    <option id="select">select</option>
-                    <option id="A+">A+</option>
-                    <option id="A-">A-</option>
-                    <option id="B+">B+</option>
-                    <option id="B-">B-</option>
-                    <option id="AB+">AB+</option>
-                    <option id="AB-">AB-</option>
-                    <option id="O+">O+</option>
-                    <option id="O-">O-</option>
-                  </select>
-                </div>
-              </div>
-
               <div className="grid grid-cols-4 gap-2 mt-4 mr-4 grid-flow-dense ">
-                <label className=" lg:text-xl font-bold px-4 mb-8 col-span-1">
+                <label className=" lg:text-xl font-bold px-4 mb-8 col-span-1 pt-2">
                   Address
                 </label>
-                <div className="grid grid-cols-2 lg:gap-8 gap-2 col-span-3 ">
+                <div className="w-full grid grid-cols-1 col-span-2">
                   <input
-                    type="text"
-                    className="bg-blue-100 lg:h-10  rounded pl-4 h-8 "
-                    required
-                    placeholder="building/area"
-                    value={patient.address.building}
-                    onChange={(e) => {
-                      let temppatient = { ...patient };
-                      temppatient.address.building = e.target.value;
-                      setPatient(temppatient);
-                    }}
-                  ></input>
-                  <input
-                    type="text"
-                    className="bg-blue-100 lg:h-10  rounded pl-4 h-8 "
-                    required
-                    placeholder="village/city"
-                    value={patient.address.city}
-                    onChange={(e) => {
-                      let temppatient = { ...patient };
-                      temppatient.address.city = e.target.value;
-                      setPatient(temppatient);
-                    }}
-                  ></input>
+                      type="text"
+                      className="bg-blue-100 lg:h-10 rounded pl-4 h-8 mb-3"
+                      required
+                      placeholder="Full address"
+                      value={patient.address.address}
+                      onChange={(e) => {
+                        let temppatient = { ...patient };
+                        temppatient.address.address = e.target.value;
+                        setPatient(temppatient);
+                      }}
+                    ></input>
+                <div className="grid grid-cols-2 lg:gap-8 gap-2 col-span-3 mb-4">
                   <input
                     type="text"
                     className="bg-blue-100 lg:h-10  rounded  pl-4 h-8"
                     required
-                    placeholder="Taluka"
-                    value={patient.address.taluka}
+                    placeholder="City"
+                    value={patient.address.city}
                     onChange={(e) => {
                       let temppatient = { ...patient };
-                      temppatient.address.taluka = e.target.value;
+                      temppatient.address.city = e.target.value;
                       setPatient(temppatient);
                     }}
                   ></input>
@@ -368,34 +312,27 @@ export default function Register(props) {
                       setPatient(temppatient);
                     }}
                   ></input>
+                  
+                </div>
+                <div className="grid grid-cols-2 lg:gap-8 gap-2 col-span-3 mb-3">
                   <input
-                    type="number"
-                    className="bg-blue-100 lg:h-10  rounded  pl-4 h-8"
-                    required
-                    placeholder="Pin-code"
-                    value={patient.address.pincode}
-                    onChange={(e) => {
-                      let temppatient = { ...patient };
-                      temppatient.address.pincode = e.target.value;
-                      setPatient(temppatient);
-                    }}
-                  ></input>
-                  <input
-                    type="text"
-                    className="bg-blue-100 lg:h-10  rounded  pl-4 h-8"
-                    placeholder="State"
-                    value={patient.address.state}
-                    onChange={(e) => {
-                      let temppatient = { ...patient };
-                      temppatient.address.state = e.target.value;
-                      setPatient(temppatient);
-                    }}
-                  ></input>
+                      type="number"
+                      className="bg-blue-100 lg:h-10  rounded  pl-4 h-8"
+                      required
+                      placeholder="Pincode"
+                      value={patient.address.pincode}
+                      onChange={(e) => {
+                        let temppatient = { ...patient };
+                        temppatient.address.pincode = e.target.value;
+                        setPatient(temppatient);
+                      }}
+                    ></input>
+                </div>
                 </div>
               </div>
 
               <div className="lg:grid grid-cols-4 gap-2 mt-4 mr-4">
-                <label type="password" className="  lg:text-xl font-bold px-4">
+                <label type="password" className="lg:text-xl font-bold px-4 py-1">
                   Password
                 </label>
                 <input
@@ -414,7 +351,7 @@ export default function Register(props) {
               </div>
 
               <div className="lg:grid lg:grid-cols-4 gap-2 mt-4 mr-4 flex">
-                <label type="password" className=" lg:text-xl font-bold px-4">
+                <label type="password" className=" lg:text-xl font-bold px-4 pt-2">
                   Confirm Password
                 </label>
                 <input
@@ -432,59 +369,74 @@ export default function Register(props) {
               </div>
 
               <div className="lg:grid lg:grid-cols-10 gap-2 mt-8 mr-4">
-                <div className="col-span-5">
-                  <label className=" lg:text-xl font-bold px-4 grid col-start-1 col-span-3">
-                    Name of any permanant disease (if any)
+                <div className="col-span-3">
+                  <label className=" lg:text-xl font-bold px-4 grid col-start-1 col-span-3 pt-2">
+                    Any upper body problem
                   </label>
                 </div>
-                <div className="col-span-4">
-                  {diseaseList.map((disease, index) => {
+                <div className="col-span-6">
+                  {upperproblemlist.map((problem, index) => {
                     return (
                       <div
                         key={index}
                         className="grid grid-cols-7 col-span-1 mb-3"
                       >
-                        <input
-                          className="bg-blue-100 lg:h-10 col-span-3 rounded lg:pl-4 h-8 pl-2"
-                          type="text"
-                          name="disease"
-                          value={disease.disease}
-                          placeholder="eg.dibetes"
+                        <select
+                          className="bg-blue-100 lg:h-10 col-span-3 rounded lg:pl-4 h-8 pl-2 ml-4"
+                          name="level"
+                          value={upperproblemlist.problem}
                           onChange={(e) => {
-                            let diseaseList1 = [...diseaseList];
-                            diseaseList1[index].disease = e.target.value;
-                            setDiseaseList(diseaseList1);
+                            let upperproblemlist1 = [...upperproblemlist];
+                            upperproblemlist1[index].problem = e.target.problem;
+                            setupperproblemlist(upperproblemlist1);
                             let temppatient = { ...patient };
-                            temppatient.diseases = diseaseList;
+                            temppatient.upperProblems = upperproblemlist;
                             setPatient(temppatient);
                           }}
-                        />
-                        <input
-                          className="bg-blue-100 lg:h-10 col-span-3  rounded lg:pl-4 h-8 pl-2 ml-4"
-                          type="text"
-                          name="yrs"
-                          placeholder="years e.g 3"
-                          value={disease.yrs}
+                        >
+                          <option value="" disabled>body part</option>
+                          <option value="neck">Neck</option>
+                          <option value="shoulder">Shoulder</option>
+                          <option value="arm">Arm</option>
+                          <option value="chest">Chest</option>
+                          <option value="elbow">Elbow</option>
+                          <option value="wrist">Wrist</option>
+                          <option value="upperBack">Upper Back</option>
+                          <option value="hip">Hip</option>
+                        </select>
+
+                        <select
+                          className="bg-blue-100 lg:h-10 col-span-3 rounded lg:pl-4 h-8 pl-2 ml-4"
+                          name="level"
+                          value={upperproblemlist.level}
                           onChange={(e) => {
-                            let diseaseList1 = [...diseaseList];
-                            diseaseList1[index].yrs = e.target.value;
-                            setDiseaseList(diseaseList1);
+                            let upperproblemlist1 = [...upperproblemlist];
+                            upperproblemlist1[index].level = e.target.value;
+                            setupperproblemlist(upperproblemlist1);
                             let temppatient = { ...patient };
-                            temppatient.diseases = diseaseList;
+                            temppatient.upperProblem = upperproblemlist;
                             setPatient(temppatient);
                           }}
-                        />
+                        >
+                          <option value="" disabled>level of pain</option>
+                          <option value="1">Mild</option>
+                          <option value="2">Moderate</option>
+                          <option value="3">Severe</option>
+                          <option value="4">Intense</option>
+                          <option value="5">Extreme</option>
+                        </select>
+
 
                         <div
-                          className="col-span-1 pl-3"
+                          className="col-span-1 pl-3 mt-2"
                           onClick={() => {
-                            if (diseaseList.length > 1) {
-                              let diseaseList1 = [...diseaseList];
-                              diseaseList1.splice(index, 1);
+                            if (upperproblemlist.length > 1) {
+                              let upperproblemlist1 = [...upperproblemlist];
+                              upperproblemlist1.splice(index, 1);
                               let temppatient = { ...patient };
-                              temppatient.diseases = diseaseList1;
+                              temppatient.upperProblem = upperproblemlist1;
                               setPatient(temppatient);
-                              setDiseaseList(diseaseList1);
+                              setupperproblemlist(upperproblemlist1);
                             }
                           }}
                         >
@@ -495,183 +447,106 @@ export default function Register(props) {
                   })}
                 </div>
 
-                <div onClick={addDisease} className="col-span-1">
+                <div onClick={addupperproblem} className="col-span-1 mt-2">
                   <img src={plus_logo} alt="" className="h-8 w-8" />
                 </div>
               </div>
+              
+              <div className="lg:grid lg:grid-cols-10 gap-2 mt-4 mr-4">
+                <div className="col-span-3">
+                  <label className=" lg:text-xl font-bold px-4 grid col-start-1 col-span-3 pt-2">
+                    Any lower body problem
+                  </label>
+                </div>
+                <div className="col-span-6">
+                  {lowerproblemlist.map((problem, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="grid grid-cols-7 col-span-1 mb-3"
+                      >
+                        <select
+                          className="bg-blue-100 lg:h-10 col-span-3 rounded lg:pl-4 h-8 pl-2 ml-4"
+                          name="level"
+                          value={lowerproblemlist.problem}
+                          onChange={(e) => {
+                            let lowerproblemlist1 = [...lowerproblemlist];
+                            lowerproblemlist1[index].problem = e.target.problem;
+                            setlowerproblemlist(lowerproblemlist1);
+                            let temppatient = { ...patient };
+                            temppatient.lowerProblem = lowerproblemlist;
+                            setPatient(temppatient);
+                          }}
+                        >
+                          <option value="" disabled>body part</option>
+                          <option value="lowerBack">Lower Back</option>
+                          <option value="leg">Leg</option>
+                          <option value="knee">Knee</option>
+                          <option value="thigh">Thigh</option>
+                          <option value="ankle">Ankle</option>
+                          <option value="foot">Foot</option>
+                        </select>
+
+                        <select
+                          className="bg-blue-100 lg:h-10 col-span-3 rounded lg:pl-4 h-8 pl-2 ml-4"
+                          name="level"
+                          value={lowerproblemlist.level}
+                          onChange={(e) => {
+                            let lowerproblemlist1 = [...lowerproblemlist];
+                            lowerproblemlist1[index].level = e.target.value;
+                            setlowerproblemlist(lowerproblemlist1);
+                            let temppatient = { ...patient };
+                            temppatient.lowerProblem = lowerproblemlist;
+                            setPatient(temppatient);
+                          }}
+                        >
+                          <option value="" disabled>level of pain</option>
+                          <option value="1">Mild</option>
+                          <option value="2">Moderate</option>
+                          <option value="3">Severe</option>
+                          <option value="4">Intense</option>
+                          <option value="5">Extreme</option>
+                        </select>
+
+
+                        <div
+                          className="col-span-1 pl-3 mt-2"
+                          onClick={() => {
+                            if (lowerproblemlist.length > 1) {
+                              let lowerproblemlist1 = [...lowerproblemlist];
+                              lowerproblemlist1.splice(index, 1);
+                              let temppatient = { ...patient };
+                              temppatient.lowerProblems = lowerproblemlist1;
+                              setPatient(temppatient);
+                              setlowerproblemlist(lowerproblemlist1);
+                            }
+                          }}
+                        >
+                          <img src={minus_logo} alt="" className="h-8 w-8" />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div onClick={addlowerproblem} className="col-span-1 mt-2">
+                  <img src={plus_logo} alt="" className="h-8 w-8" />
+                </div>
+              </div>
+
             </div>
 
             <div className={Toggle === "Patient" ? "" : "hidden"}>
-              <div className="flex justify-center">
-                <h1 className=" p-4 rounded font-bold lg:text-3xl text-xl mt-2">
-                  Emergency Contact Details
-                </h1>
-              </div>
-
-              <div className="lg:grid grid-cols-4 gap-2 mt-8 mr-4 flex">
-                <label className="font-bold lg:text-xl px-4 ">Name</label>
-                <input
-                  className="bg-blue-100 rounded h-10 pl-4"
-                  placeholder="first name"
-                  value={patient.contactPerson.name.firstName}
-                  onChange={(e) => {
-                    let temppatient = { ...patient };
-                    temppatient.contactPerson.name.firstName = e.target.value;
-                    setPatient(temppatient);
-                  }}
-                ></input>
-                <input
-                  className="bg-blue-100 rounded h-10 pl-4"
-                  placeholder="last name"
-                  value={patient.contactPerson.name.surName}
-                  onChange={(e) => {
-                    let temppatient = { ...patient };
-                    temppatient.contactPerson.name.surName = e.target.value;
-                    setPatient(temppatient);
-                  }}
-                ></input>
-              </div>
-              <div className="lg:grid grid-cols-4 gap-2 mt-4 mr-4">
-                <label className="font-bold lg:text-xl px-4 ">
-                  Mobile No.{" "}
-                </label>
-
-                <input
-                  type="tel"
-                  placeholder="mobile no."
-                  required
-                  className="pl-4 bg-blue-100 lg:h-10  rounded h-8"
-                  value={patient.contactPerson.mobile}
-                  onChange={(e) => {
-                    let temppatient = { ...patient };
-                    temppatient.contactPerson.mobile = e.target.value;
-                    setPatient(temppatient);
-                  }}
-                ></input>
-              </div>
-
-              <div className="lg:grid grid-cols-4 gap-2 mt-4 mr-4">
-                <label className="  lg:text-xl font-bold px-4">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  className="bg-blue-100 lg:h-10 rounded pl-4 h-8"
-                  value={patient.contactPerson.email}
-                  onChange={(e) => {
-                    let temppatient = { ...patient };
-                    temppatient.contactPerson.email = e.target.value;
-                    setPatient(temppatient);
-                  }}
-                ></input>
-              </div>
-
-              <div className="mt-4">
-                <label className=" rounded p-2 lg:text-xl font-bold px-4">
-                  Relation with patient
-                </label>
-                <input
-                  className="bg-blue-100 lg:h-10 ml-24 rounded pl-4 h-8 lg:mt-0 lg:ml-0 mt-2 "
-                  placeholder="eg. father"
-                  value={patient.contactPerson.relation}
-                  onChange={(e) => {
-                    let temppatient = { ...patient };
-                    temppatient.contactPerson.relation = e.target.value;
-                    setPatient(temppatient);
-                  }}
-                ></input>
-              </div>
-
-              <div className="grid grid-cols-4 gap-2 mt-4 mr-4 grid-flow-dense ">
-                <label className=" lg:text-xl font-bold px-4 mb-8 col-span-1">
-                  Address
-                </label>
-                <div className="grid grid-cols-2 gap-8 col-span-3 ">
-                  <input
-                    type="text"
-                    className="bg-blue-100 h-10  rounded pl-4 "
-                    required
-                    placeholder="building/area"
-                    value={patient.contactPerson.address.building}
-                    onChange={(e) => {
-                      let temppatient = { ...patient };
-                      temppatient.contactPerson.address.building =
-                        e.target.value;
-                      setPatient(temppatient);
-                    }}
-                  ></input>
-                  <input
-                    type="text"
-                    className="bg-blue-100 h-10  rounded pl-4 "
-                    required
-                    placeholder="village/city"
-                    value={patient.contactPerson.address.city}
-                    onChange={(e) => {
-                      let temppatient = { ...patient };
-                      temppatient.contactPerson.address.city = e.target.value;
-                      setPatient(temppatient);
-                    }}
-                  ></input>
-                  <input
-                    type="text"
-                    className="bg-blue-100 h-10  rounded  pl-4"
-                    required
-                    placeholder="Taluka"
-                    value={patient.contactPerson.address.taluka}
-                    onChange={(e) => {
-                      let temppatient = { ...patient };
-                      temppatient.contactPerson.address.taluka = e.target.value;
-                      setPatient(temppatient);
-                    }}
-                  ></input>
-                  <input
-                    type="text"
-                    className="bg-blue-100 h-10  rounded  pl-4"
-                    required
-                    placeholder="District"
-                    value={patient.contactPerson.address.district}
-                    onChange={(e) => {
-                      let temppatient = { ...patient };
-                      temppatient.contactPerson.address.district =
-                        e.target.value;
-                      setPatient(temppatient);
-                    }}
-                  ></input>
-                  <input
-                    type="number"
-                    className="bg-blue-100 h-10  rounded  pl-4"
-                    required
-                    placeholder="Pin-code"
-                    value={patient.contactPerson.address.pincode}
-                    onChange={(e) => {
-                      let temppatient = { ...patient };
-                      temppatient.contactPerson.address.pincode =
-                        e.target.value;
-                      setPatient(temppatient);
-                    }}
-                  ></input>
-                  <input
-                    type="text"
-                    className="bg-blue-100 h-10  rounded  pl-4"
-                    placeholder="State"
-                    value={patient.contactPerson.address.state}
-                    onChange={(e) => {
-                      let temppatient = { ...patient };
-                      temppatient.contactPerson.address.state = e.target.value;
-                      setPatient(temppatient);
-                    }}
-                  ></input>
-                </div>
-              </div>
               <div className="flex justify-center mb-4 mt-8">
-                {Loading ? (
-                  <ReactLoading
+                {loading ? (
+                  <Reactloading
                     type={"bubbles"}
                     color={""}
                     height={"5%"}
                     width={"5%"}
                   />
                 ) : (
-                  <button className="bg-primary rounded p-2 px-8 font-bold text-xl hover:bg-bgsecondary mb-4 ">
+                  <button className="bg-primary rounded-xl p-2 px-12 font-plusExtraBold text-white text-xl hover:bg-secondary hover:text-primary mt-8 mb-4 ">
                     Submit
                   </button>
                 )}
