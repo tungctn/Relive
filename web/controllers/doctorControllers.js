@@ -5,7 +5,7 @@ module.exports.search_patient = async (req, res) => {
   const healthID = req.params.healthID;
   try {
     const patient = await Patient.findOne({ healthID });
-    const report = await Report.find({ patient: patient._id })
+    const report = await Report.find({ patient: patient?._id })
       .populate("doctor")
       .populate("patient");
     res.status(200).json({ patient, report: report });

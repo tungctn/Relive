@@ -22,16 +22,17 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-      - run: |
-          cd ./web/client
-          npm ci
+      
       - name: Change directory
         run: |
           cd ./web
           touch config.env
           echo "${{ secrets.PROD_ENV_FILE }}" > config.env
           npm ci
-  
+      - run: |
+          cd ./web/client
+          npm ci
+    
   deploy:
     needs: build
     runs-on: self-hosted
