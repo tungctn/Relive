@@ -1,4 +1,4 @@
-import logo from "../../assets/img/landingPage/logo.png";
+import logo from "../../assets/img/landingPage/ReliveLogo.png";
 import dashboard from "../../assets/img/dashboard/dashboard.jpeg";
 import reports from "../../assets/img/dashboard/report2_pbl.png";
 import patient_history from "../../assets/img/dashboard/patient_history.jpeg";
@@ -22,13 +22,14 @@ const DashboardSidebar = (props) => {
   return (
     <div className="h-screen overflow-y-hidden w-screen grid grid-cols-12">
       <div className="side_bar bg-white shadow col-span-2">
-        <div className="flex m-2 mt-4  ">
+        <div className="flex m-2 mt-4 ">
           <div className="logo m-2  ">
             <img src={logo} className="w-16" alt="logo"></img>
+            
           </div>
-          <div className="heading font-poppins font-bold text-xl  ">
+          <div className="heading font-plusBold text-xl ">
             <Link to="/">
-              <h1>Public health Record System</h1>
+              <h1>Relive Health Management</h1>
             </Link>
           </div>
         </div>
@@ -44,7 +45,7 @@ const DashboardSidebar = (props) => {
               <div className="w-6 ml-4  ">
                 <img src={dashboard} alt="dashbord"></img>
               </div>
-              <div className="font-poppins font-bold ml-4">
+              <div className="font-plusBold ml-4">
                 <h1>Dashboard</h1>
               </div>
             </div>
@@ -59,15 +60,15 @@ const DashboardSidebar = (props) => {
               <div className="w-6 ml-4  ">
                 <img src={reports} alt="report"></img>
               </div>
-              <div className="font-poppins font-bold ml-4">
+              <div className="font-plusBold ml-4">
                 <h1>Reports</h1>
               </div>
             </div>
           </Link>
 
           <div className="p-4">
-            <h1 className="font-poppins font-bold text-xl mt-4">Main menu</h1>
-            <div className="grid grid-rows-2 gap-4 font-bold font-poppins mt-4">
+            <h1 className="font-plusBold text-xl mt-4">Main menu</h1>
+            <div className="grid grid-rows-2 gap-4 font-bold font-plus mt-4">
               <Link
                 to="/doctor/history"
                 onClick={() => setToggle("Patient_history")}
@@ -108,9 +109,9 @@ const DashboardSidebar = (props) => {
           </div>
         </nav>
 
-        <div className=" mx-auto mt-56 py-1    bg-primary  rounded font-semibold font-poppins shadow-sm hover:bg-bgsecondary w-2/5  ">
-          <button className="font-bold  flex items-center" onClick={logout}>
-            <img src={logoutimg} className="h-4 px-2 " alt="logout"></img>logout
+        <div className=" mx-auto mt-56 py-2    bg-secondary  rounded-xl font-plusBold  shadow-sm hover:bg-bgsecondary w-2/5  ">
+          <button className="flex items-center" onClick={logout}>
+            <img src={logoutimg} className="h-4 px-2 " alt="logout"></img>Logout
           </button>
         </div>
       </div>

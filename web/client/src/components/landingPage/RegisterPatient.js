@@ -165,14 +165,14 @@ export default function Register(props) {
               }
             >
               <h1 className="font-bold flex justify-center mt-6">
-                For register as doctor contact to admin with you al information
+                For register as doctor contact to admin with you all information
               </h1>
               <div className="border-4 p-4 mx-auto w-1/2 rounded-xl mt-8  ">
-                <h1>send your al information</h1>
+                <h1>send your all information</h1>
                 <div>
                   <div className=" rounded-xl p-4 mt-4 ">
-                    <h1 className="font-bold">Email :</h1>
-                    <p>admin@gmail.com</p>
+                    <h1 className="font-bold">Email:</h1>
+                    <p>reliveadmin@gmail.com</p>
                   </div>
                 </div>
               </div>
@@ -478,7 +478,7 @@ export default function Register(props) {
                             setPatient(temppatient);
                           }}
                         >
-                          <option value="" disabled>body part</option>
+                          <option value="" disabled>Body part</option>
                           <option value="lowerBack">Lower Back</option>
                           <option value="leg">Leg</option>
                           <option value="knee">Knee</option>

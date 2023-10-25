@@ -78,7 +78,7 @@ const DoctorProfile = (props) => {
   }, []);
 
   return (
-    <body className="font-poppins col-span-10 overflow-y-scroll">
+    <body className="font-plus col-span-10 overflow-y-scroll">
       <div className="grid grid-cols-2 mt-16">
         <div className="p-4 m-8 bg-white shadow-md w-2/3 mx-auto rounded-md ">
           <div className="flex justify-center">
@@ -89,13 +89,16 @@ const DoctorProfile = (props) => {
             />
           </div>
           <div className="mt-6">
+            <div className="flex justify-center">
+              <h1 className="mb-2 font-plusBold text-xl">Profiles</h1>
+            </div>
             <div className="flex ml-8 ">
               <img src={name} className="h-8 w-8  " />
               <div className="flex mt-1">
                 <h2 className="ml-2">Dr.</h2>
-                <h2 className="ml-2">{doctor.name.firstName}</h2>
-                <h2 className="ml-2">{doctor.name.middleName}</h2>
-                <h2 className="ml-2">{doctor.name.surName}</h2>
+                <h2 className="ml-1">{doctor.name.firstName}</h2>
+                <h2 className="ml-1">{doctor.name.middleName}</h2>
+                <h2 className="ml-1">{doctor.name.surName}</h2>
               </div>
             </div>
             <div className="flex ml-8 mt-4">
@@ -119,6 +122,9 @@ const DoctorProfile = (props) => {
         </div>
         <div className="my-2">
           <div className="p-8 m-2 bg-white shadow-md w-2/3 rounded-md">
+            <div className="flex justify-center">
+              <h1 className="mb-2 font-plusBold text-xl">Address</h1>
+            </div>
             <div className="flex mt-3">
               <img src={home} className="h-6 w-6" />
               <div className="ml-4">
@@ -144,8 +150,8 @@ const DoctorProfile = (props) => {
               </h1>
             </div>
           </div>
-          <div className="p-8 m-2 bg-white shadow-md w-2/3 rounded-md mt-10">
-            <h1 className="font-bold flex justify-center text-xl">
+          <div className="p-8 m-2 bg-white shadow-md w-2/3 rounded-md mt-6">
+            <h1 className="font-plusBold flex justify-center text-xl">
               Hospital Details
             </h1>
             <div className="flex mt-4 ">
@@ -156,7 +162,7 @@ const DoctorProfile = (props) => {
             <div className="flex mt-3">
               <img src={hospital_contact} className="w-5 h-5 " />
 
-              <h1 className="ml-4">{doctor.orgNumber}</h1>
+              <h1 className="ml-5">{doctor.orgNumber}</h1>
             </div>
             {/* <div className="flex mt-3">
               <img src={mail} className="w-5 h-6 " />
@@ -164,9 +170,9 @@ const DoctorProfile = (props) => {
               <h1 className="mx-4">jayeshspatil1602@gmail.com</h1>
             </div> */}
 
-            <div className="flex mt-6">
+            <div className="flex mt-2">
               <img src={address} className="h-7 w-8" />
-              <div className="ml-4 ">
+              <div className="ml-3 ">
                 <h2>
                   {`${doctor.orgAddress.building},  ${doctor.orgAddress.city},  ${doctor.orgAddress.taluka},  ${doctor.orgAddress.district},  ${doctor.orgAddress.state}-  ${doctor.orgAddress.pincode}`}
                 </h2>

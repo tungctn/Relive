@@ -202,36 +202,36 @@ const DoctorDashboard = (props) => {
           <div className="">
             <div className="flex  h-12 m-2 bg-bgprimary rounded mt-4 ">
               <div>
-                <h1 className="text-2xl font-poppins font-bold p-2 ">
-                  DashBoard Today
+                <h1 className="text-2xl font-plusBold p-2 ">
+                  Dashboard Today
                 </h1>
               </div>
 
-              <div className="flex ml-20  h-10   ">
+              <div className="flex ml-20 h-10 mt-1">
                 <input
                   placeholder="Search"
-                  className="w-96 rounded ml-4 text-xl   pl-4 border focus:outline-none "
+                  className="w-96 rounded-lg ml-4 text-lg font-plus pl-4 border focus:outline-none "
                 ></input>
-                <div className="bg-white pl-2 rounded ">
+                <div className="bg-white px-2 rounded-xl ">
                   <img src={search} className=" h-6 mt-2  " alt="search"></img>
                 </div>
               </div>
 
               <Link to="/doctor/profile">
-                <div className="flex bg-white rounded shadow  px-4  ml-60 h-14 ">
+                <div className="flex bg-white rounded-lg shadow px-4 ml-60 h-14 ">
                   <img
                     src={doctor_profile}
-                    className="w-12 p-1 rounded-2xl"
+                    className="w-12 p-1 pt-2 rounded-2xl"
                     alt="profile"
                   ></img>
-                  <div className="grid grid-rows-2 ml-4 gap-2  mb-4">
-                    <div className="font-bold font-poppins text-base">
+                  <div className="grid grid-rows-2 ml-2 gap-2  mb-4 pt-2">
+                    <div className="font-plusBold text-base">
                       <h1 className="">
                         {`Dr. ${doctor.name.firstName} ${doctor.name.surName}`}
                       </h1>
                     </div>
                     <div className="">
-                      <h2 className="text-sm">
+                      <h2 className="text-sm font-plus">
                         {doctor.specialization[0].special}
                       </h2>
                     </div>
@@ -244,17 +244,17 @@ const DoctorDashboard = (props) => {
 
           <form
             onSubmit={searchPatient}
-            className="grid grid-cols-9 bg-white rounded p-4 ml-12 mr-8 mt-4 shadow"
+            className="grid grid-cols-9 bg-white rounded-lg p-4 ml-12 mr-8 mt-8 shadow-md border-2 border-solid border-neutral-300 "
           >
             <div className="grid col-start-1 col-span-3">
-              <h1 className="text-xl font-poppins font-bold p-2 ">
+              <h1 className="text-lg font-plusBold p-2 ">
                 Search Patient By Health Id :
               </h1>
             </div>
             <div className=" grid col-span-3">
               <input
                 placeholder="Health ID"
-                className="bg-bgsecondary rounded border-2 text-xl   pl-4  focus:outline-none"
+                className="font-plus rounded-lg border-2 text-md pl-4  focus:outline-none"
                 type="text"
                 value={props.healthID}
                 onChange={(e) => {
@@ -272,19 +272,19 @@ const DoctorDashboard = (props) => {
                 />
               </div>
             ) : (
-              <div className=" grid col-start-8  h-10 ml-4  bg-primary  rounded font-semibold font-poppins shadow-sm hover:bg-bgsecondary  ">
+              <div className=" grid col-start-8  h-10 ml-4  bg-secondary  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary  ">
                 <div className="flex py-2 px-4 items-center ">
                   <img src={search} className=" h-4  " alt="search"></img>
-                  <button className="ml-2 flex  rounded font-semibold font-poppins shadow-sm hover:bg-bgsecondary   ">
+                  <button className="ml-2 flex  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary   ">
                     Search
                   </button>
                 </div>
               </div>
             )}
-            <div className="grid col-start-9  h-10 ml-4  bg-primary  rounded font-semibold font-poppins shadow-sm hover:bg-bgsecondary  ">
+            <div className="grid col-start-9  h-10 ml-4  bg-secondary  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary  ">
               <div className="flex py-2 px-4 items-center ">
                 <div
-                  className="ml-2 flex cursor-pointer rounded font-semibold font-poppins shadow-sm hover:bg-bgsecondary "
+                  className="ml-2 flex cursor-pointer rounded font-semibold font-plus shadow-sm hover:bg-bgsecondary "
                   onClick={() => {
                     props.setHealthID("");
                   }}
@@ -299,11 +299,11 @@ const DoctorDashboard = (props) => {
             <div className="grid grid-cols-2">
               <div className="m-4 p-4">
                 <div>
-                  <h1 className="font-bold font-poppins text-xl ">
+                  <h1 className="font-bold font-plus text-xl ">
                     Patient Details
                   </h1>
                 </div>
-                <div className="bg-white font-poppins p-4 mt-4 px-8 rounded-xl shadow">
+                <div className="bg-white font-plus p-4 mt-4 px-8 rounded-xl shadow">
                   <div className="flex">
                     <div>
                       <h1>Name : </h1>
@@ -339,7 +339,7 @@ const DoctorDashboard = (props) => {
               {/* recent health check up start */}
               <div className="m-4 p-4 ">
                 <div>
-                  <h1 className="font-bold font-poppins text-xl ">
+                  <h1 className="font-bold font-plus text-xl ">
                     Recent Health Checkup
                     <img
                       src={add_pre_logo}
@@ -352,7 +352,7 @@ const DoctorDashboard = (props) => {
                   </h1>
                 </div>
                 {Object.keys(problems).length > 0 ? (
-                  <div className="bg-white mt-4 font-poppins p-4 rounded-xl shadow px-8">
+                  <div className="bg-white mt-4 font-plus p-4 rounded-xl shadow px-8">
                     <div className="flex ">
                       <div>
                         <h1>Upper Problems:</h1>
@@ -436,7 +436,7 @@ const DoctorDashboard = (props) => {
                       ))}
                     </div>
                     {isEditing && (
-                      <div className=" flex  bg-primary pl-0 pr-3 py-1 items-center justify-items-center  rounded font-semibold font-poppins shadow-sm hover:bg-bgsecondary">
+                      <div className=" flex  bg-primary pl-0 pr-3 py-1 items-center justify-items-center  rounded font-semibold font-plus shadow-sm hover:bg-bgsecondary">
                         <button
                           className="font-semibold text-white"
                           onClick={changeProblem}
@@ -447,7 +447,7 @@ const DoctorDashboard = (props) => {
                     )}
                   </div>
                 ) : (
-                  <div className="bg-white mt-4 font-poppins p-4 rounded-xl shadow px-8 flex justify-center font-bold">
+                  <div className="bg-white mt-4 font-plus p-4 rounded-xl shadow px-8 flex justify-center font-bold">
                     {" "}
                     No Data Found...{" "}
                   </div>
@@ -457,19 +457,19 @@ const DoctorDashboard = (props) => {
               <div></div>
             </div>
           ) : (
-            <div className="text-xl flex justify-center items-center font-bold my-60">
+            <div className="text-2xl flex justify-center items-center font-plusBold my-60">
               Search Patient to Add Diagnosis
             </div>
           )}
 
           {Object.keys(patient).length !== 0 ? (
-            <div className="font-poppins m-4  ">
+            <div className="font-plus m-4  ">
               <div className="flex justify-between m-8">
                 <div className="font-bold text-xl ml-4">
                   <h1>Patient Dashboard</h1>
                 </div>
                 <Link to="/doctor/addDiagno">
-                  <div className=" flex  bg-primary pl-0 pr-3 py-1 items-center justify-items-center  rounded font-semibold font-poppins shadow-sm hover:bg-bgsecondary   ">
+                  <div className=" flex  bg-primary pl-0 pr-3 py-1 items-center justify-items-center  rounded font-semibold font-plus shadow-sm hover:bg-bgsecondary   ">
                     <img
                       src={add_pre_logo}
                       className="h-3 mx-3"
@@ -521,7 +521,7 @@ const DoctorDashboard = (props) => {
                               console.log("prescription._id")
                             }
                           >
-                            <div className=" flex  justify-center bg-primary py-1 px-3 rounded font-semibold font-poppins shadow-sm hover:bg-bgsecondary w-2/5   ">
+                            <div className=" flex  justify-center bg-primary py-1 px-3 rounded font-semibold font-plus shadow-sm hover:bg-bgsecondary w-2/5   ">
                               <img
                                 src={eye}
                                 className="h-4 my-auto"
