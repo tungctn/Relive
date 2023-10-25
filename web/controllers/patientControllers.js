@@ -23,8 +23,11 @@ module.exports.get_patient_id = async (req, res) => {
   const patient = await Patient.findOne({ _id: petientID }).populate(
     "exercise"
   );
+  const advices = await Report.find({ patient: petientID })
+    .populate("doctor")
+    .populate("patient");
 
-  res.status(200).json({ patient });
+  res.status(200).json({ patient, advices });
 };
 
 module.exports.get_all_doctor = async (req, res) => {
