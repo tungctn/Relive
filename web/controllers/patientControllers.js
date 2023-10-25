@@ -1,3 +1,4 @@
+const Doctor = require("../models/doctor");
 const Patient = require("../models/patient");
 
 module.exports.preview_prescription = async (req, res) => {
@@ -22,5 +23,11 @@ module.exports.get_patient_id = async (req, res) => {
   const patient = await Patient.findOne({ _id: petientID }).populate(
     "exercise"
   );
+
   res.status(200).json({ patient });
+};
+
+module.exports.get_all_doctor = async (req, res) => {
+  const doctors = await Doctor.find({});
+  res.status(200).json({ doctors });
 };
