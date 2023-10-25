@@ -1,5 +1,6 @@
 const Doctor = require("../models/doctor");
 const Patient = require("../models/patient");
+const Report = require("../models/report");
 
 module.exports.preview_prescription = async (req, res) => {
   const id = req.params.id;
