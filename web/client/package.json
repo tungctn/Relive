@@ -1,6 +1,6 @@
 {
   "name": "health-home",
-  "proxy": "http://localhost:6000",
+  "proxy": "http://117.1.29.174:6000",
   "homepage": ".",
   "version": "0.1.0",
   "private": true,

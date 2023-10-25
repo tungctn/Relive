@@ -1,5 +1,6 @@
 const Doctor = require("../models/doctor");
 const Patient = require("../models/patient");
+const Report = require("../models/report");
 
 module.exports.preview_prescription = async (req, res) => {
   const id = req.params.id;
@@ -23,8 +24,11 @@ module.exports.get_patient_id = async (req, res) => {
   const patient = await Patient.findOne({ _id: petientID }).populate(
     "exercise"
   );
+  const advices = await Report.find({ patient: petientID })
+    .populate("doctor")
+    .populate("patient");
 
-  res.status(200).json({ patient });
+  res.status(200).json({ patient, advices });
 };
 
 module.exports.get_all_doctor = async (req, res) => {
