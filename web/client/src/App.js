@@ -30,6 +30,7 @@ import Page404 from "./pages/Page_404";
 function App() {
   const [healthID, setHealthID] = useState("");
   const [prescriptionID, setPrescriptionID] = useState("");
+  const [report, setReport] = useState("");
   const [toastShow, setToastShow] = useState(false);
   const [toastCondition, settoastCondition] = useState({
     status: "",
@@ -171,6 +172,7 @@ function App() {
             element={
               <PatientReportsDoctorView
                 healthID={healthID}
+                // reportID={prescriptionID}
                 setPrescriptionID={setPrescriptionID}
                 settoastCondition={settoastCondition}
                 setToastShow={setToastShow}
@@ -213,6 +215,8 @@ function App() {
             element={
               <PreviewPrescriptionDoctorView
                 healthID={healthID}
+                report={report}
+                setReport={setReport}
                 prescriptionID={prescriptionID}
                 settoastCondition={settoastCondition}
                 setToastShow={setToastShow}

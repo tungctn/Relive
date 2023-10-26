@@ -97,7 +97,9 @@ const DoctorDashboard = (props) => {
         //   props.setToastShow(true);
         // } else {
         console.log({ patient: data.patient });
-        setPatient(data.patient);
+        if (data.patient) {
+          setPatient(data.patient);
+        }
 
         if (data.patient.prescriptions) {
           setPrescriptions(data.patient.prescriptions.reverse());
@@ -145,6 +147,13 @@ const DoctorDashboard = (props) => {
         props.settoastCondition({
           status: "error",
           message: "This HealthID doesn't exist!!!",
+        });
+        props.setToastShow(true);
+      } else if (!data.patient) {
+        setLoading(false);
+        props.settoastCondition({
+          status: "error",
+          message: "No Patient Found!!!",
         });
         props.setToastShow(true);
       } else {
@@ -200,19 +209,9 @@ const DoctorDashboard = (props) => {
         <div className="main    m-2  ">
           {/* dashboard today start */}
           <div className="">
-            <div className="flex  h-12 m-2 bg-bgprimary rounded mt-4 ">
+            <div className="flex justify-between h-12 m-2 bg-bgprimary rounded mt-4 ">
               <div>
-                <h1 className="text-2xl font-plusBold p-2 ">Dashboard Today</h1>
-              </div>
-
-              <div className="flex ml-20 h-10 mt-1">
-                <input
-                  placeholder="Search"
-                  className="w-96 rounded-lg ml-4 text-lg font-plus pl-4 border focus:outline-none "
-                ></input>
-                <div className="bg-white px-2 rounded-xl ">
-                  <img src={search} className=" h-6 mt-2  " alt="search"></img>
-                </div>
+                <h1 className="text-2xl font-plusBold p-2 ">Dashboard</h1>
               </div>
 
               <Link to="/doctor/profile">
@@ -293,7 +292,7 @@ const DoctorDashboard = (props) => {
             </div>
           </form>
 
-          {Object.keys(patient).length !== 0 ? (
+          {patient && Object.keys(patient).length !== 0 ? (
             <div className="grid grid-cols-2">
               <div className="m-4 p-4">
                 <div>
@@ -466,7 +465,7 @@ const DoctorDashboard = (props) => {
             <div className="font-plus m-4  ">
               <div className="flex justify-between m-8">
                 <div className="font-bold text-xl ml-4">
-                  <h1>Patient Dashboard</h1>
+                  <h1>Checkup History</h1>
                 </div>
                 <Link to="/doctor/addDiagno">
                   <div className=" grid col-start-8  h-10 ml-4  bg-secondary  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary  ">
@@ -477,7 +476,7 @@ const DoctorDashboard = (props) => {
                         alt="adddiagno"
                       ></img>
                       <button className="ml-2 flex  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary   ">
-                        Add New Advice
+                        Add new report
                       </button>
                     </div>
                   </div>
@@ -492,11 +491,11 @@ const DoctorDashboard = (props) => {
                     <div>
                       <h1>Doctor Name</h1>
                     </div>
-                    <div>
+                    {/* <div>
                       <h1>Advice</h1>
-                    </div>
+                    </div> */}
                     <div>
-                      <h1>Preview</h1>
+                      <h1>Detail</h1>
                     </div>
                   </div>
                   {/* <div> */}
@@ -512,28 +511,29 @@ const DoctorDashboard = (props) => {
                             <h1>Dr. </h1>
                             <h1> {report?.doctor.name.firstName}</h1>
                           </div>
-                          <div>
-                            {report?.advice.map((advice) => {
+                          {/* <div>
+                            {report?.advice.map((advice, index) => {
                               return <h1>{advice}</h1>;
                             })}
-                          </div>
+                          </div> */}
                           <Link
                             to="/doctor/prescription"
-                            onClick={() =>
+                            onClick={() => {
                               // props.setPrescriptionID(prescription._id)
-                              console.log("prescription._id")
-                            }
+                              // props.setReportID(report[index]._id);
+                              console.log("prescription._id");
+                            }}
                           >
-                            <div className=" grid col-start-8  h-10 ml-4  bg-secondary  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary  ">
+                            <div className=" grid col-start-8  h-10 ml-4  bg-secondary  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary w-[50px]">
                               <div className="flex py-2 px-4 items-center ">
                                 <img
                                   src={eye}
-                                  className="h-5 mx-3"
+                                  className="h-5"
                                   alt="adddiagno"
                                 ></img>
-                                <button className="ml-2 flex  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary   ">
-                                  Preview{" "}
-                                </button>
+                                {/* <button className="ml-2 flex  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary   ">
+                                  Detail{" "}
+                                </button> */}
                               </div>
                             </div>
                           </Link>
@@ -548,7 +548,7 @@ const DoctorDashboard = (props) => {
             </div>
           ) : (
             // </div>
-            <div></div>
+            <div>No patient found</div>
           )}
         </div>
       </div>

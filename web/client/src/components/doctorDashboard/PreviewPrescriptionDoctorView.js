@@ -86,7 +86,7 @@ const PreviewPrescriptionDoctorView = (props) => {
     async function fetchpatient() {
       const res = await fetch(`/searchpatient/${props.healthID}`);
       const data = await res.json();
-
+      console.log({ data });
       if (data.AuthError) {
         props.settoastCondition({
           status: "info",
@@ -258,7 +258,6 @@ const PreviewPrescriptionDoctorView = (props) => {
           </div>
         </div>
       </div>
-
     </div>
   );
 };
