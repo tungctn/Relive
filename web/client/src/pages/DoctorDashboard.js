@@ -202,9 +202,7 @@ const DoctorDashboard = (props) => {
           <div className="">
             <div className="flex  h-12 m-2 bg-bgprimary rounded mt-4 ">
               <div>
-                <h1 className="text-2xl font-plusBold p-2 ">
-                  Dashboard Today
-                </h1>
+                <h1 className="text-2xl font-plusBold p-2 ">Dashboard Today</h1>
               </div>
 
               <div className="flex ml-20 h-10 mt-1">
@@ -443,13 +441,15 @@ const DoctorDashboard = (props) => {
                       ))}
                     </div>
                     {isEditing && (
-                      <div className=" flex mt-6 mx-20 py-2 bg-primary text-white hover:text-primary py-1 justify-center  rounded-xl font-plusBold shadow-sm hover:bg-secondary">
-                        <button
-                          className="font-semibold "
-                          onClick={changeProblem}
-                        >
-                          Edit problem
-                        </button>
+                      <div className=" grid col-start-8  h-10 ml-4  bg-secondary  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary w-[200px] mt-4 ">
+                        <div className="flex py-2 px-4 items-center ">
+                          <button
+                            className="ml-2 flex  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary"
+                            onClick={changeProblem}
+                          >
+                            Edit problem
+                          </button>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -476,14 +476,17 @@ const DoctorDashboard = (props) => {
                   <h1>Patient Dashboard</h1>
                 </div>
                 <Link to="/doctor/addDiagno">
-                  <div className=" flex  bg-primary pl-0 pr-3 py-1 items-center justify-items-center  rounded font-semibold font-plus shadow-sm hover:bg-bgsecondary   ">
-                    <img
-                      src={add_pre_logo}
-                      className="h-3 mx-3"
-                      alt="adddiagno"
-                    ></img>
-
-                    <button className="font-semibold">Add New Advice</button>
+                  <div className=" grid col-start-8  h-10 ml-4  bg-secondary  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary  ">
+                    <div className="flex py-2 px-4 items-center ">
+                      <img
+                        src={add_pre_logo}
+                        className="h-3 mx-3"
+                        alt="adddiagno"
+                      ></img>
+                      <button className="ml-2 flex  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary   ">
+                        Add New Advice
+                      </button>
+                    </div>
                   </div>
                 </Link>
               </div>
@@ -528,15 +531,17 @@ const DoctorDashboard = (props) => {
                               console.log("prescription._id")
                             }
                           >
-                            <div className=" flex  justify-center bg-primary py-1 px-3 rounded font-semibold font-plus shadow-sm hover:bg-bgsecondary w-2/5   ">
-                              <img
-                                src={eye}
-                                className="h-4 my-auto"
-                                alt="preview"
-                              ></img>
-                              <button className="font-bold ml-2">
-                                Preview{" "}
-                              </button>
+                            <div className=" grid col-start-8  h-10 ml-4  bg-secondary  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary  ">
+                              <div className="flex py-2 px-4 items-center ">
+                                <img
+                                  src={eye}
+                                  className="h-5 mx-3"
+                                  alt="adddiagno"
+                                ></img>
+                                <button className="ml-2 flex  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary   ">
+                                  Preview{" "}
+                                </button>
+                              </div>
                             </div>
                           </Link>
                         </div>

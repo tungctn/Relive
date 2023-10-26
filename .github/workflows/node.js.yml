@@ -28,10 +28,10 @@ jobs:
           cd ./web
           touch config.env
           echo "${{ secrets.PROD_ENV_FILE }}" > config.env
-          npm ci
+          npm install
       - run: |
           cd ./web/client
-          npm ci
+          npm install
           touch .env
           echo "${{ secrets.FRONT_ENV_FILE }}" > .env
 

@@ -656,9 +656,13 @@ const AddNewDiagnosis = (props) => {
                   width={"5%"}
                 />
               ) : (
-                <button className="bg-primary rounded p-2 px-8 font-bold text-xl hover:bg-bgsecondary mb-4 ">
-                  Submit
-                </button>
+                <div className=" grid col-start-8  h-10 ml-4  bg-secondary  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary  ">
+                  <div className="flex py-2 px-4 items-center ">
+                    <button className="ml-2 flex  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary   ">
+                      Submit
+                    </button>
+                  </div>
+                </div>
               )}
             </div>
           </form>
