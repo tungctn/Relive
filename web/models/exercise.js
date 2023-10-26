@@ -2,29 +2,25 @@ const mongoose = require("mongoose");
 
 const exerciseSchema = new mongoose.Schema(
   {
-    name: {
+    title: {
       type: String,
       default: "",
     },
-    description: {
+    video: {
       type: String,
-      default: "",
     },
-    video: [
-      {
-        type: String,
-      },
-    ],
     image: [
       {
         type: String,
+        default: "",
       },
     ],
-    problem: [
-      {
-        type: String,
-      },
-    ],
+    specialCondition: {
+      type: String,
+      default: "",
+    },
+    upperproblem: [],
+    lowerproblem: [],
   },
   { timestamps: true }
 );

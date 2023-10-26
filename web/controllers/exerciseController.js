@@ -1,14 +1,10 @@
 const Exercise = require("../models/exercise");
 
 module.exports.add_exercise = async (req, res) => {
-  const { name, description, video, image, problem } = req.body;
+  const { title, video, specialCondition, upperproblem, lowerproblem } =
+    req.body;
   try {
     const exercise = await Exercise.create({
-      //   name,
-      //   description,
-      //   video,
-      //   image,
-      //   problem,
       ...req.body,
     });
     res.status(200).json({ exercise });
