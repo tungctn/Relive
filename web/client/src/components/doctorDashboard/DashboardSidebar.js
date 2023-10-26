@@ -26,7 +26,6 @@ const DashboardSidebar = (props) => {
         <div className="flex m-2 mt-4 ">
           <div className="logo m-2  ">
             <img src={logo} className="w-16" alt="logo"></img>
-            
           </div>
           <div className="heading font-plusBold text-xl ">
             <Link to="/">
@@ -107,22 +106,20 @@ const DashboardSidebar = (props) => {
                 </div>
               </Link>
               <Link
-                to=""
+                to="/doctor/videoUpload"
                 onClick={() => setToggle("Video_upload")}
                 className={
-                  Toggle === "Video_upload"
-                    ? "text-gray-900"
-                    : "text-gray-400"
+                  Toggle === "Video_upload" ? "text-gray-900" : "text-gray-400"
                 }
               >
-                  <div className="flex p-2">
-                    <img
-                      src={video_upload}
-                      className="w-6"
-                      alt="video_upload"
-                    ></img>
-                    <h1 className="ml-4">Video Upload</h1>
-                  </div>
+                <div className="flex p-2">
+                  <img
+                    src={video_upload}
+                    className="w-6"
+                    alt="video_upload"
+                  ></img>
+                  <h1 className="ml-4">Upload Exercise</h1>
+                </div>
               </Link>
             </div>
           </div>

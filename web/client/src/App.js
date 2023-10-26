@@ -224,12 +224,7 @@ function App() {
               />
             }
           />
-          <Route
-            path="videoUpload" 
-            element={
-              <VideoUpload/>
-            }
-              />
+          <Route path="videoUpload" element={<VideoUpload />} />
         </Route>
 
         <Route
