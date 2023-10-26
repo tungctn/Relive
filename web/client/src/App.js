@@ -26,6 +26,7 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Page404 from "./pages/Page_404";
+import VideoUpload from "./components/doctorDashboard/VideoUpload";
 
 function App() {
   const [healthID, setHealthID] = useState("");
@@ -223,6 +224,12 @@ function App() {
               />
             }
           />
+          <Route
+            path="videoUpload" 
+            element={
+              <VideoUpload/>
+            }
+              />
         </Route>
 
         <Route
