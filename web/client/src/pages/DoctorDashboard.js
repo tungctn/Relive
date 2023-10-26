@@ -434,13 +434,15 @@ const DoctorDashboard = (props) => {
                       ))}
                     </div>
                     {isEditing && (
-                      <div className=" flex  bg-primary pl-0 pr-3 py-1 items-center justify-items-center  rounded font-semibold font-plus shadow-sm hover:bg-bgsecondary">
-                        <button
-                          className="font-semibold text-white"
-                          onClick={changeProblem}
-                        >
-                          Edit problem
-                        </button>
+                      <div className=" grid col-start-8  h-10 ml-4  bg-secondary  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary w-[200px] mt-4 ">
+                        <div className="flex py-2 px-4 items-center ">
+                          <button
+                            className="ml-2 flex  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary"
+                            onClick={changeProblem}
+                          >
+                            Edit problem
+                          </button>
+                        </div>
                       </div>
                     )}
                   </div>
