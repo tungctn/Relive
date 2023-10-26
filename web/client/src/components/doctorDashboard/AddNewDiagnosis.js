@@ -160,10 +160,10 @@ const AddNewDiagnosis = (props) => {
   };
 
   return (
-    <div className="font-poppins col-span-10 overflow-y-scroll">
+    <div className="font-plus col-span-10 overflow-y-scroll">
       <div className=" lg:min-h-screen lg:grid grid-cols-6  ">
         <div className=" col-start-1 col-span-6 ml-8">
-          <h1 className="font-bold lg:text-2xl my-6 ml-6  ">
+          <h1 className="font-plusExtraBold lg:text-2xl my-6 ml-6  ">
             Add a new diagnosis
           </h1>
 
@@ -219,7 +219,7 @@ const AddNewDiagnosis = (props) => {
                   ></input>
                   <div className="flex ml-3">
                     <div
-                      className=" m-2 h-8 w-16 mt-0  font-poppins font-semibold cursor-pointer "
+                      className=" m-2 h-8 w-16 mt-0  font-plus font-semibold cursor-pointer "
                       onClick={handleAddChiefComplaint}
                     >
                       <img
@@ -230,7 +230,7 @@ const AddNewDiagnosis = (props) => {
                     </div>
                     {chiefComplaints.length > 1 && (
                       <div
-                        className=" m-2 h-8 w-20 mt-0 font-poppins font-semibold cursor-pointer "
+                        className=" m-2 h-8 w-20 mt-0 font-plus font-semibold cursor-pointer "
                         onClick={() => {
                           let tempChiefComplaint = [...chiefComplaints];
                           tempChiefComplaint.splice(index, 1);
@@ -506,7 +506,7 @@ const AddNewDiagnosis = (props) => {
                     </div>
                     <div className="flex">
                       <div
-                        className=" m-2 h-10 w-16 mt-0  font-poppins font-semibold cursor-pointer "
+                        className=" m-2 h-10 w-16 mt-0  font-plus font-semibold cursor-pointer "
                         onClick={handleAddMedicine}
                       >
                         <img
@@ -517,7 +517,7 @@ const AddNewDiagnosis = (props) => {
                       </div>
                       {MedicineList.length > 1 && (
                         <div
-                          className=" m-2 h-10 w-20 mt-0   font-poppins font-semibold cursor-pointer "
+                          className=" m-2 h-10 w-20 mt-0   font-plus font-semibold cursor-pointer "
                           onClick={() => {
                             let tempmedicinelist = [...MedicineList];
                             setMedicineList(tempmedicinelist);
@@ -560,7 +560,7 @@ const AddNewDiagnosis = (props) => {
 
                   <div className="flex ml-3">
                     <div
-                      className=" m-2 h-8 w-16 mt-0  font-poppins font-semibold cursor-pointer "
+                      className=" m-2 h-8 w-16 mt-0  font-plus font-semibold cursor-pointer "
                       onClick={handleAddInvestigation}
                     >
                       <img
@@ -571,7 +571,7 @@ const AddNewDiagnosis = (props) => {
                     </div>
                     {investigations.length > 1 && (
                       <div
-                        className=" m-2 h-8 w-20 mt-0   font-poppins font-semibold cursor-pointer "
+                        className=" m-2 h-8 w-20 mt-0   font-plus font-semibold cursor-pointer "
                         onClick={() => {
                           let tempinvestigations = [...investigations];
                           tempinvestigations.splice(index, 1);
@@ -593,12 +593,12 @@ const AddNewDiagnosis = (props) => {
               ))} */}
 
               {advices.map((Advice, index) => (
-                <div className="grid grid-cols-6 mt-2">
+                <div className="grid grid-cols-6 mt-4 font-plusBold">
                   <h1 className="col-span-1">Advices </h1>
 
                   <input
                     placeholder="e.g drink more water "
-                    className=" bg-blue-100  rounded mx-2 px-2 py-1.5 outline-none col-span-2"
+                    className=" bg-blue-100  rounded mx-2 px-2 py-1.5 outline-none col-span-2 font-plusMedium"
                     value={Advice.advice}
                     onChange={(e) => {
                       const tempadvices = [...advices];
@@ -613,7 +613,7 @@ const AddNewDiagnosis = (props) => {
 
                   <div className="flex ml-3">
                     <div
-                      className=" m-2 h-8 w-16 mt-0  font-poppins font-semibold cursor-pointer "
+                      className=" m-2 h-8 w-16 mt-0  font-plus font-semibold cursor-pointer "
                       onClick={handleAddAdvices}
                     >
                       <img
@@ -624,7 +624,7 @@ const AddNewDiagnosis = (props) => {
                     </div>
                     {advices.length > 1 && (
                       <div
-                        className=" m-2 h-8 w-20 mt-0   font-poppins font-semibold cursor-pointer "
+                        className=" m-2 h-8 w-20 mt-0   font-plus font-semibold cursor-pointer "
                         onClick={() => {
                           const tempadvices = [...advices];
                           tempadvices.splice(index, 1);
@@ -658,7 +658,7 @@ const AddNewDiagnosis = (props) => {
               ) : (
                 <div className=" grid col-start-8  h-10 ml-4  bg-secondary  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary  ">
                   <div className="flex py-2 px-4 items-center ">
-                    <button className="ml-2 flex  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary   ">
+                    <button className=" flex  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary   ">
                       Submit
                     </button>
                   </div>

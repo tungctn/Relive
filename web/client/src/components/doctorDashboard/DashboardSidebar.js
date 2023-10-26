@@ -3,6 +3,7 @@ import dashboard from "../../assets/img/dashboard/dashboard.jpeg";
 import reports from "../../assets/img/dashboard/report2_pbl.png";
 import patient_history from "../../assets/img/dashboard/patient_history.jpeg";
 import patient_profile from "../../assets/img/dashboard/patient2_pbl.png";
+import video_upload from "../../assets/img/dashboard/add_doctor.png";
 import logoutimg from "../../assets/img/dashboard/logout.png";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -104,6 +105,24 @@ const DashboardSidebar = (props) => {
                   ></img>
                   <h1 className="ml-4">Doctor Profile</h1>
                 </div>
+              </Link>
+              <Link
+                to=""
+                onClick={() => setToggle("Video_upload")}
+                className={
+                  Toggle === "Video_upload"
+                    ? "text-gray-900"
+                    : "text-gray-400"
+                }
+              >
+                  <div className="flex p-2">
+                    <img
+                      src={video_upload}
+                      className="w-6"
+                      alt="video_upload"
+                    ></img>
+                    <h1 className="ml-4">Video Upload</h1>
+                  </div>
               </Link>
             </div>
           </div>
