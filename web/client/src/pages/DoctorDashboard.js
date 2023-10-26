@@ -299,7 +299,7 @@ const DoctorDashboard = (props) => {
             <div className="grid grid-cols-2">
               <div className="m-4 p-4">
                 <div>
-                  <h1 className="font-bold font-plus text-xl ">
+                  <h1 className="font-plusBold text-xl ">
                     Patient Details
                   </h1>
                 </div>
@@ -330,32 +330,39 @@ const DoctorDashboard = (props) => {
                       <h1>{patient.bloodGroup}</h1>
                     </div>
                   </div> */}
-                  <div>
-                    <h1 className="font-bold mt-4">Past Health History</h1>
-                    {/* <div>{`${patient.diseases[0].disease} (${patient.diseases[0].yrs} yrs.)`}</div> */}
-                  </div>
+                 {/* <div className="flex">
+                    <div>
+                      <h1>Address : </h1>
+                    </div>
+                    <div className="ml-2">
+                      <h1>{patient.address}</h1>                   
+                    </div>
+                 </div> */}
                 </div>
               </div>
               {/* recent health check up start */}
               <div className="m-4 p-4 ">
-                <div>
-                  <h1 className="font-bold font-plus text-xl ">
+                <div className="flex flex-row">
+                  <h1 className="font-plusBold text-xl ">
                     Recent Health Checkup
+                  </h1>
+                  <div className="border-2 border-solid border-primary rounded-2xl ml-4">
                     <img
                       src={add_pre_logo}
-                      className="h-3 mx-3"
+                      className="h-5 px-2 pt-1"
                       alt="adddiagno"
                       onClick={() => {
                         setIsEditing(!isEditing);
                       }}
                     />
-                  </h1>
+                  </div>
+                  
                 </div>
                 {Object.keys(problems).length > 0 ? (
                   <div className="bg-white mt-4 font-plus p-4 rounded-xl shadow px-8">
                     <div className="flex ">
                       <div>
-                        <h1>Upper Problems:</h1>
+                        <h1 className="font-plusBold">Upper Problems:</h1>
                       </div>
                       {problems.upperProblem?.map((upperProblem, index) => (
                         <div className="ml-2" key={index}>
@@ -363,7 +370,7 @@ const DoctorDashboard = (props) => {
                             <div>
                               <input
                                 placeholder="Search"
-                                className="w-96 rounded ml-4 text-xl pl-4 border focus:outline-none"
+                                className="w-96 rounded ml-4 text-md pl-4 border focus:outline-none"
                                 defaultValue={upperProblem.problem}
                                 onChange={(e) => {
                                   let temp = problems.upperProblem;
@@ -376,7 +383,7 @@ const DoctorDashboard = (props) => {
                               />
                               <input
                                 placeholder="Search"
-                                className="w-96 rounded ml-4 text-xl pl-4 border focus:outline-none"
+                                className="w-96 rounded ml-4 text-md pl-4 border focus:outline-none"
                                 defaultValue={upperProblem.level}
                                 onChange={(e) => {
                                   let temp = problems.upperProblem;
@@ -394,9 +401,9 @@ const DoctorDashboard = (props) => {
                         </div>
                       ))}
                     </div>
-                    <div className="flex ">
+                    <div className="flex mt-4">
                       <div>
-                        <h1>Lower Problems:</h1>
+                        <h1 className="font-plusBold">Lower Problems:</h1>
                       </div>
                       {problems.lowerProblem?.map((lowerProblem, index) => (
                         <div className="ml-2" key={index}>
@@ -404,7 +411,7 @@ const DoctorDashboard = (props) => {
                             <div>
                               <input
                                 placeholder="Search"
-                                className="w-96 rounded ml-4 text-xl pl-4 border focus:outline-none"
+                                className="w-96 rounded ml-4 text-md pl-4 border focus:outline-none"
                                 defaultValue={lowerProblem.problem}
                                 onChange={(e) => {
                                   let temp = problems.lowerProblem;
@@ -417,7 +424,7 @@ const DoctorDashboard = (props) => {
                               />
                               <input
                                 placeholder="Search"
-                                className="w-96 rounded ml-4 text-xl pl-4 border focus:outline-none"
+                                className="w-96 rounded ml-4 text-md pl-4 border focus:outline-none"
                                 defaultValue={lowerProblem.level}
                                 onChange={(e) => {
                                   let temp = problems.lowerProblem;
@@ -436,9 +443,9 @@ const DoctorDashboard = (props) => {
                       ))}
                     </div>
                     {isEditing && (
-                      <div className=" flex  bg-primary pl-0 pr-3 py-1 items-center justify-items-center  rounded font-semibold font-plus shadow-sm hover:bg-bgsecondary">
+                      <div className=" flex mt-6 mx-20 py-2 bg-primary text-white hover:text-primary py-1 justify-center  rounded-xl font-plusBold shadow-sm hover:bg-secondary">
                         <button
-                          className="font-semibold text-white"
+                          className="font-semibold "
                           onClick={changeProblem}
                         >
                           Edit problem
@@ -447,7 +454,7 @@ const DoctorDashboard = (props) => {
                     )}
                   </div>
                 ) : (
-                  <div className="bg-white mt-4 font-plus p-4 rounded-xl shadow px-8 flex justify-center font-bold">
+                  <div className="bg-white mt-4 font-plus p-4 rounded-md shadow px-8 flex justify-center font-bold">
                     {" "}
                     No Data Found...{" "}
                   </div>
