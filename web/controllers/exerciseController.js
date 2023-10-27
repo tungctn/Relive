@@ -1,7 +1,7 @@
 const Exercise = require("../models/exercise");
 
 module.exports.add_exercise = async (req, res) => {
-  const { title, video, specialCondition, upperproblem, lowerproblem } =
+  const { title, video, specialCondition, upperproblem, lowerproblem, angles } =
     req.body;
   try {
     const exercise = await Exercise.create({
