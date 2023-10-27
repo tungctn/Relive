@@ -259,7 +259,7 @@ const DoctorDashboard = (props) => {
             <div className=" grid col-span-3">
               <input
                 placeholder="Health ID"
-                className="font-plus rounded-lg border-2 text-md pl-2  focus:outline-none"
+                className="font-plus rounded-lg border-2 text-md px-4  focus:outline-none"
                 type="text"
                 value={props.healthID}
                 onChange={(e) => {
@@ -430,23 +430,6 @@ const DoctorDashboard = (props) => {
                                   });
                                 }}
                               />
-                              <Link
-                                to={{
-                                  pathname: "/doctor/addExercise",
-                                  state: {
-                                    problem: upperProblem.problem,
-                                    level: upperProblem.level,
-                                    problemType: "upperProblem"
-                                  }
-                                }}
-                              >
-                                <button 
-                                  className="ml-4 bg-primary text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
-                                  onClick={() => {}}
-                                >
-                                  Add Exercise
-                                </button>
-                              </Link>
 
                             </div>
                           ) : (
@@ -518,23 +501,6 @@ const DoctorDashboard = (props) => {
                                   });
                                 }}
                               />
-                              <Link
-                                to={{
-                                  pathname: "/doctor/addExercise",
-                                  state: {
-                                    problem: lowerProblem.problem,
-                                    level: lowerProblem.level,
-                                    problemType: "lowerProblem"
-                                  }
-                                }}
-                              >
-                                <button 
-                                  className="ml-4 bg-primary text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
-                                  onClick={() => {}}
-                                >
-                                  Add Exercise
-                                </button>
-                              </Link>
                               
                             </div>
                           ) : (
@@ -564,7 +530,31 @@ const DoctorDashboard = (props) => {
                 )}
                 {/* recent health check up end */}
               </div>
-              <div></div>
+              <div className="flex flex-col">
+                <div className="m-4 p-4 flex justify-between">
+                  <div>
+                    <h1 className="font-plusBold text-xl ">
+                      Add Exercises
+                    </h1>
+                  </div>
+                  <Link
+                    to= "/doctor/addExercise"
+                  >
+                    <div className=" grid col-start-8  h-10 ml-2  bg-secondary  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary  ">
+                      <div className="flex py-2 px-2 items-center ">
+                        <img
+                          src={add_pre_logo}
+                          className="h-3 mx-3"
+                          alt="addexercise"
+                        ></img>
+                        <button className="ml- flex  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary   ">
+                          Add Exercises
+                        </button>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              </div>
             </div>
           ) : (
             <div className="text-2xl flex justify-center items-center font-plusBold my-60">
@@ -572,21 +562,23 @@ const DoctorDashboard = (props) => {
             </div>
           )}
 
+          
+
           {Object.keys(patient).length !== 0 ? (
             <div className="font-plus m-4  ">
-              <div className="flex justify-between m-8">
-                <div className="font-bold text-xl ml-4">
+              <div className="flex justify-between">
+                <div className="font-plusBold text-xl ml-4">
                   <h1>Checkup History</h1>
                 </div>
                 <Link to="/doctor/addDiagno">
-                  <div className=" grid col-start-8  h-10 ml-4  bg-secondary  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary  ">
-                    <div className="flex py-2 px-4 items-center ">
+                  <div className=" grid col-start-8  h-10 ml-2  bg-secondary  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary  ">
+                    <div className="flex py-2 px-2 items-center ">
                       <img
                         src={add_pre_logo}
                         className="h-3 mx-3"
                         alt="adddiagno"
                       ></img>
-                      <button className="ml-2 flex  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary   ">
+                      <button className="ml-1 flex  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary   ">
                         Add new report
                       </button>
                     </div>
@@ -659,7 +651,7 @@ const DoctorDashboard = (props) => {
             </div>
           ) : (
             // </div>
-            <div>No patient found</div>
+            <div></div>
           )}
         </div>
       </div>
