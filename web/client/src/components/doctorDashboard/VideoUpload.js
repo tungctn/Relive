@@ -23,6 +23,8 @@ const VideoUpload = () => {
   const fileInputRef = useRef(null);
   const [isShowUpper, setIsShowUpper] = useState(false);
   const [isShowLower, setIsShowLower] = useState(false);
+  const [loadPose, setLoadPose] = useState(false);
+  const [images, setImages] = useState([]);
   const navigate = useNavigate();
   const swiperRef = useRef(null);
 
@@ -35,11 +37,13 @@ const VideoUpload = () => {
   ];
 
   const [data, setData] = useState(initialData);
+  const [angles, setAngles] = useState([]);
+  const [angleIndex, setAngleIndex] = useState(0);
 
   const handleToleranceChange = (index, newValue) => {
-    const updatedData = [...data];
-    updatedData[index].tolerance = newValue;
-    setData(updatedData);
+    const updatedData = [...angles];
+    updatedData[angleIndex].tolerance[index] = Number(newValue);
+    setAngles(updatedData);
   };
   const [upperproblemlist, setupperproblemlist] = useState([
     { problem: "", level: "" },
@@ -72,7 +76,7 @@ const VideoUpload = () => {
 
   const uploadVideo = (file) => {
     const formData = new FormData();
-    formData.append("video", file);
+    formData.append("file", file);
 
     fetch("http://117.1.29.174:4000/upload-video", {
       method: "POST",
@@ -82,6 +86,33 @@ const VideoUpload = () => {
       .then((data) => {
         console.log("Video uploaded successfully. URL:", data.videoUrl);
         setVideoSrc(data.videoUrl);
+        setLoadPose(true);
+        fetch(
+          `http://117.1.29.174:8000/landmark-prediction/${data.filePath}?o=${data.fileOutput}`,
+          {
+            method: "GET",
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(
+              data.angles.map((angle) => {
+                return {
+                  ...angle,
+                  tolerance: Object.keys(angle).map((_) => 10),
+                };
+              })
+            );
+            setImages(data.images);
+            setAngles(
+              data.angles.map((angle) => {
+                return {
+                  ...angle,
+                  tolerance: Object.keys(angle).map((_) => 10),
+                };
+              })
+            );
+          });
       })
       .catch((error) => {
         console.error("Error uploading video:", error);
@@ -108,13 +139,15 @@ const VideoUpload = () => {
   };
 
   const handleSubmit = async () => {
-    console.log({
-      videoSrc,
-      title,
-      specialCondition,
-      upperproblemlist,
-      lowerproblemlist,
-    });
+    // console.log({
+    //   videoSrc,
+    //   title,
+    //   specialCondition,
+    //   upperproblemlist,
+    //   lowerproblemlist,
+    //   images,
+    //   angles: angles,
+    // });
     const res = await fetch("/addexercise", {
       method: "POST",
       headers: {
@@ -126,6 +159,8 @@ const VideoUpload = () => {
         specialCondition,
         upperproblem: upperproblemlist,
         lowerproblem: lowerproblemlist,
+        image: images,
+        angles,
       }),
     });
     const data = await res.json();
@@ -139,11 +174,19 @@ const VideoUpload = () => {
 
   const handleSlideChange = (swiper) => {
     console.log("Current Slide Index:", swiper.realIndex);
+    setAngleIndex(swiper.realIndex);
   };
 
   return (
     <div className="w-[1100px] mx-[100px] mt-[100px] overflow-y-auto">
-      <h1 className="text-2xl font-plusBold p-2 ">Add Exercise</h1>
+      <div className="flex">
+        <div className="w-[50%]">
+          <h1 className="text-2xl font-plusBold p-2">Add Exercise</h1>
+        </div>
+        <div className="w-[50%]">
+          <h1 className="text-2xl font-plusBold p-2">Disease</h1>
+        </div>
+      </div>
       <input
         type="file"
         ref={fileInputRef}
@@ -386,6 +429,7 @@ const VideoUpload = () => {
 
       <div className="flex">
         <div className="w-[45%]">
+          <h1 className="text-2xl font-plusBold p-2 ">Pose image</h1>
           <Swiper
             modules={[Navigation]}
             spaceBetween={50}
@@ -396,41 +440,52 @@ const VideoUpload = () => {
           >
             {images.map((image, index) => (
               <SwiperSlide key={index}>
-                <img src={image} alt={`Slide ${index}`} />
+                <img
+                  src={image}
+                  alt={`Slide ${index}`}
+                  className="h-[400px] w-full"
+                />
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
         <div className="w-[5%]"></div>
         <div className="w-2/5">
-          <table className="w-full border-collapse border border-gray-400 mt-6">
+          <h1 className="text-2xl font-plusBold p-2 ">Angle table</h1>
+          <table className="w-full border-collapse border border-gray-400">
             <thead>
               <tr>
                 <th className="border border-gray-400 p-2">STT</th>
                 <th className="border border-gray-400 p-2">Body part</th>
                 <th className="border border-gray-400 p-2">Angle</th>
-                <th className="border border-gray-400 p-2">Tolerance</th>
+                <th className="border border-gray-400 p-2">Tolerance (%)</th>
               </tr>
             </thead>
             <tbody>
-              {data.map((item, index) => (
-                <tr key={index}>
-                  <td className="border border-gray-400 p-2">{item.stt}</td>
-                  <td className="border border-gray-400 p-2">
-                    {item.bodyPart}
-                  </td>
-                  <td className="border border-gray-400 p-2">{item.angle}</td>
-                  <td className="border border-gray-400 p-2">
-                    <input
-                      type="number"
-                      value={item.tolerance}
-                      onChange={(e) =>
-                        handleToleranceChange(index, e.target.value)
-                      }
-                    />
-                  </td>
-                </tr>
-              ))}
+              {angles.length > 0 &&
+                Object.keys(angles[angleIndex])?.map((item, index) => {
+                  if (item != "tolerance")
+                    return (
+                      <tr key={index}>
+                        <td className="border border-gray-400 p-2">
+                          {index + 1}
+                        </td>
+                        <td className="border border-gray-400 p-2">{item}</td>
+                        <td className="border border-gray-400 p-2">
+                          {angles[angleIndex][item]}
+                        </td>
+                        <td className="border border-gray-400 p-2">
+                          <input
+                            type="number"
+                            value={angles[angleIndex].tolerance[index]}
+                            onChange={(e) =>
+                              handleToleranceChange(index, e.target.value)
+                            }
+                          />
+                        </td>
+                      </tr>
+                    );
+                })}
             </tbody>
           </table>
         </div>
