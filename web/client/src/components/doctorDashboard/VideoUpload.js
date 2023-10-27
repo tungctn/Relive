@@ -8,6 +8,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import SwiperCore from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
+import { Rings } from "react-loader-spinner";
 
 const images = [
   "https://picsum.photos/id/1018/1000/600/",
@@ -24,6 +25,7 @@ const VideoUpload = () => {
   const [isShowUpper, setIsShowUpper] = useState(false);
   const [isShowLower, setIsShowLower] = useState(false);
   const [loadPose, setLoadPose] = useState(false);
+  const [isLoadingImages, setIsLoadingImages] = useState(false);
   const [images, setImages] = useState([]);
   const navigate = useNavigate();
   const swiperRef = useRef(null);
@@ -86,7 +88,7 @@ const VideoUpload = () => {
       .then((data) => {
         console.log("Video uploaded successfully. URL:", data.videoUrl);
         setVideoSrc(data.videoUrl);
-        setLoadPose(true);
+        setIsLoadingImages(true);
         fetch(
           `http://117.1.29.174:8000/landmark-prediction/${data.filePath}?o=${data.fileOutput}`,
           {
@@ -100,6 +102,7 @@ const VideoUpload = () => {
                 return {
                   ...angle,
                   tolerance: Object.keys(angle).map((_) => 10),
+                  isCheck: Object.keys(angle).map((_) => false),
                 };
               })
             );
@@ -109,9 +112,11 @@ const VideoUpload = () => {
                 return {
                   ...angle,
                   tolerance: Object.keys(angle).map((_) => 10),
+                  isCheck: Object.keys(angle).map((_) => false),
                 };
               })
             );
+            setIsLoadingImages(false);
           });
       })
       .catch((error) => {
@@ -139,15 +144,15 @@ const VideoUpload = () => {
   };
 
   const handleSubmit = async () => {
-    // console.log({
-    //   videoSrc,
-    //   title,
-    //   specialCondition,
-    //   upperproblemlist,
-    //   lowerproblemlist,
-    //   images,
-    //   angles: angles,
-    // });
+    console.log({
+      videoSrc,
+      title,
+      specialCondition,
+      upperproblemlist,
+      lowerproblemlist,
+      images,
+      angles: angles,
+    });
     const res = await fetch("/addexercise", {
       method: "POST",
       headers: {
@@ -430,32 +435,41 @@ const VideoUpload = () => {
       <div className="flex">
         <div className="w-[45%]">
           <h1 className="text-2xl font-plusBold p-2 ">Pose image</h1>
-          <Swiper
-            modules={[Navigation]}
-            spaceBetween={50}
-            slidesPerView={1}
-            navigation={true}
-            loop={true}
-            onSlideChange={handleSlideChange}
-          >
-            {images.map((image, index) => (
-              <SwiperSlide key={index}>
-                <img
-                  src={image}
-                  alt={`Slide ${index}`}
-                  className="h-[400px] w-full"
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          {isLoadingImages ? (
+            // <div>Loading pose images...</div>
+            <Rings color="#00BFFF" height={80} width={80} />
+          ) : (
+            <Swiper
+              modules={[Navigation]}
+              spaceBetween={50}
+              slidesPerView={1}
+              navigation={true}
+              loop={true}
+              onSlideChange={handleSlideChange}
+            >
+              {images.map((image, index) => (
+                <SwiperSlide key={index}>
+                  <div className="grid justify-items-stretch">
+                    <div className="justify-self-center">
+                      <img
+                        src={image}
+                        alt={`Slide ${index}`}
+                        className="h-[400px]"
+                      />
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
         </div>
         <div className="w-[5%]"></div>
         <div className="w-2/5">
           <h1 className="text-2xl font-plusBold p-2 ">Angle table</h1>
           <table className="w-full border-collapse border border-gray-400">
             <thead>
-              <tr>
-                <th className="border border-gray-400 p-2">STT</th>
+              <tr className="bg-slate-200">
+                <th className="border border-gray-400 p-2">Sel.</th>
                 <th className="border border-gray-400 p-2">Body part</th>
                 <th className="border border-gray-400 p-2">Angle</th>
                 <th className="border border-gray-400 p-2">Tolerance (%)</th>
@@ -464,15 +478,27 @@ const VideoUpload = () => {
             <tbody>
               {angles.length > 0 &&
                 Object.keys(angles[angleIndex])?.map((item, index) => {
-                  if (item != "tolerance")
+                  if (item != "tolerance" && item != "isCheck")
                     return (
                       <tr key={index}>
                         <td className="border border-gray-400 p-2">
-                          {index + 1}
+                          <input
+                            type="checkbox"
+                            checked={angles[angleIndex].isCheck[index]}
+                            onChange={(e) => {
+                              console.log(e.target.value);
+                              console.log(e.target.checked);
+                              let updatedData = [...angles];
+                              // updatedData[angleIndex][item] = e.target.checked;
+                              updatedData[angleIndex].isCheck[index] =
+                                e.target.checked;
+                              setAngles(updatedData);
+                            }}
+                          />
                         </td>
                         <td className="border border-gray-400 p-2">{item}</td>
                         <td className="border border-gray-400 p-2">
-                          {angles[angleIndex][item]}
+                          {angles[angleIndex][item].toFixed(2)}
                         </td>
                         <td className="border border-gray-400 p-2">
                           <input
@@ -481,6 +507,7 @@ const VideoUpload = () => {
                             onChange={(e) =>
                               handleToleranceChange(index, e.target.value)
                             }
+                            className="border-2 p-2 w-full"
                           />
                         </td>
                       </tr>
