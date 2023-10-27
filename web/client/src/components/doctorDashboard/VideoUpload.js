@@ -434,7 +434,7 @@ const VideoUpload = () => {
 
       <div className="flex">
         <div className="w-[45%]">
-          <h1 className="text-2xl font-plusBold p-2 ">Pose image</h1>
+          <h1 className="text-2xl font-plusBold p-2 ">{`Pose image (${images.length})`}</h1>
           {isLoadingImages ? (
             // <div>Loading pose images...</div>
             <Rings color="#00BFFF" height={80} width={80} />
