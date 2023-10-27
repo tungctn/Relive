@@ -69,6 +69,10 @@ const patientSchema = new mongoose.Schema({
       level: {
         type: Number,
       },
+      notes: {
+        type: String,
+      },
+      
     },
   ],
   lowerProblem: [
@@ -79,6 +83,10 @@ const patientSchema = new mongoose.Schema({
       level: {
         type: Number,
       },
+      notes: {
+        type: String,
+      },
+
     },
   ],
 

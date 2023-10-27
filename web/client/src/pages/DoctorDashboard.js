@@ -203,6 +203,14 @@ const DoctorDashboard = (props) => {
     setIsEditing(false);
   };
 
+  const levelMapping = {
+    1: "Mild",
+    2: "Moderate",
+    3: "Severe",
+    4: "Intense",
+    5: "Extreme",
+  };
+
   return (
     <div className="full-body col-span-10 overflow-y-auto">
       <div className="body-without-footer   bg-bgprimary ">
@@ -251,7 +259,7 @@ const DoctorDashboard = (props) => {
             <div className=" grid col-span-3">
               <input
                 placeholder="Health ID"
-                className="font-plus rounded-lg border-2 text-md pl-4  focus:outline-none"
+                className="font-plus rounded-lg border-2 text-md pl-2  focus:outline-none"
                 type="text"
                 value={props.healthID}
                 onChange={(e) => {
@@ -293,7 +301,7 @@ const DoctorDashboard = (props) => {
           </form>
 
           {patient && Object.keys(patient).length !== 0 ? (
-            <div className="grid grid-cols-2">
+            <div className="flex flex-col">
               <div className="m-4 p-4">
                 <div>
                   <h1 className="font-plusBold text-xl ">
@@ -359,16 +367,16 @@ const DoctorDashboard = (props) => {
                   <div className="bg-white mt-4 font-plus p-4 rounded-xl shadow px-8">
                     <div className="flex ">
                       <div>
-                        <h1 className="font-plusBold">Upper Problems:</h1>
+                        <h1 className="font-plusBold py-2">Upper Problems:</h1>
                       </div>
                       {problems.upperProblem?.map((upperProblem, index) => (
                         <div className="ml-2" key={index}>
                           {isEditing ? (
                             <div>
-                              <input
-                                placeholder="Search"
-                                className="w-96 rounded ml-4 text-md pl-4 border focus:outline-none"
-                                defaultValue={upperProblem.problem}
+                              <select
+                                name="upperProblem"
+                                className="w-76 rounded-lg ml-4 text-md pl-2 py-2 px-4 border border-solid border-neutral-400 focus:outline-none"
+                                value={upperProblem.problem}
                                 onChange={(e) => {
                                   let temp = problems.upperProblem;
                                   temp[index].problem = e.target.value;
@@ -377,11 +385,21 @@ const DoctorDashboard = (props) => {
                                     upperProblem: temp,
                                   });
                                 }}
-                              />
-                              <input
-                                placeholder="Search"
-                                className="w-96 rounded ml-4 text-md pl-4 border focus:outline-none"
-                                defaultValue={upperProblem.level}
+                              >
+                                <option value="" disabled>body part</option>
+                                <option value="Neck">Neck</option>
+                                <option value="Shoulder">Shoulder</option>
+                                <option value="Arm">Arm</option>
+                                <option value="Chest">Chest</option>
+                                <option value="Elbow">Elbow</option>
+                                <option value="Wrist">Wrist</option>
+                                <option value="Upper Back">Upper Back</option>
+                                <option value="Hip">Hip</option>
+                              </select>
+                              <select
+                                name="upperProblemLevel"
+                                className="w-76 rounded-lg ml-4 text-md pl-2 py-2 px-4 border border-solid border-neutral-400 focus:outline-none"
+                                value={upperProblem.level}
                                 onChange={(e) => {
                                   let temp = problems.upperProblem;
                                   temp[index].level = e.target.value;
@@ -390,26 +408,65 @@ const DoctorDashboard = (props) => {
                                     upperProblem: temp,
                                   });
                                 }}
+                              >
+                                <option value="1">Mild</option>
+                                <option value="2">Moderate</option>
+                                <option value="3">Severe</option>
+                                <option value="4">Intense</option>
+                                <option value="5">Extreme</option>
+                              </select>
+                              <input
+                                type="text"
+                                name="upperProblemNotes"
+                                className="w-[28rem] rounded-lg ml-4 text-md pl-2 py-2 px-4 border border-solid border-neutral-400 focus:outline-none"
+                                placeholder="Notes"
+                                value={upperProblem.notes}
+                                onChange={(e) => {
+                                  let temp = problems.upperProblem;
+                                  temp[index].notes = e.target.value;
+                                  setProblems({
+                                    ...problems,
+                                    upperProblem: temp,
+                                  });
+                                }}
                               />
+                              <Link
+                                to={{
+                                  pathname: "/doctor/addExercise",
+                                  state: {
+                                    problem: upperProblem.problem,
+                                    level: upperProblem.level,
+                                    problemType: "upperProblem"
+                                  }
+                                }}
+                              >
+                                <button 
+                                  className="ml-4 bg-primary text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
+                                  onClick={() => {}}
+                                >
+                                  Add Exercise
+                                </button>
+                              </Link>
+
                             </div>
                           ) : (
-                            <h1>{`${upperProblem.problem} (Level ${upperProblem.level})`}</h1>
+                            <h1 className="py-2">{`${upperProblem.problem} (${levelMapping[upperProblem.level]})`}</h1>
                           )}
                         </div>
                       ))}
                     </div>
                     <div className="flex mt-4">
                       <div>
-                        <h1 className="font-plusBold">Lower Problems:</h1>
+                        <h1 className="font-plusBold py-2">Lower Problems:</h1>
                       </div>
                       {problems.lowerProblem?.map((lowerProblem, index) => (
                         <div className="ml-2" key={index}>
                           {isEditing ? (
-                            <div>
-                              <input
-                                placeholder="Search"
-                                className="w-96 rounded ml-4 text-md pl-4 border focus:outline-none"
-                                defaultValue={lowerProblem.problem}
+                            <div class="flex">
+                              <select
+                                name="lowerProblem"
+                                className="w-76 rounded-lg ml-4 text-md pl-2 py-2 px-4 border border-solid border-neutral-400 focus:outline-none"
+                                value={lowerProblem.problem}
                                 onChange={(e) => {
                                   let temp = problems.lowerProblem;
                                   temp[index].problem = e.target.value;
@@ -418,11 +475,19 @@ const DoctorDashboard = (props) => {
                                     lowerProblem: temp,
                                   });
                                 }}
-                              />
-                              <input
-                                placeholder="Search"
-                                className="w-96 rounded ml-4 text-md pl-4 border focus:outline-none"
-                                defaultValue={lowerProblem.level}
+                              >
+                                <option value="" disabled>body part</option>
+                                <option value="Lower Back">Lower Back</option>
+                                <option value="Leg">Leg</option>
+                                <option value="Knee">Knee</option>
+                                <option value="Thigh">Thigh</option>
+                                <option value="Ankle">Ankle</option>
+                                <option value="Foot">Foot</option>
+                              </select>
+                              <select
+                                name="lowerProblemLevel"
+                                className="w-76 rounded-lg ml-4 text-md pl-2 py-2 px-4 border border-solid border-neutral-400 focus:outline-none"
+                                value={lowerProblem.level}
                                 onChange={(e) => {
                                   let temp = problems.lowerProblem;
                                   temp[index].level = e.target.value;
@@ -431,19 +496,58 @@ const DoctorDashboard = (props) => {
                                     lowerProblem: temp,
                                   });
                                 }}
+                              >
+                                <option value="1">Mild</option>
+                                <option value="2">Moderate</option>
+                                <option value="3">Severe</option>
+                                <option value="4">Intense</option>
+                                <option value="5">Extreme</option>
+                              </select>
+                              <input
+                                type="text"
+                                name="lowerProblemNotes"
+                                className="w-[28rem] rounded-lg ml-4 text-md pl-2 py-2 px-4 border border-solid border-neutral-400 focus:outline-none"
+                                placeholder="Notes"
+                                value={lowerProblem.notes}
+                                onChange={(e) => {
+                                  let temp = problems.lowerProblem;
+                                  temp[index].notes = e.target.value;
+                                  setProblems({
+                                    ...problems,
+                                    lowerProblem: temp,
+                                  });
+                                }}
                               />
+                              <Link
+                                to={{
+                                  pathname: "/doctor/addExercise",
+                                  state: {
+                                    problem: lowerProblem.problem,
+                                    level: lowerProblem.level,
+                                    problemType: "lowerProblem"
+                                  }
+                                }}
+                              >
+                                <button 
+                                  className="ml-4 bg-primary text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
+                                  onClick={() => {}}
+                                >
+                                  Add Exercise
+                                </button>
+                              </Link>
+                              
                             </div>
                           ) : (
-                            <h1>{`${lowerProblem.problem} (Level ${lowerProblem.level})`}</h1>
+                            <h1 className="py-2">{`${lowerProblem.problem} (${levelMapping[lowerProblem.level]})`}</h1>
                           )}
                         </div>
                       ))}
                     </div>
                     {isEditing && (
-                      <div className=" grid col-start-8  h-10 ml-4  bg-secondary  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary w-[200px] mt-4 ">
-                        <div className="flex py-2 px-4 items-center ">
+                      <div className=" grid col-start-8  h-10  bg-secondary  rounded-lg font-plusBold shadow-sm hover:bg-bgsecondary w-[200px] mt-4 ">
+                        <div className="flex py-2 px-4 justify-center ">
                           <button
-                            className="ml-2 flex  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary"
+                            className="rounded-lg font-plusBold shadow-sm hover:bg-bgsecondary"
                             onClick={changeProblem}
                           >
                             Edit problem
