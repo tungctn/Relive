@@ -183,144 +183,134 @@ const VideoUpload = () => {
   };
 
   return (
-    <div className="w-[78vw] mx-[3vw] flex flex-col">
-      <h1 className="font-plusBold text-2xl mt-4">Video Upload</h1>
-      <div className="overflow-y-auto mt-6">
-        <div className="flex">
-          <div className="w-[50%]">
-            <h1 className="text-xl font-plusBold">Add Exercise</h1>
-          </div>
-          <div className="w-[50%]">
-            <h1 className="text-xl font-plusBold">Disease</h1>
-          </div>
+    <div className="w-[1100px] mx-[100px] mt-[100px] overflow-y-auto">
+      <div className="flex">
+        <div className="w-[50%]">
+          <h1 className="text-2xl font-plusBold p-2">Add Exercise</h1>
         </div>
-        <input
-          type="file"
-          ref={fileInputRef}
-          onChange={handleFileChange}
-          style={{ display: "none" }}
-          accept="video/*"
-        />
-        <div className="flex">
-          <div
-            className="mt-4 w-[45%] h-[300px] border-2 border-dashed border-gray-400 relative flex justify-center items-center mb-4"
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-            onClick={handleClick}
-          >
-            {videoSrc ? (
-              <video className="w-full h-full object-contain font-plusMedium" controls>
-                <source src={videoSrc} type="video/mp4" />
-                Trình duyệt của bạn không hỗ trợ thẻ video.
-              </video>
-            ) : (
-              <div className="flex flex-row items-center">
-                <p className="font-plusMedium mt-1">Kéo và thả video của bạn vào đây hoặc</p>
-                <div className="font-plusMedium text-3xl ml-2 cursor-pointer">+</div>
-              </div>
-            )}
-          </div>
-          <div className="w-[5%]"></div>
-          <div className="w-[45%]">
-            <div className="mt-4">
-              <input
-                type="text"
-                placeholder="Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="border-2 px-4 py-2 w-full mb-4 rounded-lg font-plusMedium"
-              />
-              <div className="flex flex-row justify-between font-plusMedium ml-4">
-                <div>
-                  <input
-                    type="checkbox"
-                    id="upperCheckbox"
-                    name="upperCheckbox"
-                    value="upperValue"
-                    onChange={(e) => {
-                      console.log(e.target.value);
-                      console.log(e.target.checked);
-                      setIsShowUpper(e.target.checked);
-                    }}
-                  />
-                  <label for="upperCheckbox" className="ml-2"> Upper</label>
+        <div className="w-[50%]">
+          <h1 className="text-2xl font-plusBold p-2">Disease</h1>
+        </div>
+      </div>
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileChange}
+        style={{ display: "none" }}
+        accept="video/*"
+      />
+      <div className="flex">
+        <div
+          className="w-[45%] h-[300px] border-2 border-dashed border-gray-400 relative flex justify-center items-center mb-4"
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+          onClick={handleClick}
+        >
+          {videoSrc ? (
+            <video className="w-full h-full object-contain" controls>
+              <source src={videoSrc} type="video/mp4" />
+              Trình duyệt của bạn không hỗ trợ thẻ video.
+            </video>
+          ) : (
+            <>
+              <p>Kéo và thả video của bạn vào đây hoặc</p>
+              <div className="text-4xl ml-2 cursor-pointer">+</div>
+            </>
+          )}
+        </div>
+        <div className="w-[5%]"></div>
+        <div className="w-[45%]">
+          <div className="mt-4">
+            <input
+              type="text"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="border-2 p-2 w-full mb-5"
+            />
+            <input
+              type="checkbox"
+              id="upperCheckbox"
+              name="upperCheckbox"
+              value="upperValue"
+              onChange={(e) => {
+                console.log(e.target.value);
+                console.log(e.target.checked);
+                setIsShowUpper(e.target.checked);
+              }}
+            />
+            <label for="upperCheckbox"> Upper</label>
+            <br />
+            <input
+              type="checkbox"
+              id="lowerCheckbox"
+              name="lowerCheckbox"
+              value="lowerValue"
+              onChange={(e) => {
+                console.log(e.target.value);
+                console.log(e.target.checked);
+                setIsShowLower(e.target.checked);
+              }}
+            />
+            <label for="lowerCheckbox"> Lower</label>
+            {isShowUpper && (
+              <div className="lg:grid lg:grid-cols-10 gap-2 mt-5 mr-4">
+                <div className="col-span-3">
+                  <label className=" text-base font-bold px-4 grid col-start-1 col-span-3 pt-2">
+                    Upper problem
+                  </label>
                 </div>
-                
-                <div className="mr-[30%]">
-                  <input
-                    type="checkbox"
-                    id="lowerCheckbox"
-                    name="lowerCheckbox"
-                    value="lowerValue"
-                    onChange={(e) => {
-                      console.log(e.target.value);
-                      console.log(e.target.checked);
-                      setIsShowLower(e.target.checked);
-                    }}
-                  />
-                  <label for="lowerCheckbox" className="ml-2"> Lower</label>
-                </div>
-                
-              </div>
-              
-              {isShowUpper && (
-                <div className="lg:grid lg:grid-cols-10 gap-2 mt-2 mr-4">
-                  <div className="col-span-3">
-                    <label className="font-plusMedium text-md pl-4 grid col-start-1 col-span-3 py-2">
-                      Upper problem
-                    </label>
-                  </div>
-                  <div className="col-span-6">
-                    {upperproblemlist.map((problem, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className="grid grid-cols-7 col-span-1"
+                <div className="col-span-6">
+                  {upperproblemlist.map((problem, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="grid grid-cols-7 col-span-1 mb-3"
+                      >
+                        <select
+                          className="bg-blue-100 lg:h-10 col-span-3 rounded lg:pl-4 h-8 pl-2 ml-4"
+                          name="level"
+                          value={upperproblemlist.problem}
+                          onChange={(e) => {
+                            // console.log(e.target.value);
+                            let upperproblemlist1 = [...upperproblemlist];
+                            upperproblemlist1[index].problem = e.target.value;
+                            setupperproblemlist(upperproblemlist1);
+                            // let temppatient = { ...patient };
+                            // temppatient.upperProblems = upperproblemlist;
+                          }}
                         >
-                          <select
-                            className="font-plus text-sm col-span-3 rounded-lg h-8 pl-2 ml-4 mt-1 border-2 border-neutral-200"
-                            name="level"
-                            value={upperproblemlist.problem}
-                            onChange={(e) => {
-                              // console.log(e.target.value);
-                              let upperproblemlist1 = [...upperproblemlist];
-                              upperproblemlist1[index].problem = e.target.value;
-                              setupperproblemlist(upperproblemlist1);
-                              // let temppatient = { ...patient };
-                              // temppatient.upperProblems = upperproblemlist;
-                            }}
-                          >
-                            <option value="">body part</option>
-                            <option value="neck">Neck</option>
-                            <option value="shoulder">Shoulder</option>
-                            <option value="arm">Arm</option>
-                            <option value="chest">Chest</option>
-                            <option value="elbow">Elbow</option>
-                            <option value="wrist">Wrist</option>
-                            <option value="upperBack">Upper Back</option>
-                            <option value="hip">Hip</option>
-                          </select>
+                          <option value="">body part</option>
+                          <option value="neck">Neck</option>
+                          <option value="shoulder">Shoulder</option>
+                          <option value="arm">Arm</option>
+                          <option value="chest">Chest</option>
+                          <option value="elbow">Elbow</option>
+                          <option value="wrist">Wrist</option>
+                          <option value="upperBack">Upper Back</option>
+                          <option value="hip">Hip</option>
+                        </select>
 
-                          <select
-                            className="col-span-3 rounded-lg h-8 pl-2 ml-2 mt-1 border-2 border-neutral-200"
-                            name="level"
-                            value={upperproblemlist.level}
-                            onChange={(e) => {
-                              let upperproblemlist1 = [...upperproblemlist];
-                              upperproblemlist1[index].level = e.target.value;
-                              setupperproblemlist(upperproblemlist1);
-                              // let temppatient = { ...patient };
-                              // temppatient.upperProblem = upperproblemlist;
-                              // setPatient(temppatient);
-                            }}
-                          >
-                            <option value="">level of pain</option>
-                            <option value="1">Mild</option>
-                            <option value="2">Moderate</option>
-                            <option value="3">Severe</option>
-                            <option value="4">Intense</option>
-                            <option value="5">Extreme</option>
-                          </select>
+                        <select
+                          className="bg-blue-100 lg:h-10 col-span-3 rounded lg:pl-4 h-8 pl-2 ml-4"
+                          name="level"
+                          value={upperproblemlist.level}
+                          onChange={(e) => {
+                            let upperproblemlist1 = [...upperproblemlist];
+                            upperproblemlist1[index].level = e.target.value;
+                            setupperproblemlist(upperproblemlist1);
+                            // let temppatient = { ...patient };
+                            // temppatient.upperProblem = upperproblemlist;
+                            // setPatient(temppatient);
+                          }}
+                        >
+                          <option value="">level of pain</option>
+                          <option value="1">Mild</option>
+                          <option value="2">Moderate</option>
+                          <option value="3">Severe</option>
+                          <option value="4">Intense</option>
+                          <option value="5">Extreme</option>
+                        </select>
 
                         <div
                           className="col-span-1 pl-3 mt-2"
@@ -348,62 +338,62 @@ const VideoUpload = () => {
               </div>
             )}
 
-              {isShowLower && (
-                <div className="lg:grid lg:grid-cols-10 gap-2 mt-2 mr-4">
-                  <div className="col-span-3">
-                    <label className="font-plusMedium text-md pl-4 grid col-start-1 col-span-3 py-2">
-                      Lower problem
-                    </label>
-                  </div>
-                  <div className="col-span-6">
-                    {lowerproblemlist.map((problem, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className="grid grid-cols-7 col-span-1"
+            {isShowLower && (
+              <div className="lg:grid lg:grid-cols-10 gap-2 mt-4 mr-4">
+                <div className="col-span-3">
+                  <label className=" text-base font-bold px-4 grid col-start-1 col-span-3 pt-2">
+                    Lower problem
+                  </label>
+                </div>
+                <div className="col-span-6">
+                  {lowerproblemlist.map((problem, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="grid grid-cols-7 col-span-1 mb-3"
+                      >
+                        <select
+                          className="bg-blue-100 lg:h-10 col-span-3 rounded lg:pl-4 h-8 pl-2 ml-4"
+                          name="level"
+                          value={lowerproblemlist.problem}
+                          onChange={(e) => {
+                            let lowerproblemlist1 = [...lowerproblemlist];
+                            lowerproblemlist1[index].problem = e.target.value;
+                            setlowerproblemlist(lowerproblemlist1);
+                            // let temppatient = { ...patient };
+                            // temppatient.lowerProblem = lowerproblemlist;
+                            // setPatient(temppatient);
+                          }}
                         >
-                          <select
-                            className="col-span-3 rounded-lg h-8 pl-2 ml-4 mt-1 border-2 border-neutral-200"
-                            name="level"
-                            value={lowerproblemlist.problem}
-                            onChange={(e) => {
-                              let lowerproblemlist1 = [...lowerproblemlist];
-                              lowerproblemlist1[index].problem = e.target.value;
-                              setlowerproblemlist(lowerproblemlist1);
-                              // let temppatient = { ...patient };
-                              // temppatient.lowerProblem = lowerproblemlist;
-                              // setPatient(temppatient);
-                            }}
-                          >
-                            <option value="">body part</option>
-                            <option value="lowerBack">Lower Back</option>
-                            <option value="leg">Leg</option>
-                            <option value="knee">Knee</option>
-                            <option value="thigh">Thigh</option>
-                            <option value="ankle">Ankle</option>
-                            <option value="foot">Foot</option>
-                          </select>
+                          <option value="">Body part</option>
+                          <option value="lowerBack">Lower Back</option>
+                          <option value="leg">Leg</option>
+                          <option value="knee">Knee</option>
+                          <option value="thigh">Thigh</option>
+                          <option value="ankle">Ankle</option>
+                          <option value="foot">Foot</option>
+                        </select>
 
-                          <select
-                            className="col-span-3 rounded-lg h-8 pl-2 ml-2 mt-1 border-2 border-neutral-200"
-                            name="level"
-                            value={lowerproblemlist.level}
-                            onChange={(e) => {
-                              let lowerproblemlist1 = [...lowerproblemlist];
-                              lowerproblemlist1[index].level = e.target.value;
-                              setlowerproblemlist(lowerproblemlist1);
-                              // let temppatient = { ...patient };
-                              // temppatient.lowerProblem = lowerproblemlist;
-                              // setPatient(temppatient);
-                            }}
-                          >
-                            <option value="">level of pain</option>
-                            <option value="1">Mild</option>
-                            <option value="2">Moderate</option>
-                            <option value="3">Severe</option>
-                            <option value="4">Intense</option>
-                            <option value="5">Extreme</option>
-                          </select>
+                        <select
+                          className="bg-blue-100 lg:h-10 col-span-3 rounded lg:pl-4 h-8 pl-2 ml-4"
+                          name="level"
+                          value={lowerproblemlist.level}
+                          onChange={(e) => {
+                            let lowerproblemlist1 = [...lowerproblemlist];
+                            lowerproblemlist1[index].level = e.target.value;
+                            setlowerproblemlist(lowerproblemlist1);
+                            // let temppatient = { ...patient };
+                            // temppatient.lowerProblem = lowerproblemlist;
+                            // setPatient(temppatient);
+                          }}
+                        >
+                          <option value="">level of pain</option>
+                          <option value="1">Mild</option>
+                          <option value="2">Moderate</option>
+                          <option value="3">Severe</option>
+                          <option value="4">Intense</option>
+                          <option value="5">Extreme</option>
+                        </select>
 
                         <div
                           className="col-span-1 pl-3 mt-2"
