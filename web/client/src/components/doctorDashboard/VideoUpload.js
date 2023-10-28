@@ -320,14 +320,14 @@ const VideoUpload = () => {
                             }}
                           >
                             <option value="">body part</option>
-                            <option value="neck">Neck</option>
-                            <option value="shoulder">Shoulder</option>
-                            <option value="arm">Arm</option>
-                            <option value="chest">Chest</option>
-                            <option value="elbow">Elbow</option>
-                            <option value="wrist">Wrist</option>
-                            <option value="upperBack">Upper Back</option>
-                            <option value="hip">Hip</option>
+                            <option value="Neck">Neck</option>
+                            <option value="Shoulder">Shoulder</option>
+                            <option value="Arm">Arm</option>
+                            <option value="Chest">Chest</option>
+                            <option value="Elbow">Elbow</option>
+                            <option value="Wrist">Wrist</option>
+                            <option value="Upper Back">Upper Back</option>
+                            <option value="Hip">Hip</option>
                           </select>
 
                           <select
@@ -404,12 +404,12 @@ const VideoUpload = () => {
                             }}
                           >
                             <option value="">body part</option>
-                            <option value="lowerBack">Lower Back</option>
-                            <option value="leg">Leg</option>
-                            <option value="knee">Knee</option>
-                            <option value="thigh">Thigh</option>
-                            <option value="ankle">Ankle</option>
-                            <option value="foot">Foot</option>
+                            <option value="Lower Back">Lower Back</option>
+                            <option value="Leg">Leg</option>
+                            <option value="Knee">Knee</option>
+                            <option value="Thigh">Thigh</option>
+                            <option value="Ankle">Ankle</option>
+                            <option value="Foot">Foot</option>
                           </select>
 
                           <select
