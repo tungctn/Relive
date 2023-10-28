@@ -226,7 +226,10 @@ function App() {
             }
           />
           <Route path="videoUpload" element={<VideoUpload />} />
-          <Route path="addExercise" element={<AddExercise />} />
+          <Route
+            path="addExercise"
+            element={<AddExercise healthID={healthID} />}
+          />
         </Route>
 
         <Route

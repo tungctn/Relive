@@ -46,7 +46,9 @@ const VideoUpload = () => {
 
   const handleToleranceChange = (index, newValue) => {
     const updatedData = [...angles];
-    updatedData[angleIndex].tolerance[index] = Number(newValue);
+    updatedData.map((_, dataIndex) => {
+      updatedData[dataIndex].tolerance[index] = Number(newValue);
+    });
     setAngles(updatedData);
   };
   const [upperproblemlist, setupperproblemlist] = useState([

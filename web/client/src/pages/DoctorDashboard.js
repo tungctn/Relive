@@ -546,7 +546,12 @@ const DoctorDashboard = (props) => {
                           className="h-3 mx-3"
                           alt="addexercise"
                         ></img>
-                        <button className="ml- flex  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary   ">
+                        <button
+                          className="ml- flex  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary"
+                          onClick={() => {
+                            props.setHealthID(props.healthID);
+                          }}
+                        >
                           Add Exercises
                         </button>
                       </div>
