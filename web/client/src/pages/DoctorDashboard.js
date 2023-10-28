@@ -212,9 +212,9 @@ const DoctorDashboard = (props) => {
   };
 
   return (
-    <div className="full-body col-span-10 overflow-y-auto">
-      <div className="body-without-footer   bg-bgprimary ">
-        <div className="main    m-2  ">
+    <div className="full-body col-span-10 h-full">
+      <div className="body-without-footer bg-bgprimary overflow-y-scroll">
+        <div className="main m-2">
           {/* dashboard today start */}
           <div className="">
             <div className="flex justify-between h-12 m-2 bg-bgprimary rounded mt-4 ">
@@ -304,9 +304,7 @@ const DoctorDashboard = (props) => {
             <div className="flex flex-col">
               <div className="m-4 p-4">
                 <div>
-                  <h1 className="font-plusBold text-xl ">
-                    Patient Details
-                  </h1>
+                  <h1 className="font-plusBold text-xl ">Patient Details</h1>
                 </div>
                 <div className="bg-white font-plus p-4 mt-4 px-8 rounded-xl shadow">
                   <div className="flex">
@@ -335,7 +333,7 @@ const DoctorDashboard = (props) => {
                       <h1>{patient.bloodGroup}</h1>
                     </div>
                   </div> */}
-                 {/* <div className="flex">
+                  {/* <div className="flex">
                     <div>
                       <h1>Address : </h1>
                     </div>
@@ -361,7 +359,6 @@ const DoctorDashboard = (props) => {
                       }}
                     />
                   </div>
-                  
                 </div>
                 {Object.keys(problems).length > 0 ? (
                   <div className="bg-white mt-4 font-plus p-4 rounded-xl shadow px-8">
@@ -386,7 +383,9 @@ const DoctorDashboard = (props) => {
                                   });
                                 }}
                               >
-                                <option value="" disabled>body part</option>
+                                <option value="" disabled>
+                                  body part
+                                </option>
                                 <option value="Neck">Neck</option>
                                 <option value="Shoulder">Shoulder</option>
                                 <option value="Arm">Arm</option>
@@ -430,10 +429,11 @@ const DoctorDashboard = (props) => {
                                   });
                                 }}
                               />
-
                             </div>
                           ) : (
-                            <h1 className="py-2">{`${upperProblem.problem} (${levelMapping[upperProblem.level]})`}</h1>
+                            <h1 className="py-2">{`${upperProblem.problem} (${
+                              levelMapping[upperProblem.level]
+                            })`}</h1>
                           )}
                         </div>
                       ))}
@@ -459,7 +459,9 @@ const DoctorDashboard = (props) => {
                                   });
                                 }}
                               >
-                                <option value="" disabled>body part</option>
+                                <option value="" disabled>
+                                  body part
+                                </option>
                                 <option value="Lower Back">Lower Back</option>
                                 <option value="Leg">Leg</option>
                                 <option value="Knee">Knee</option>
@@ -501,10 +503,11 @@ const DoctorDashboard = (props) => {
                                   });
                                 }}
                               />
-                              
                             </div>
                           ) : (
-                            <h1 className="py-2">{`${lowerProblem.problem} (${levelMapping[lowerProblem.level]})`}</h1>
+                            <h1 className="py-2">{`${lowerProblem.problem} (${
+                              levelMapping[lowerProblem.level]
+                            })`}</h1>
                           )}
                         </div>
                       ))}
@@ -533,13 +536,9 @@ const DoctorDashboard = (props) => {
               <div className="flex flex-col">
                 <div className="m-4 p-4 flex justify-between">
                   <div>
-                    <h1 className="font-plusBold text-xl ">
-                      Add Exercises
-                    </h1>
+                    <h1 className="font-plusBold text-xl ">Add Exercises</h1>
                   </div>
-                  <Link
-                    to= "/doctor/addExercise"
-                  >
+                  <Link to="/doctor/addExercise">
                     <div className=" grid col-start-8  h-10 ml-2  bg-secondary  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary  ">
                       <div className="flex py-2 px-2 items-center ">
                         <img
@@ -562,10 +561,8 @@ const DoctorDashboard = (props) => {
             </div>
           )}
 
-          
-
           {Object.keys(patient).length !== 0 ? (
-            <div className="font-plus m-4  ">
+            <div className="font-plus m-4">
               <div className="flex justify-between">
                 <div className="font-plusBold text-xl ml-4">
                   <h1>Checkup History</h1>
@@ -585,9 +582,9 @@ const DoctorDashboard = (props) => {
                   </div>
                 </Link>
               </div>
-              <div className="bg-white m-4 rounded-lg overflow-y-auto">
-                <div className="grid grid-rows-2 p-6 gap-2 shadow overflow-y-auto">
-                  <div className="grid grid-cols-4 font-bold  border-b-2">
+              <div className="bg-white m-4 rounded-lg">
+                <div className="grid grid-rows-2 p-6 gap-2 shadow">
+                  <div className="grid grid-cols-4 font-bold  border-b-2 overflow-y-scroll">
                     <div>
                       <h1>Date</h1>
                     </div>
