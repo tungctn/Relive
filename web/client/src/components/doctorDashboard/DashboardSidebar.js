@@ -22,8 +22,8 @@ const DashboardSidebar = (props) => {
 
   const [Toggle, setToggle] = useState("Dashboard");
   return (
-    <div className="h-screen overflow-y-auto w-screen grid grid-cols-12">
-      <div className="side_bar bg-white shadow col-span-2">
+    <div className="fixed h-[100vh] overflow-y-auto w-screen grid grid-cols-12">
+      <div className="side_bar bg-white shadow-md col-span-2">
         <div className="flex m-2 mt-4 ">
           <div className="logo m-2  ">
             <img src={logo} className="w-16" alt="logo"></img>

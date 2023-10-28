@@ -2,10 +2,13 @@ import React, {useEffect, useState} from "react";
 import icon from "../../assets/img/dashboard/add_prescription_logo.png";
 import fitnessLogo from "../../assets/img/dashboard/fitness.png";
 import { MdAddAlert, MdAlarm, MdWarning } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-function AddExercise () {
+function AddExercise (props) {
 
     const [exercises, setExercises] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchExercises() {
@@ -14,24 +17,37 @@ function AddExercise () {
             setExercises(data.exercises);
             console.log(data.exercises);
         }
+        async function getpatient() {
+            // setLoading(true);
+            if (props.healthID) {
+              const res = await fetch(`/searchpatient/${props.healthID}`);
+              const data = await res.json();
+              console.log({ patient: data.patient });
+      
+              if (data.patient.exercise) {
+                setSelectedExercise(data.patient.exercise);
+              }
+            }
+          }
+          getpatient();
         fetchExercises();
     }, []);
 
-
-
+    
+    
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedProblem, setSelectedProblem] = useState("");
     const [selectedLevel, setSelectedLevel] = useState("");
     const [bodyPart, setBodyPart] = useState("");
-    const [selectedVideo, setSelectedVideo] = useState([]);
+    const [selectedExercise, setSelectedExercise] = useState([]);
 
-    const handleVideoSelect = (exercise) => {
-        if (selectedVideo.includes(exercise)) {
-          setSelectedVideo((prev) => prev.filter((e) => e !== exercise));
+    const handleExerciseSelect = (exercise) => {
+        if (selectedExercise.includes(exercise)) {
+          setSelectedExercise((prev) => prev.filter((e) => e !== exercise));
         } else {
-          setSelectedVideo((prev) => [...prev, exercise]);
+          setSelectedExercise((prev) => [...prev, exercise]);
         }
-        console.log(selectedVideo);
+        console.log(selectedExercise);
       };
     
     const handleSubmit = async () => {
@@ -42,7 +58,7 @@ function AddExercise () {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            exercise: selectedVideo.map((exercise) => exercise._id),
+            exercise: selectedExercise.map((exercise) => exercise._id),
           }),
         });
         const data = await res.json();
@@ -51,6 +67,10 @@ function AddExercise () {
           navigate("/doctor/dashboard");
         }
     };
+
+    useEffect(() => {
+        
+      }, []);
     
     return (
         <div className="flex flex-col ml-6 mt-4 w-[78vw] overflow-y-auto">
@@ -136,12 +156,12 @@ function AddExercise () {
                     </div>
                 </div>
                 
-                {selectedVideo.length !== 0 ? (
+                {selectedExercise.length !== 0 ? (
                     <div className="grid grid-cols-4 gap-4 mt-2">
-                        {selectedVideo.map(exercise => (
+                        {selectedExercise.map(exercise => (
                             <div 
                             key={exercise.id} 
-                            onClick={() => handleVideoSelect(exercise)}
+                            onClick={() => handleExerciseSelect(exercise)}
                             className="mt-4 rounded-xl overflow-hidden cursor-pointer border-4 border-primary shadow-lg focus:border-secondary hover:border-secondary hover:border-6"
                         >
                             <div className="w-full h-[200px] flex justify-center items-center bg-neutral-800">
@@ -153,11 +173,11 @@ function AddExercise () {
                             </div>
                             <h2 className="mx-4 mt-2 font-plusBold text-[1.3rem] text-primary">{exercise.title}</h2>
                             
-                            <div className="flex flex-row gap-1 mx-4 mb-2">
+                            <div className="flex flex-row gap-1 mx-4 mb-2 flex-wrap">
                                 { exercise.upperproblem[0].problem !== "" && exercise.upperproblem.map((problem) => (
                                     // <div className=" flex flex-col gap-1">
 
-                                        <div>
+                                        <div className="flex flex-col gap-1 flex-shrink-0">
                                             <div className="flex flex-row items-center rounded-xl border-primary border-2 w-fit px-2">
                                                 <img
                                                     src={fitnessLogo}
@@ -173,7 +193,7 @@ function AddExercise () {
                                 { exercise.lowerproblem[0].problem !== "" && exercise.lowerproblem.map((problem) => (
                                     // <div className=" flex flex-col gap-1">
 
-                                        <div>
+                                        <div className="flex flex-col gap-1 flex-shrink-0">
                                             <div className="flex flex-row items-center rounded-xl border-primary border-2 w-fit px-2">
                                                 <img
                                                     src={fitnessLogo}
@@ -215,7 +235,7 @@ function AddExercise () {
                     {exercises.map(exercise => (
                         <div 
                             key={exercise.id} 
-                            onClick={() => handleVideoSelect(exercise)}
+                            onClick={() => handleExerciseSelect(exercise)}
                             className=" mt-4 rounded-xl overflow-hidden cursor-pointer border-4 border-primary shadow-lg focus:border-secondary hover:border-secondary hover:border-6"
                         >
                             <div className="w-full h-[200px] flex justify-center items-center bg-neutral-800">
@@ -231,7 +251,7 @@ function AddExercise () {
                             <div className="flex flex-row gap-1 mt-1 mx-4 mb-2 flex-wrap">
                                 { exercise.upperproblem[0].problem !== "" && exercise.upperproblem.map((problem) => (
                                     // <div className=" flex flex-col gap-1">
-                                        <div>
+                                        <div className="flex flex-col gap-1 flex-shrink-0">
                                             <div className="flex flex-row items-center rounded-xl border-primary border-2 px-2">
                                                 <img
                                                     src={fitnessLogo}
