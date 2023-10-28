@@ -1,7 +1,23 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import icon from "../../assets/img/dashboard/add_prescription_logo.png";
+import fitnessLogo from "../../assets/img/dashboard/fitness.png";
 
 function AddExercise () {
+
+    const [exercises, setExercises] = useState([]);
+
+    useEffect(() => {
+        async function fetchExercises() {
+            const res = await fetch("/getallexercise");
+            const data = await res.json();
+            setExercises(data.exercises);
+            console.log(data.exercises);
+        }
+        fetchExercises();
+    }, []);
+
+
+
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedProblem, setSelectedProblem] = useState("");
     const [selectedLevel, setSelectedLevel] = useState("");
@@ -18,7 +34,7 @@ function AddExercise () {
 
     
     return (
-        <div className="flex flex-col ml-6 mt-4">
+        <div className="flex flex-col ml-6 mt-4 w-[78vw] overflow-y-auto">
             <h1 className="text-2xl font-plusBold w-60">Add Exercise</h1>
             <div className="w-[80vw] border-neutral-300 border-b-2">
                 <div className="flex justify-between mt-6 mb-4">
@@ -94,9 +110,16 @@ function AddExercise () {
                     <div className="grid grid-cols-4 gap-4 mt-2">
                         {selectedVideo.map(exercise => (
                             <div key={exercise.id} className="mt-4 rounded-xl overflow-hidden cursor-pointer border-4 border-primary shadow-lg focus:border-secondary hover:border-secondary hover:border-6">
-                                <video src={exercise.videoPath} controls className="w-full border-b-4 border-primary"></video>
+                                <div className="w-full h-[200px] flex justify-center items-center bg-neutral-800">
+                                    <video 
+                                        src={exercise.video} 
+                                        controls 
+                                        className="w-full h-full object-contain border-b-4 border-secondary"
+                                    ></video>
+                                </div>
+                                
                                 <div className="mt-2 mx-4 mb-3 flex flex-col gap-1">
-                                    <h2 className="font-plusBold text-[1.1rem]">Exercise A {exercise.title}</h2>
+                                    <h2 className="font-plusBold text-[1.1rem]">{exercise.title}</h2>
                                     <div>
                                         <div className="flex flex-row items-center rounded-xl border-primary border-2 w-fit px-2">
                                             <img
@@ -123,27 +146,55 @@ function AddExercise () {
             <div className="w-[78vw] flex flex-col mt-6">
                 <h1 className="font-plusBold text-lg">Select Exercises</h1>
                 <div className="grid grid-cols-4 gap-4 mt-2 ">
-                    {[1, 2, 3, 4, 5].map(exercise => (
+                    {exercises.map(exercise => (
                         <div 
                             key={exercise.id} 
                             onClick={() => handleVideoSelect(exercise)}
                             className="mt-4 rounded-xl overflow-hidden cursor-pointer border-4 border-primary shadow-lg focus:border-secondary hover:border-secondary hover:border-6"
                         >
-                            <video src={exercise.videoPath} controls className="w-full border-b-4 border-primary"></video>
-                            <div className="mt-2 mx-4 mb-3 flex flex-col gap-1">
-                                <h2 className="font-plusBold text-[1.1rem]">Exercise A {exercise.title}</h2>
-                                <div>
-                                    <div className="flex flex-row items-center rounded-xl border-primary border-2 w-fit px-2">
-                                        <img
-                                            src={icon}
-                                            className="h-2"
-                                            alt="bodyPartHit"
-                                        >
-                                        </img>
-                                        <h2 className="ml-1 font-plusMedium text-[0.7rem]">Lower Back</h2>
-                                    </div>
-                                </div>
+                            <div className="w-full h-[200px] flex justify-center items-center bg-neutral-800">
+                                <video 
+                                    src={exercise.video} 
+                                    controls 
+                                    className="w-full h-full object-contain border-b-4 border-secondary"
+                                ></video>
                             </div>
+                            <h2 className="mx-4 mt-2 font-plusBold text-[1.3rem] text-primary">{exercise.title}</h2>
+                            <div className="flex flex-row gap-1 mx-4 mb-3">
+                                { exercise.upperproblem[0].problem !== "" && exercise.upperproblem.map((problem) => (
+                                    <div className=" flex flex-col gap-1">
+                                        <h2 className="font-plusBold text-[1.1rem]">{problem.title}</h2>
+                                        <div>
+                                            <div className="flex flex-row items-center rounded-xl border-primary border-2 w-fit px-2">
+                                                <img
+                                                    src={fitnessLogo}
+                                                    className="h-3"
+                                                    alt="bodyPartHit"
+                                                >
+                                                </img>
+                                                <h2 className="ml-1 font-plusMedium text-[0.7rem]">{problem.problem}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                                { exercise.lowerproblem[0].problem !== "" && exercise.lowerproblem.map((problem) => (
+                                    <div className=" flex flex-col gap-1">
+                                        <h2 className="font-plusBold text-[1.1rem]">{problem.title}</h2>
+                                        <div>
+                                            <div className="flex flex-row items-center rounded-xl border-primary border-2 w-fit px-2">
+                                                <img
+                                                    src={fitnessLogo}
+                                                    className="h-3"
+                                                    alt="bodyPartHit"
+                                                >
+                                                </img>
+                                                <h2 className="ml-1 font-plusMedium text-[0.7rem]">{problem.problem}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            
                         </div>
                     ))}
                 </div>
