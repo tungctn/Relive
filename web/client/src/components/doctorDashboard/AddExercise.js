@@ -155,7 +155,7 @@ function AddExercise () {
                             
                             <div className="flex flex-row gap-1 mx-4 mb-2">
                                 { exercise.upperproblem[0].problem !== "" && exercise.upperproblem.map((problem) => (
-                                    <div className=" flex flex-col gap-1">
+                                    // <div className=" flex flex-col gap-1">
 
                                         <div>
                                             <div className="flex flex-row items-center rounded-xl border-primary border-2 w-fit px-2">
@@ -168,10 +168,10 @@ function AddExercise () {
                                                 <h2 className="ml-1 font-plusMedium text-[0.7rem]">{problem.problem}</h2>
                                             </div>
                                         </div>
-                                    </div>
+                                    // </div>
                                 ))}
                                 { exercise.lowerproblem[0].problem !== "" && exercise.lowerproblem.map((problem) => (
-                                    <div className=" flex flex-col gap-1">
+                                    // <div className=" flex flex-col gap-1">
 
                                         <div>
                                             <div className="flex flex-row items-center rounded-xl border-primary border-2 w-fit px-2">
@@ -184,7 +184,7 @@ function AddExercise () {
                                                 <h2 className="ml-1 font-plusMedium text-[0.7rem]">{problem.problem}</h2>
                                             </div>
                                         </div>
-                                    </div>
+                                    // </div>
                                 ))}
                             </div>
                             {exercise.specialCondition !== "" && (
@@ -216,7 +216,7 @@ function AddExercise () {
                         <div 
                             key={exercise.id} 
                             onClick={() => handleVideoSelect(exercise)}
-                            className="mt-4 rounded-xl overflow-hidden cursor-pointer border-4 border-primary shadow-lg focus:border-secondary hover:border-secondary hover:border-6"
+                            className=" mt-4 rounded-xl overflow-hidden cursor-pointer border-4 border-primary shadow-lg focus:border-secondary hover:border-secondary hover:border-6"
                         >
                             <div className="w-full h-[200px] flex justify-center items-center bg-neutral-800">
                                 <video 
@@ -228,12 +228,11 @@ function AddExercise () {
                             <h2 className="mx-4 mt-2 font-plusBold text-[1.3rem] text-primary">{exercise.title}</h2>
                             
                             
-                            <div className="flex flex-row gap-1 mt-1 mx-4 mb-2">
+                            <div className="flex flex-row gap-1 mt-1 mx-4 mb-2 flex-wrap">
                                 { exercise.upperproblem[0].problem !== "" && exercise.upperproblem.map((problem) => (
-                                    <div className=" flex flex-col gap-1">
-
+                                    // <div className=" flex flex-col gap-1">
                                         <div>
-                                            <div className="flex flex-row items-center rounded-xl border-primary border-2 w-fit px-2">
+                                            <div className="flex flex-row items-center rounded-xl border-primary border-2 px-2">
                                                 <img
                                                     src={fitnessLogo}
                                                     className="h-3"
@@ -243,13 +242,13 @@ function AddExercise () {
                                                 <h2 className="ml-1 font-plusMedium text-[0.7rem]">{problem.problem}</h2>
                                             </div>
                                         </div>
-                                    </div>
+                                    // </div>
                                 ))}
                                 { exercise.lowerproblem[0].problem !== "" && exercise.lowerproblem.map((problem) => (
-                                    <div className=" flex flex-col gap-1">
+                                    // <div className=" flex flex-col gap-1">
 
-                                        <div>
-                                            <div className="flex flex-row items-center rounded-xl border-primary border-2 w-fit px-2">
+                                        <div className="flex flex-col gap-1 flex-shrink-0">
+                                            <div className="flex flex-row items-center rounded-xl border-primary border-2 px-2">
                                                 <img
                                                     src={fitnessLogo}
                                                     className="h-3"
@@ -259,7 +258,7 @@ function AddExercise () {
                                                 <h2 className="ml-1 font-plusMedium text-[0.7rem]">{problem.problem}</h2>
                                             </div>
                                         </div>
-                                    </div>
+                                    // </div>
                                 ))}
                             </div>
                             {exercise.specialCondition !== "" && (
