@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import icon from "../../assets/img/dashboard/add_prescription_logo.png";
 import fitnessLogo from "../../assets/img/dashboard/fitness.png";
+
+import { MdAddAlert, MdAlarm, MdWarning } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { data } from "autoprefixer";
@@ -30,33 +32,6 @@ function AddExercise(props) {
   const [selectedProblem, setSelectedProblem] = useState("");
   const [selectedLevel, setSelectedLevel] = useState("");
   const [bodyPart, setBodyPart] = useState("");
-
-  const handleVideoSelect = (exercise) => {
-    if (selectedVideo.includes(exercise)) {
-      setSelectedVideo((prev) => prev.filter((e) => e !== exercise));
-    } else {
-      setSelectedVideo((prev) => [...prev, exercise]);
-    }
-    console.log(selectedVideo);
-  };
-
-  const handleSubmit = async () => {
-    console.log(props.healthID);
-    const res = await fetch(`/updatepatient/${props.healthID}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        exercise: selectedVideo.map((exercise) => exercise._id),
-      }),
-    });
-    const data = await res.json();
-    if (res.status == 200) {
-      toast.success("Thêm bài tập thành công");
-      navigate("/doctor/dashboard");
-    }
-  };
 
   return (
     <div className="flex flex-col ml-6 mt-4 w-[78vw] overflow-y-auto">
@@ -164,13 +139,11 @@ function AddExercise(props) {
                 <h2 className="mx-4 mt-2 font-plusBold text-[1.3rem] text-primary">
                   {exercise.title}
                 </h2>
-                <div className="flex flex-row gap-1 mx-4 mb-3">
+
+                <div className="flex flex-row gap-1 mx-4 mb-2">
                   {exercise.upperproblem[0].problem !== "" &&
                     exercise.upperproblem.map((problem) => (
                       <div className=" flex flex-col gap-1">
-                        <h2 className="font-plusBold text-[1.1rem]">
-                          {problem.title}
-                        </h2>
                         <div>
                           <div className="flex flex-row items-center rounded-xl border-primary border-2 w-fit px-2">
                             <img
@@ -188,9 +161,6 @@ function AddExercise(props) {
                   {exercise.lowerproblem[0].problem !== "" &&
                     exercise.lowerproblem.map((problem) => (
                       <div className=" flex flex-col gap-1">
-                        <h2 className="font-plusBold text-[1.1rem]">
-                          {problem.title}
-                        </h2>
                         <div>
                           <div className="flex flex-row items-center rounded-xl border-primary border-2 w-fit px-2">
                             <img
@@ -206,6 +176,19 @@ function AddExercise(props) {
                       </div>
                     ))}
                 </div>
+                {exercise.specialCondition !== "" && (
+                  <div className=" flex flex-col gap-1 mx-4 mt-1 mb-2">
+                    <div>
+                      <div className="flex flex-row items-center rounded-xl border-[#c73a3a] border-2 w-fit px-2">
+                        <MdWarning className="text-[#c73a3a]" />
+                        <h2 className="ml-1 font-plusMedium text-[0.7rem] text-[#c73a3a]">
+                          {exercise.specialCondition}
+                        </h2>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <div className="mb-4"></div>
               </div>
             ))}
           </div>
@@ -237,13 +220,11 @@ function AddExercise(props) {
               <h2 className="mx-4 mt-2 font-plusBold text-[1.3rem] text-primary">
                 {exercise.title}
               </h2>
-              <div className="flex flex-row gap-1 mx-4 mb-3">
+
+              <div className="flex flex-row gap-1 mt-1 mx-4 mb-2">
                 {exercise.upperproblem[0].problem !== "" &&
                   exercise.upperproblem.map((problem) => (
                     <div className=" flex flex-col gap-1">
-                      <h2 className="font-plusBold text-[1.1rem]">
-                        {problem.title}
-                      </h2>
                       <div>
                         <div className="flex flex-row items-center rounded-xl border-primary border-2 w-fit px-2">
                           <img
@@ -261,9 +242,6 @@ function AddExercise(props) {
                 {exercise.lowerproblem[0].problem !== "" &&
                   exercise.lowerproblem.map((problem) => (
                     <div className=" flex flex-col gap-1">
-                      <h2 className="font-plusBold text-[1.1rem]">
-                        {problem.title}
-                      </h2>
                       <div>
                         <div className="flex flex-row items-center rounded-xl border-primary border-2 w-fit px-2">
                           <img
@@ -279,6 +257,19 @@ function AddExercise(props) {
                     </div>
                   ))}
               </div>
+              {exercise.specialCondition !== "" && (
+                <div className=" flex flex-col gap-1 mx-4 mt-1 mb-2">
+                  <div>
+                    <div className="flex flex-row items-center rounded-xl border-[#c73a3a] border-2 w-fit px-2">
+                      <MdWarning className="text-[#c73a3a]" />
+                      <h2 className="ml-1 font-plusMedium text-[0.7rem] text-[#c73a3a]">
+                        {exercise.specialCondition}
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div className="mb-4"></div>
             </div>
           ))}
         </div>

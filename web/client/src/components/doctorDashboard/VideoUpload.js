@@ -315,6 +315,7 @@ const VideoUpload = () => {
                               value={upperproblemlist.problem}
                               onChange={(e) => {
                                 // console.log(e.target.value);
+
                                 let upperproblemlist1 = [...upperproblemlist];
                                 upperproblemlist1[index].problem =
                                   e.target.value;
