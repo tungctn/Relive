@@ -26,10 +26,10 @@ const exerciseSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    duration: {
+    equipment: {
       type: String,
       default: "",
-    },
+    }
   },
   { timestamps: true }
 );
