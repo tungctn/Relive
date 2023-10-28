@@ -52,10 +52,10 @@ const VideoUpload = () => {
     setAngles(updatedData);
   };
   const [upperproblemlist, setupperproblemlist] = useState([
-    { problem: "", level: "" },
+    { problem: "", startLevel: "", endLevel: "" },
   ]);
   const [lowerproblemlist, setlowerproblemlist] = useState([
-    { problem: "", level: "" },
+    { problem: "", startLevel: "", endLevel: "" },
   ]);
 
   const addupperproblem = () => {
@@ -306,67 +306,102 @@ const VideoUpload = () => {
                       return (
                         <div
                           key={index}
-                          className="grid grid-cols-7 col-span-1"
+                          className="grid grid-cols-1 col-span-1"
                         >
-                          <select
-                            className="font-plus text-sm col-span-3 rounded-lg h-8 pl-2 ml-4 mt-1 border-2 border-neutral-200"
-                            name="level"
-                            value={upperproblemlist.problem}
-                            onChange={(e) => {
-                              // console.log(e.target.value);
-                              let upperproblemlist1 = [...upperproblemlist];
-                              upperproblemlist1[index].problem = e.target.value;
-                              setupperproblemlist(upperproblemlist1);
-                              // let temppatient = { ...patient };
-                              // temppatient.upperProblems = upperproblemlist;
-                            }}
-                          >
-                            <option value="">body part</option>
-                            <option value="neck">Neck</option>
-                            <option value="shoulder">Shoulder</option>
-                            <option value="arm">Arm</option>
-                            <option value="chest">Chest</option>
-                            <option value="elbow">Elbow</option>
-                            <option value="wrist">Wrist</option>
-                            <option value="upperBack">Upper Back</option>
-                            <option value="hip">Hip</option>
-                          </select>
-
-                          <select
-                            className="font-plus text-sm col-span-3 rounded-lg h-8 pl-2 ml-2 mt-1 border-2 border-neutral-200"
-                            name="level"
-                            value={upperproblemlist.level}
-                            onChange={(e) => {
-                              let upperproblemlist1 = [...upperproblemlist];
-                              upperproblemlist1[index].level = e.target.value;
-                              setupperproblemlist(upperproblemlist1);
-                              // let temppatient = { ...patient };
-                              // temppatient.upperProblem = upperproblemlist;
-                              // setPatient(temppatient);
-                            }}
-                          >
-                            <option value="">level of pain</option>
-                            <option value="1">Mild</option>
-                            <option value="2">Moderate</option>
-                            <option value="3">Severe</option>
-                            <option value="4">Intense</option>
-                            <option value="5">Extreme</option>
-                          </select>
-
-                          <div
-                            className="col-span-1 pl-3 mt-2"
-                            onClick={() => {
-                              if (upperproblemlist.length > 1) {
+                          <div className="grid grid-cols-7">
+                            <select
+                              className="font-plus text-sm col-span-7 rounded-lg h-8 pl-2 ml-4 mt-1 border-2 border-neutral-200"
+                              name="level"
+                              value={upperproblemlist.problem}
+                              onChange={(e) => {
+                                // console.log(e.target.value);
                                 let upperproblemlist1 = [...upperproblemlist];
-                                upperproblemlist1.splice(index, 1);
-                                // let temppatient = { ...patient };
-                                // temppatient.upperProblem = upperproblemlist1;
-                                // setPatient(temppatient);
+                                upperproblemlist1[index].problem =
+                                  e.target.value;
                                 setupperproblemlist(upperproblemlist1);
-                              }
-                            }}
-                          >
-                            <img src={minus_logo} alt="" className="h-6 w-6" />
+                                // let temppatient = { ...patient };
+                                // temppatient.upperProblems = upperproblemlist;
+                              }}
+                            >
+                              <option value="">body part</option>
+                              <option value="neck">Neck</option>
+                              <option value="shoulder">Shoulder</option>
+                              <option value="arm">Arm</option>
+                              <option value="chest">Chest</option>
+                              <option value="elbow">Elbow</option>
+                              <option value="wrist">Wrist</option>
+                              <option value="upperBack">Upper Back</option>
+                              <option value="hip">Hip</option>
+                            </select>
+                          </div>
+
+                          {/* start level */}
+                          <div className="grid grid-cols-7">
+                            {/* end level */}
+                            <select
+                              className="font-plus text-sm col-span-3 rounded-lg h-8 pl-2 ml-2 mt-1 border-2 border-neutral-200"
+                              name="level"
+                              value={upperproblemlist.level}
+                              onChange={(e) => {
+                                let upperproblemlist1 = [...upperproblemlist];
+                                upperproblemlist1[index].startLevel =
+                                  e.target.value;
+                                setupperproblemlist(upperproblemlist1);
+                                // let temppatient = { ...patient };
+                                // temppatient.upperProblem = upperproblemlist;
+                                // setPatient(temppatient);
+                              }}
+                            >
+                              <option value="">level of pain</option>
+                              <option value="1">Mild</option>
+                              <option value="2">Moderate</option>
+                              <option value="3">Severe</option>
+                              <option value="4">Intense</option>
+                              <option value="5">Extreme</option>
+                            </select>
+                            <label className="font-plusMedium text-md pl-4 py-2">
+                              to
+                            </label>
+                            <select
+                              className="font-plus text-sm col-span-3 rounded-lg h-8 pl-2 ml-2 mt-1 border-2 border-neutral-200"
+                              name="level"
+                              value={upperproblemlist.level}
+                              onChange={(e) => {
+                                let upperproblemlist1 = [...upperproblemlist];
+                                upperproblemlist1[index].endLevel =
+                                  e.target.value;
+                                setupperproblemlist(upperproblemlist1);
+                                // let temppatient = { ...patient };
+                                // temppatient.upperProblem = upperproblemlist;
+                                // setPatient(temppatient);
+                              }}
+                            >
+                              <option value="">level of pain</option>
+                              <option value="1">Mild</option>
+                              <option value="2">Moderate</option>
+                              <option value="3">Severe</option>
+                              <option value="4">Intense</option>
+                              <option value="5">Extreme</option>
+                            </select>
+                            <div
+                              className="pl-3 mt-2"
+                              onClick={() => {
+                                if (upperproblemlist.length > 1) {
+                                  let upperproblemlist1 = [...upperproblemlist];
+                                  upperproblemlist1.splice(index, 1);
+                                  // let temppatient = { ...patient };
+                                  // temppatient.upperProblem = upperproblemlist1;
+                                  // setPatient(temppatient);
+                                  setupperproblemlist(upperproblemlist1);
+                                }
+                              }}
+                            >
+                              <img
+                                src={minus_logo}
+                                alt=""
+                                className="h-6 w-6"
+                              />
+                            </div>
                           </div>
                         </div>
                       );
@@ -381,7 +416,7 @@ const VideoUpload = () => {
               {isShowLower && (
                 <div className="lg:grid lg:grid-cols-10 gap-2 mt-2 mr-4">
                   <div className="col-span-3">
-                    <label className="font-plus text-md pl-4 grid col-start-1 col-span-3 py-2">
+                    <label className="font-plusMedium text-md pl-4 grid col-start-1 col-span-3 py-2">
                       Lower problem
                     </label>
                   </div>
@@ -390,60 +425,84 @@ const VideoUpload = () => {
                       return (
                         <div
                           key={index}
-                          className="grid grid-cols-7 col-span-1"
+                          className="grid grid-cols-1 col-span-1"
                         >
-                          <select
-                            className="font-plus text-sm col-span-3 rounded-lg h-8 pl-2 ml-4 mt-1 border-2 border-neutral-200"
-                            name="level"
-                            value={lowerproblemlist.problem}
-                            onChange={(e) => {
-                              let lowerproblemlist1 = [...lowerproblemlist];
-                              lowerproblemlist1[index].problem = e.target.value;
-                              setlowerproblemlist(lowerproblemlist1);
-                              // let temppatient = { ...patient };
-                              // temppatient.lowerProblem = lowerproblemlist;
-                              // setPatient(temppatient);
-                            }}
-                          >
-                            <option value="">body part</option>
-                            <option value="lowerBack">Lower Back</option>
-                            <option value="leg">Leg</option>
-                            <option value="knee">Knee</option>
-                            <option value="thigh">Thigh</option>
-                            <option value="ankle">Ankle</option>
-                            <option value="foot">Foot</option>
-                          </select>
+                          {/* Body Part Select */}
+                          <div className="grid grid-cols-7">
+                            <select
+                              className="font-plus text-sm col-span-7 rounded-lg h-8 pl-2 ml-4 mt-1 border-2 border-neutral-200"
+                              name="level"
+                              value={lowerproblemlist.problem}
+                              onChange={(e) => {
+                                let lowerproblemlist1 = [...lowerproblemlist];
+                                lowerproblemlist1[index].problem =
+                                  e.target.value;
+                                setlowerproblemlist(lowerproblemlist1);
+                              }}
+                            >
+                              {/* ...options */}
+                              <option value="">body part</option>
+                              <option value="lowerBack">Lower Back</option>
+                              <option value="leg">Leg</option>
+                              <option value="knee">Knee</option>
+                              <option value="thigh">Thigh</option>
+                              <option value="ankle">Ankle</option>
+                              <option value="foot">Foot</option>
+                            </select>
+                          </div>
 
-                          <select
-                            className="font-plusMedium text-sm col-span-3 rounded-lg h-8 pl-2 ml-2 mt-1 border-2 border-neutral-200"
-                            name="level"
-                            value={lowerproblemlist.level}
-                            onChange={(e) => {
-                              let lowerproblemlist1 = [...lowerproblemlist];
-                              lowerproblemlist1[index].level = e.target.value;
-                              setlowerproblemlist(lowerproblemlist1);
-                              // let temppatient = { ...patient };
-                              // temppatient.lowerProblem = lowerproblemlist;
-                              // setPatient(temppatient);
-                            }}
-                          >
-                            <option value="">level of pain</option>
-                            <option value="1">Mild</option>
-                            <option value="2">Moderate</option>
-                            <option value="3">Severe</option>
-                            <option value="4">Intense</option>
-                            <option value="5">Extreme</option>
-                          </select>
+                          {/* Start Level and End Level Select */}
+                          <div className="grid grid-cols-7">
+                            <select
+                              className="font-plus text-sm col-span-3 rounded-lg h-8 pl-2 ml-2 mt-1 border-2 border-neutral-200"
+                              name="level"
+                              value={lowerproblemlist.level}
+                              onChange={(e) => {
+                                let lowerproblemlist1 = [...lowerproblemlist];
+                                lowerproblemlist1[index].startLevel =
+                                  e.target.value;
+                                setlowerproblemlist(lowerproblemlist1);
+                              }}
+                            >
+                              {/* ...options */}
+                              <option value="">level of pain</option>
+                              <option value="1">Mild</option>
+                              <option value="2">Moderate</option>
+                              <option value="3">Severe</option>
+                              <option value="4">Intense</option>
+                              <option value="5">Extreme</option>
+                            </select>
+                            <label className="font-plusMedium text-md pl-4 py-2">
+                              to
+                            </label>
+                            <select
+                              className="font-plus text-sm col-span-3 rounded-lg h-8 pl-2 ml-2 mt-1 border-2 border-neutral-200"
+                              name="level"
+                              value={lowerproblemlist.level}
+                              onChange={(e) => {
+                                let lowerproblemlist1 = [...lowerproblemlist];
+                                lowerproblemlist1[index].endLevel =
+                                  e.target.value;
+                                setlowerproblemlist(lowerproblemlist1);
+                              }}
+                            >
+                              {/* ...options */}
+                              <option value="">level of pain</option>
+                              <option value="1">Mild</option>
+                              <option value="2">Moderate</option>
+                              <option value="3">Severe</option>
+                              <option value="4">Intense</option>
+                              <option value="5">Extreme</option>
+                            </select>
+                          </div>
 
+                          {/* Minus Logo */}
                           <div
                             className="col-span-1 pl-3 mt-2"
                             onClick={() => {
                               if (lowerproblemlist.length > 1) {
                                 let lowerproblemlist1 = [...lowerproblemlist];
                                 lowerproblemlist1.splice(index, 1);
-                                // let temppatient = { ...patient };
-                                // temppatient.lowerProblems = lowerproblemlist1;
-                                // setPatient(temppatient);
                                 setlowerproblemlist(lowerproblemlist1);
                               }
                             }}
@@ -454,12 +513,12 @@ const VideoUpload = () => {
                       );
                     })}
                   </div>
-
                   <div onClick={addlowerproblem} className="col-span-1 mt-2">
                     <img src={plus_logo} alt="" className="h-6 w-6" />
                   </div>
                 </div>
               )}
+
               <input
                 type="text"
                 placeholder={

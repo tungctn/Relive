@@ -3,9 +3,12 @@ import icon from "../../assets/img/dashboard/add_prescription_logo.png";
 import fitnessLogo from "../../assets/img/dashboard/fitness.png";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { data } from "autoprefixer";
 
 function AddExercise(props) {
   const [exercises, setExercises] = useState([]);
+  const [patient, setPatient] = useState({});
+  const [selectedVideo, setSelectedVideo] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     async function fetchExercises() {
@@ -13,6 +16,13 @@ function AddExercise(props) {
       const data = await res.json();
       setExercises(data.exercises);
     }
+    async function fetchPatient() {
+      const res = await fetch(`/searchpatient/${props.healthID}`);
+      const data = await res.json();
+      //   setPatient(data.patient);
+      setSelectedVideo(data.patient.exercise);
+    }
+    fetchPatient();
     fetchExercises();
   }, []);
 
@@ -20,7 +30,6 @@ function AddExercise(props) {
   const [selectedProblem, setSelectedProblem] = useState("");
   const [selectedLevel, setSelectedLevel] = useState("");
   const [bodyPart, setBodyPart] = useState("");
-  const [selectedVideo, setSelectedVideo] = useState([]);
 
   const handleVideoSelect = (exercise) => {
     if (selectedVideo.includes(exercise)) {
