@@ -278,7 +278,7 @@ const VideoUpload = () => {
                           className="grid grid-cols-7 col-span-1"
                         >
                           <select
-                            className="col-span-3 rounded-lg h-8 pl-2 ml-4 mt-1 border-2 border-neutral-200"
+                            className="font-plus text-sm col-span-3 rounded-lg h-8 pl-2 ml-4 mt-1 border-2 border-neutral-200"
                             name="level"
                             value={upperproblemlist.problem}
                             onChange={(e) => {
@@ -302,7 +302,7 @@ const VideoUpload = () => {
                           </select>
 
                           <select
-                            className="col-span-3 rounded-lg h-8 pl-2 ml-2 mt-1 border-2 border-neutral-200"
+                            className="font-plus text-sm col-span-3 rounded-lg h-8 pl-2 ml-2 mt-1 border-2 border-neutral-200"
                             name="level"
                             value={upperproblemlist.level}
                             onChange={(e) => {
@@ -352,7 +352,7 @@ const VideoUpload = () => {
               {isShowLower && (
                 <div className="lg:grid lg:grid-cols-10 gap-2 mt-2 mr-4">
                   <div className="col-span-3">
-                    <label className="font-plusMedium text-md pl-4 grid col-start-1 col-span-3 py-2">
+                    <label className="font-plus text-md pl-4 grid col-start-1 col-span-3 py-2">
                       Lower problem
                     </label>
                   </div>
@@ -364,7 +364,7 @@ const VideoUpload = () => {
                           className="grid grid-cols-7 col-span-1"
                         >
                           <select
-                            className="col-span-3 rounded-lg h-8 pl-2 ml-4 mt-1 border-2 border-neutral-200"
+                            className="font-plus text-sm col-span-3 rounded-lg h-8 pl-2 ml-4 mt-1 border-2 border-neutral-200"
                             name="level"
                             value={lowerproblemlist.problem}
                             onChange={(e) => {
@@ -386,7 +386,7 @@ const VideoUpload = () => {
                           </select>
 
                           <select
-                            className="col-span-3 rounded-lg h-8 pl-2 ml-2 mt-1 border-2 border-neutral-200"
+                            className="font-plusMedium text-sm col-span-3 rounded-lg h-8 pl-2 ml-2 mt-1 border-2 border-neutral-200"
                             name="level"
                             value={lowerproblemlist.level}
                             onChange={(e) => {

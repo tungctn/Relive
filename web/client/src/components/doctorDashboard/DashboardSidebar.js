@@ -6,6 +6,7 @@ import patient_profile from "../../assets/img/dashboard/patient2_pbl.png";
 import video_upload from "../../assets/img/dashboard/add_doctor.png";
 import logoutimg from "../../assets/img/dashboard/logout.png";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import { MdDashboard, MdUpload } from "react-icons/md";
 import { useState } from "react";
 const DashboardSidebar = (props) => {
   const navigate = useNavigate();
@@ -43,89 +44,31 @@ const DashboardSidebar = (props) => {
           >
             <div className="flex m-2 mt-8 ">
               <div className="w-6 ml-4  ">
-                <img src={dashboard} alt="dashbord"></img>
+                <MdDashboard size={24}/>
               </div>
               <div className="font-plusBold ml-4">
                 <h1>Dashboard</h1>
               </div>
             </div>
           </Link>
-
           <Link
-            to="/doctor/reports"
-            onClick={() => setToggle("Reports")}
-            className={Toggle === "Reports" ? "text-gray-900" : "text-gray-400"}
+            to="/doctor/videoUpload"
+            onClick={() => setToggle("Video_upload")}
+            className={
+              Toggle === "Video_upload" ? "text-gray-900" : "text-gray-400"
+            }
           >
-            <div className="flex m-2 mt-6  ">
-              <div className="w-6 ml-4  ">
-                <img src={reports} alt="report"></img>
+            <div className="flex m-2 mt-6">
+              <div className="w-6 ml-4">
+                <MdUpload size={26}/>
               </div>
-              <div className="font-plusBold ml-4">
-                <h1>Reports</h1>
-              </div>
+              
+              <h1 className="font-plusBold ml-4">Upload Exercise</h1>
             </div>
           </Link>
-
-          <div className="p-4">
-            <h1 className="font-plusBold text-xl mt-4">Main menu</h1>
-            <div className="grid grid-rows-2 gap-4 font-bold font-plus mt-4">
-              <Link
-                to="/doctor/history"
-                onClick={() => setToggle("Patient_history")}
-                className={
-                  Toggle === "Patient_history"
-                    ? "text-gray-900 "
-                    : "text-gray-400"
-                }
-              >
-                <div className="flex p-2">
-                  <img
-                    src={patient_history}
-                    className="w-6"
-                    alt="pat-history"
-                  ></img>
-                  <h1 className="ml-4">Patient History</h1>
-                </div>
-              </Link>
-              <Link
-                to="/doctor/profile"
-                onClick={() => setToggle("Patient_profile")}
-                className={
-                  Toggle === "Patient_profile"
-                    ? "text-gray-900"
-                    : "text-gray-400"
-                }
-              >
-                <div className="flex p-2">
-                  <img
-                    src={patient_profile}
-                    className="w-6"
-                    alt="profile"
-                  ></img>
-                  <h1 className="ml-4">Doctor Profile</h1>
-                </div>
-              </Link>
-              <Link
-                to="/doctor/videoUpload"
-                onClick={() => setToggle("Video_upload")}
-                className={
-                  Toggle === "Video_upload" ? "text-gray-900" : "text-gray-400"
-                }
-              >
-                <div className="flex p-2">
-                  <img
-                    src={video_upload}
-                    className="w-6"
-                    alt="video_upload"
-                  ></img>
-                  <h1 className="ml-4">Upload Exercise</h1>
-                </div>
-              </Link>
-            </div>
-          </div>
         </nav>
 
-        <div className=" mx-auto mt-56 py-2    bg-secondary  rounded-xl font-plusBold  shadow-sm hover:bg-bgsecondary w-2/5  ">
+        <div className=" mx-auto my-[230%] py-2  flex justify-center  bg-secondary  rounded-xl font-plusBold  shadow-sm hover:bg-bgsecondary w-4/5  ">
           <button className="flex items-center" onClick={logout}>
             <img src={logoutimg} className="h-4 px-2 " alt="logout"></img>Logout
           </button>
