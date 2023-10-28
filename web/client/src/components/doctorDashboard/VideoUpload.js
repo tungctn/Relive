@@ -195,7 +195,7 @@ const VideoUpload = () => {
   };
 
   return (
-    <div className="w-[1100px] mx-[3vw] flex flex-col">
+    <div className="w-[1200px] mx-[3vw] flex flex-col">
       <h1 className="font-plusBold text-2xl mt-4">Video Upload</h1>
       <div className="overflow-y-auto mt-6">
         <div className="flex">
@@ -489,8 +489,8 @@ const VideoUpload = () => {
 
         <div className="w-[78vw] border border-neutral-300 my-4"></div>
 
-        <div className="flex">
-          <div className="w-[45%]">
+        <div className="flex min-h-full">
+          <div className="w-[45%] overflow-y-auto">
             <h1 className="text-xl font-plusBold mb-4">{`Pose image (${images.length})`}</h1>
             {isLoadingImages ? (
               // <div>Loading pose images...</div>

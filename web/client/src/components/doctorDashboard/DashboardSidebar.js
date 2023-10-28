@@ -22,7 +22,7 @@ const DashboardSidebar = (props) => {
 
   const [Toggle, setToggle] = useState("Dashboard");
   return (
-    <div className="h-screen overflow-y-hidden w-screen grid grid-cols-12">
+    <div className="h-screen overflow-y-auto w-screen grid grid-cols-12">
       <div className="side_bar bg-white shadow col-span-2">
         <div className="flex m-2 mt-4 ">
           <div className="logo m-2  ">
@@ -44,7 +44,7 @@ const DashboardSidebar = (props) => {
           >
             <div className="flex m-2 mt-8 ">
               <div className="w-6 ml-4  ">
-                <MdDashboard size={24}/>
+                <MdDashboard size={24} />
               </div>
               <div className="font-plusBold ml-4">
                 <h1>Dashboard</h1>
@@ -60,9 +60,9 @@ const DashboardSidebar = (props) => {
           >
             <div className="flex m-2 mt-6">
               <div className="w-6 ml-4">
-                <MdUpload size={26}/>
+                <MdUpload size={26} />
               </div>
-              
+
               <h1 className="font-plusBold ml-4">Upload Exercise</h1>
             </div>
           </Link>
