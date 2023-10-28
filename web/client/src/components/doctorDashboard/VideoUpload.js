@@ -21,6 +21,8 @@ const VideoUpload = () => {
   const [videoSrc, setVideoSrc] = useState(null);
   const [title, setTitle] = useState("");
   const [specialCondition, setSpecialCondition] = useState("");
+  const [equipment, setEquipment] = useState("");
+  const [description, setDescription] = useState("");
   const fileInputRef = useRef(null);
   const [isShowUpper, setIsShowUpper] = useState(false);
   const [isShowLower, setIsShowLower] = useState(false);
@@ -151,6 +153,8 @@ const VideoUpload = () => {
       upperproblemlist,
       lowerproblemlist,
       images,
+      equipment,
+      description,
       angles: angles,
     });
     const res = await fetch("/addexercise", {
@@ -166,6 +170,8 @@ const VideoUpload = () => {
         lowerproblem: lowerproblemlist,
         image: images,
         angles,
+        equipment: equipment,
+        description: description,
       }),
     });
     const data = await res.json();
@@ -191,7 +197,7 @@ const VideoUpload = () => {
             <h1 className="text-xl font-plusBold">Add Exercise</h1>
           </div>
           <div className="w-[50%]">
-            <h1 className="text-xl font-plusBold">Disease</h1>
+            <h1 className="text-xl font-plusBold">Information</h1>
           </div>
         </div>
         <input
@@ -203,7 +209,7 @@ const VideoUpload = () => {
         />
         <div className="flex">
           <div
-            className="mt-4 w-[45%] h-[300px] border-2 border-dashed border-gray-400 relative flex justify-center items-center mb-4"
+            className="mt-4 w-[45%] h-[45vh] border-2 border-dashed border-gray-400 relative flex justify-center items-center mb-4"
             onDragOver={handleDragOver}
             onDrop={handleDrop}
             onClick={handleClick}
@@ -431,13 +437,28 @@ const VideoUpload = () => {
                   </div>
                 </div>
               )}
-
               <input
                 type="text"
-                placeholder="Special Condition"
+                placeholder={"Necessary Equipment (Example: chair, dumbbell, etc.)"}
+                value={equipment}
+                onChange={(e) => setEquipment(e.target.value)}
+                className="border-2 px-4 py-2 w-full mt-4 rounded-lg font-plusMedium"
+              />
+              <input
+                type="text"
+                placeholder={"Special Condition"}
                 value={specialCondition}
                 onChange={(e) => setSpecialCondition(e.target.value)}
                 className="border-2 px-4 py-2 w-full mt-4 rounded-lg font-plusMedium"
+              />
+              <textarea 
+                placeholder="Describe the exercise (Example:
+                - First, stand straight and raise arms horizontally to your shoulders
+                - Second, bend your elbows and raise your hands to your head
+                - Third, return to the original position)"
+                className="border-2 px-4 py-2 w-full mt-4 h-[18vh] rounded-lg font-plusMedium"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
           </div>
@@ -481,15 +502,15 @@ const VideoUpload = () => {
             )}
           </div>
           <div className="w-[5%]"></div>
-          <div className="w-2/5">
+          <div className="w-[40%]">
             <h1 className="text-xl font-plusBold ">Angle table</h1>
-            <table className="w-full border-collapse border border-gray-400 mt-4 font-plus">
+            <table className="w-[100%] border-collapse border border-gray-400 mt-4 font-plus">
               <thead>
                 <tr className="bg-slate-200">
                   <th className="border border-gray-400 p-2">Sel.</th>
                   <th className="border border-gray-400 p-2">Body part</th>
                   <th className="border border-gray-400 p-2">Angle</th>
-                  <th className="border border-gray-400 p-2">Tolerance (%)</th>
+                  <th className="border border-gray-400 p-2">Tol (%)</th>
                 </tr>
               </thead>
               <tbody className="font-plus">
@@ -498,7 +519,7 @@ const VideoUpload = () => {
                     if (item != "tolerance" && item != "isCheck")
                       return (
                         <tr key={index}>
-                          <td className="border border-gray-400 p-2">
+                          <td className="border border-gray-400 py-2 px-4">
                             <input
                               type="checkbox"
                               checked={angles[angleIndex].isCheck[index]}
@@ -517,14 +538,14 @@ const VideoUpload = () => {
                           <td className="border border-gray-400 p-2">
                             {angles[angleIndex][item].toFixed(2)}
                           </td>
-                          <td className="border border-gray-400 p-2">
+                          <td className="border border-gray-300 p-2 flex justify-center">
                             <input
                               type="number"
                               value={angles[angleIndex].tolerance[index]}
                               onChange={(e) =>
                                 handleToleranceChange(index, e.target.value)
                               }
-                              className="border-2 p-2 w-full"
+                              className="border-2 p-2 w-[5vw]"
                             />
                           </td>
                         </tr>
