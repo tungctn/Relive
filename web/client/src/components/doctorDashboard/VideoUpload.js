@@ -531,12 +531,12 @@ const VideoUpload = () => {
         </div>
         <div className="w-[10%]"></div>
       </div>
-      <div className="flex justify-center">
+      <div className="fixed bottom-0 right-0 mb-6 mr-10">
         <div
-          className="items-center grid col-start-8 h-10 bg-secondary rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary w-[100px] my-5"
+          className="items-center px-10 py-2 bg-secondary rounded-lg font-plusBold text-lg shadow-sm hover:bg-bgsecondary"
           onClick={handleSubmit}
         >
-          <div className="flex py-2 px-4 items-center ">
+          <div className="flex px-4 items-center ">
             <button className="ml-2 flex  rounded-lg font-semibold font-plus shadow-sm hover:bg-bgsecondary">
               Submit
             </button>
@@ -544,6 +544,7 @@ const VideoUpload = () => {
         </div>
       </div>
     </div>
+  </div>
   );
 };
 

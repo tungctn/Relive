@@ -22,6 +22,14 @@ const exerciseSchema = new mongoose.Schema(
     upperproblem: [],
     lowerproblem: [],
     angles: [],
+    description: {
+      type: String,
+      default: "",
+    },
+    duration: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );
