@@ -4,7 +4,7 @@ const Report = require("../models/report");
 module.exports.search_patient = async (req, res) => {
   const healthID = req.params.healthID;
   try {
-    const patient = await Patient.findOne({ healthID });
+    const patient = await Patient.findOne({ healthID }).populate("exercise");
     const report = await Report.find({ patient: patient?._id })
       .populate("doctor")
       .populate("patient");

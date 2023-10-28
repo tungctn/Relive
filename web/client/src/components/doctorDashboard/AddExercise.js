@@ -1,83 +1,99 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import icon from "../../assets/img/dashboard/add_prescription_logo.png";
 import fitnessLogo from "../../assets/img/dashboard/fitness.png";
-import { MdAddAlert, MdAlarm, MdWarning } from "react-icons/md";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-function AddExercise () {
-
-    const [exercises, setExercises] = useState([]);
-
-    useEffect(() => {
-        async function fetchExercises() {
-            const res = await fetch("/getallexercise");
-            const data = await res.json();
-            setExercises(data.exercises);
-            console.log(data.exercises);
-        }
-        fetchExercises();
-    }, []);
-
-
-
-    const [searchTerm, setSearchTerm] = useState("");
-    const [selectedProblem, setSelectedProblem] = useState("");
-    const [selectedLevel, setSelectedLevel] = useState("");
-    const [bodyPart, setBodyPart] = useState("");
-    const [selectedVideo, setSelectedVideo] = useState([]);
-
-    const handleVideoSelect = (exercise) => {
-        if (selectedVideo.includes(exercise)) {
-            setSelectedVideo(prev => prev.filter(e => e !== exercise));
-        } else {
-            setSelectedVideo(prev => [...prev, exercise]);
-        }
-    };
-
-    const handleSubmit = async () => {
-
+function AddExercise(props) {
+  const [exercises, setExercises] = useState([]);
+  const navigate = useNavigate();
+  useEffect(() => {
+    async function fetchExercises() {
+      const res = await fetch("/getallexercise");
+      const data = await res.json();
+      setExercises(data.exercises);
     }
-    
-    return (
-        <div className="flex flex-col ml-6 mt-4 w-[78vw] overflow-y-auto">
-            <h1 className="text-2xl font-plusBold w-60">Add Exercise</h1>
-            <div className="w-[80vw] border-neutral-300 border-b-2">
-                <div className="flex justify-between mt-6 mb-4">
-                    <input 
-                        type="text"
-                        placeholder="Search"
-                        value={searchTerm}
-                        onChange={e => setSearchTerm(e.target.value)}
-                        className="flex-grow rounded-lg font-plusMedium text-md px-4 py-2 border border-neutral-300 w-[32rem] focus:outline-none"
-                    />
-                    <select
-                        value={bodyPart}
-                        onChange={e => setBodyPart(e.target.value)}
-                        className="w-76 rounded-lg ml-4 font-plusMedium text-md py-2 px-4 border border-solid border-neutral-300 focus:outline-none"
-                    >
-                        <option value="" disabled>body area</option>
-                        <option value="Upper Body">Upper Body</option>
-                        <option value="Lower Body">Lower Body</option>
-                    </select>
-                    <select
-                        value={selectedProblem}
-                        onChange={e => setSelectedProblem(e.target.value)}
-                        disabled={!bodyPart}
-                        className="w-76 rounded-lg ml-4 font-plusMedium text-md py-2 px-4 border border-solid border-neutral-300 focus:outline-none"
-                    >
-                        <option value="" disabled>body part</option>
+    fetchExercises();
+  }, []);
 
-                        {bodyPart === "Upper Body" && (
-                        <>
-                            <option value="Neck">Neck</option>
-                            <option value="Shoulder">Shoulder</option>
-                            <option value="Arm">Arm</option>
-                            <option value="Chest">Chest</option>
-                            <option value="Elbow">Elbow</option>
-                            <option value="Wrist">Wrist</option>
-                            <option value="Upper Back">Upper Back</option>
-                            <option value="Hip">Hip</option>
-                        </>
-                        )}
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedProblem, setSelectedProblem] = useState("");
+  const [selectedLevel, setSelectedLevel] = useState("");
+  const [bodyPart, setBodyPart] = useState("");
+  const [selectedVideo, setSelectedVideo] = useState([]);
+
+  const handleVideoSelect = (exercise) => {
+    if (selectedVideo.includes(exercise)) {
+      setSelectedVideo((prev) => prev.filter((e) => e !== exercise));
+    } else {
+      setSelectedVideo((prev) => [...prev, exercise]);
+    }
+    console.log(selectedVideo);
+  };
+
+  const handleSubmit = async () => {
+    console.log(props.healthID);
+    const res = await fetch(`/updatepatient/${props.healthID}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        exercise: selectedVideo.map((exercise) => exercise._id),
+      }),
+    });
+    const data = await res.json();
+    if (res.status == 200) {
+      toast.success("Thêm bài tập thành công");
+      navigate("/doctor/dashboard");
+    }
+  };
+
+  return (
+    <div className="flex flex-col ml-6 mt-4 w-[78vw] overflow-y-auto">
+      <h1 className="text-2xl font-plusBold w-60">Add Exercise</h1>
+      <div className="w-[80vw] border-neutral-300 border-b-2">
+        <div className="flex justify-between mt-6 mb-4">
+          <input
+            type="text"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="flex-grow rounded-lg font-plusMedium text-md px-4 py-2 border border-neutral-300 w-[32rem] focus:outline-none"
+          />
+          <select
+            value={bodyPart}
+            onChange={(e) => setBodyPart(e.target.value)}
+            className="w-76 rounded-lg ml-4 font-plusMedium text-md py-2 px-4 border border-solid border-neutral-300 focus:outline-none"
+          >
+            <option value="" disabled>
+              body area
+            </option>
+            <option value="Upper Body">Upper Body</option>
+            <option value="Lower Body">Lower Body</option>
+          </select>
+          <select
+            value={selectedProblem}
+            onChange={(e) => setSelectedProblem(e.target.value)}
+            disabled={!bodyPart}
+            className="w-76 rounded-lg ml-4 font-plusMedium text-md py-2 px-4 border border-solid border-neutral-300 focus:outline-none"
+          >
+            <option value="" disabled>
+              body part
+            </option>
+
+            {bodyPart === "Upper Body" && (
+              <>
+                <option value="Neck">Neck</option>
+                <option value="Shoulder">Shoulder</option>
+                <option value="Arm">Arm</option>
+                <option value="Chest">Chest</option>
+                <option value="Elbow">Elbow</option>
+                <option value="Wrist">Wrist</option>
+                <option value="Upper Back">Upper Back</option>
+                <option value="Hip">Hip</option>
+              </>
+            )}
 
                         {bodyPart === "Lower Body" && (
                         <>

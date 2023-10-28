@@ -35,3 +35,19 @@ module.exports.get_all_doctor = async (req, res) => {
   const doctors = await Doctor.find({});
   res.status(200).json({ doctors });
 };
+
+module.exports.update_patient = async (req, res) => {
+  const patientID = req.params.patientID;
+  const patient = await Patient.findOneAndUpdate(
+    {
+      healthID: patientID,
+    },
+    {
+      ...req.body,
+    },
+    {
+      new: true,
+    }
+  );
+  res.status(200).json({ patient });
+};
