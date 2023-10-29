@@ -98,11 +98,11 @@ const AddNewDiagnosis = (props) => {
       }
       setDoctor(data.doctor);
       const tempprescription = { ...prescription };
-      tempprescription.doctor = `${doctor.name.firstName} ${doctor.name.middleName} ${doctor.name.surName}`;
-      tempprescription.hospital.name = doctor.org;
-      tempprescription.hospital.address = `${doctor.orgAddress.building}, ${doctor.orgAddress.city}, ${doctor.orgAddress.taluka}, ${doctor.orgAddress.district}, ${doctor.orgAddress.state}- ${doctor.orgAddress.pincode}`;
-      tempprescription.doctormobile = doctor.mobile;
-      tempprescription.hospital.mobile = doctor.orgNumber;
+      tempprescription.doctor = `${doctor?.name?.firstName} ${doctor?.name?.middleName} ${doctor?.name?.surName}`;
+      tempprescription.hospital.name = doctor?.org;
+      tempprescription.hospital.address = `${doctor?.orgAddress?.building}, ${doctor?.orgAddress?.city}, ${doctor?.orgAddress?.taluka}, ${doctor?.orgAddress?.district}, ${doctor?.orgAddress?.state}- ${doctor?.orgAddress?.pincode}`;
+      tempprescription.doctormobile = doctor?.mobile;
+      tempprescription.hospital.mobile = doctor?.orgNumber;
       setPrescription(tempprescription);
     }
     getDoctor();

@@ -3,6 +3,7 @@ import reports from "../assets/img/dashboard/report2_pbl.png";
 import search from "../assets/img/dashboard/search2.png";
 import add_pre_logo from "../assets/img/dashboard/add_prescription_logo.png";
 import eye from "../assets/img/dashboard/eye.png";
+import fitnessLogo from "../assets/img/dashboard/fitness.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ReactLoading from "react-loading";
@@ -212,7 +213,7 @@ const DoctorDashboard = (props) => {
   };
 
   return (
-    <div className="full-body col-span-10 h-full">
+    <div className="full-body col-span-10 h-full ">
       <div className="body-without-footer bg-bgprimary overflow-y-scroll">
         <div className="main m-2">
           {/* dashboard today start */}
@@ -558,6 +559,69 @@ const DoctorDashboard = (props) => {
                     </div>
                   </Link>
                 </div>
+                {patient.exercise && patient.exercise.length > 0 ? (
+                  <div className="grid grid-cols-4 gap-4 mx-8">
+                    {patient.exercise.map(exercise => (
+                      <div 
+                          key={exercise.id} 
+                          onClick={() => {}}
+                          className=" rounded-xl overflow-hidden cursor-pointer border-2 border-primary shadow-lg"
+                      >
+                          <div className="w-full h-[200px] flex justify-center items-center bg-neutral-800">
+                              <video 
+                                  src={exercise.video} 
+                                  controls 
+                                  className="w-full h-full object-contain border-b-2 border-primary"
+                              ></video>
+                          </div>
+                          <h2 className="mx-4 mt-2 font-plusBold text-[1.3rem] text-primary">{exercise.title}</h2>
+                          
+                          <div className="flex flex-row gap-1 mt-1 mx-4 mb-2 flex-wrap">
+                              { exercise.upperproblem[0].problem !== "" && exercise.upperproblem.map((problem) => (
+                                      <div className="flex flex-col gap-1 flex-shrink-0">
+                                          <div className="flex flex-row items-center rounded-xl border-primary border-2 w-fit px-2">
+                                              <img
+                                                  src={fitnessLogo}
+                                                  className="h-3"
+                                                  alt="bodyPartHit"
+                                              >
+                                              </img>
+                                              <h2 className="ml-1 font-plusMedium text-[0.7rem]">{problem.problem}</h2>
+                                          </div>
+                                      </div>
+                              ))}
+                              { exercise.lowerproblem[0].problem !== "" && exercise.lowerproblem.map((problem) => (
+                                      <div className="flex flex-col gap-1 flex-shrink-0">
+                                          <div className="flex flex-row items-center rounded-xl border-primary border-2 w-fit px-2">
+                                              <img
+                                                  src={fitnessLogo}
+                                                  className="h-3"
+                                                  alt="bodyPartHit"
+                                              >
+                                              </img>
+                                              <h2 className="ml-1 font-plusMedium text-[0.7rem]">{problem.problem}</h2>
+                                          </div>
+                                      </div>
+                                  // </div>
+                              ))}
+                          </div>
+                          {exercise.specialCondition !== "" && (
+                              <div className=" flex flex-col gap-1 mx-4 mt-1 mb-2">
+                              <div>
+                                  <div className="flex flex-row items-center rounded-xl border-[#c73a3a] border-2 w-fit px-2">
+                                      <MdWarning className="text-[#c73a3a]"/>
+                                      <h2 className="ml-1 font-plusMedium text-[0.7rem] text-[#c73a3a]">{exercise.specialCondition}</h2>
+                                  </div>
+                              </div>
+                          </div>
+                          )}
+                          <div className="mb-4"></div>
+                        </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div></div>
+                )}
               </div>
             </div>
           ) : (
@@ -568,7 +632,7 @@ const DoctorDashboard = (props) => {
 
           {Object.keys(patient).length !== 0 ? (
             <div className="font-plus m-4">
-              <div className="flex justify-between">
+              <div className="flex justify-between mt-10">
                 <div className="font-plusBold text-xl ml-4">
                   <h1>Checkup History</h1>
                 </div>
