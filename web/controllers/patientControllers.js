@@ -19,7 +19,7 @@ module.exports.get_patient = async (req, res) => {
   res.status(200).json({ patient });
 };
 
-module.exports.get_patient_id = async (req, res) => {
+module.exports. get_patient_id = async (req, res) => {
   let petientID = req.params.patientID;
   const patient = await Patient.findOne({ _id: petientID }).populate(
     "exercise"
