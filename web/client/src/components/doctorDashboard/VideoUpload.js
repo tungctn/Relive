@@ -80,58 +80,100 @@ const VideoUpload = () => {
     handleFile(file);
   };
 
-  const uploadVideo = (file) => {
+  const uploadVideo = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
 
-    fetch("http://117.1.29.174:4000/upload-video", {
+    const response = await fetch("http://117.1.29.174:4000/upload-video", {
       method: "POST",
       body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Video uploaded successfully. URL:", data.videoUrl);
-        // setVideoSrc(data.videoUrl);
-        setIsLoadingImages(true);
-        fetch(
-          `http://117.1.29.174:8000/landmark-prediction/${data.filePath}?o=${data.fileOutput}`,
-          {
-            method: "GET",
-          }
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(
-              data.angles.map((angle) => {
-                return {
-                  ...angle,
-                  tolerance: Object.keys(angle).map((_) => 10),
-                  isCheck: Object.keys(angle).map((_) => false),
-                };
-              })
-            );
-            setImages(data.images);
-            setAngles(
-              data.angles.map((angle) => {
-                return {
-                  ...angle,
-                  tolerance: Object.keys(angle).map((_) => 10),
-                  isCheck: Object.keys(angle).map((_) => false),
-                };
-              })
-            );
-            console.log(
-              `http://117.1.29.174:8000/file/${data.output_video_path}`
-            );
-            setVideoSrc(
-              `http://117.1.29.174:8000/file/${data.output_video_path}`
-            );
-            setIsLoadingImages(false);
-          });
-      })
-      .catch((error) => {
-        console.error("Error uploading video:", error);
-      });
+    });
+    const data = await response.json();
+    if (response.status == 200) {
+      setIsLoadingImages(true);
+      console.log("Video uploaded successfully. URL:", data.videoUrl);
+      // setVideoSrc(data.videoUrl);
+      const responseLandmark = await fetch(
+        `http://117.1.29.174:8000/landmark-prediction/${data.filePath}?o=${data.fileOutput}`,
+        {
+          method: "GET",
+        }
+      );
+      const dataLandmark = await responseLandmark.json();
+      console.log(
+        dataLandmark.angles.map((angle) => {
+          return {
+            ...angle,
+            tolerance: Object.keys(angle).map((_) => 10),
+            isCheck: Object.keys(angle).map((_) => false),
+          };
+        })
+      );
+      if (responseLandmark.status == 200) {
+        setImages(dataLandmark.images);
+        setAngles(
+          dataLandmark.angles.map((angle) => {
+            return {
+              ...angle,
+              tolerance: Object.keys(angle).map((_) => 10),
+              isCheck: Object.keys(angle).map((_) => false),
+            };
+          })
+        );
+        console.log(`http://117.1.29.174:8000/file/${dataLandmark.output_video_path}`);
+        setVideoSrc(`http://117.1.29.174:8000/file/${dataLandmark.output_video_path}`);
+        setIsLoadingImages(false);
+      } else {
+        toast.error("Lỗi khi xử lý video");
+      }
+    } else {
+      toast.error("Lỗi khi upload video");
+    }
+
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   console.log("Video uploaded successfully. URL:", data.videoUrl);
+    //   // setVideoSrc(data.videoUrl);
+    //   setIsLoadingImages(true);
+    //   fetch(
+    //     `http://117.1.29.174:8000/landmark-prediction/${data.filePath}?o=${data.fileOutput}`,
+    //     {
+    //       method: "GET",
+    //     }
+    //   )
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       console.log(
+    //         data.angles.map((angle) => {
+    //           return {
+    //             ...angle,
+    //             tolerance: Object.keys(angle).map((_) => 10),
+    //             isCheck: Object.keys(angle).map((_) => false),
+    //           };
+    //         })
+    //       );
+    //       setImages(data.images);
+    //       setAngles(
+    //         data.angles.map((angle) => {
+    //           return {
+    //             ...angle,
+    //             tolerance: Object.keys(angle).map((_) => 10),
+    //             isCheck: Object.keys(angle).map((_) => false),
+    //           };
+    //         })
+    //       );
+    //       console.log(
+    //         `http://117.1.29.174:8000/file/${data.output_video_path}`
+    //       );
+    //       setVideoSrc(
+    //         `http://117.1.29.174:8000/file/${data.output_video_path}`
+    //       );
+    //       setIsLoadingImages(false);
+    //     });
+    // })
+    // .catch((error) => {
+    //   console.error("Error uploading video:", error);
+    // });
   };
 
   const handleFile = (file) => {
