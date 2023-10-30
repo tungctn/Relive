@@ -31,7 +31,7 @@ jobs:
           npm install
       - run: |
           cd ./web/client
-          npm install
+          npm install --force
           touch .env
           echo "${{ secrets.FRONT_ENV_FILE }}" > .env
 
