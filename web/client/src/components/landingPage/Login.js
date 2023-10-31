@@ -5,7 +5,7 @@ import ReactLoading from "react-loading";
 export default function Login(props) {
   const navigate = useNavigate();
   const [Loading, setLoading] = useState(false);
-  const [Toggle, setToggle] = useState("Patient");
+  const [Toggle, setToggle] = useState("Doctor");
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -22,9 +22,9 @@ export default function Login(props) {
       if (data.msg === "Admin Login Found") {
         navigate("/admin/dashboard");
       }
-      if (data.msg === "Patient Login Found") {
-        navigate("/patient/dashboard");
-      }
+      // if (data.msg === "Patient Login Found") {
+      //   navigate("/patient/dashboard");
+      // }
     };
     auth();
   });
@@ -107,9 +107,9 @@ export default function Login(props) {
   const handleLogin = async (e) => {
     e.preventDefault();
     switch (Toggle) {
-      case "Patient":
-        handlePatientLogin(username, password);
-        break;
+      // case "Patient":
+      //   handlePatientLogin(username, password);
+      //   break;
       case "Doctor":
         handleDoctorAdminLogin(username, password, "/login/doctor");
         break;
@@ -126,7 +126,7 @@ export default function Login(props) {
         Login
       </h1>
       <div className="flex w-fit justify-between rounded">
-        <button
+        {/* <button
           className={
             Toggle === "Patient"
               ? "py-2 px-8 mr-2 text-lg font-plusBold text-white cursor-pointer rounded-xl bg-primary"
@@ -141,7 +141,7 @@ export default function Login(props) {
           }}
         >
           Patient
-        </button>
+        </button> */}
         <button
           onClick={() => {
             setToggle("Doctor");
