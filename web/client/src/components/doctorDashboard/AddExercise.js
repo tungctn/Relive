@@ -10,12 +10,6 @@ function AddExercise(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function fetchExercises() {
-      const res = await fetch("/getallexercise");
-      const data = await res.json();
-      setExercises(data.exercises);
-      console.log(data.exercises);
-    }
     async function getpatient() {
       // setLoading(true);
       if (props.healthID) {
@@ -26,10 +20,23 @@ function AddExercise(props) {
         if (data.patient.exercise) {
           setSelectedExercise(data.patient.exercise);
         }
+        return data.patient.exercise;
+      } else {
+        return [];
       }
     }
-    getpatient();
-    fetchExercises();
+    async function fetchExercises(patientExercise) {
+      const patientExerciseId = patientExercise.map((exercise) => exercise._id);
+      const res = await fetch("/getallexercise");
+      const data = await res.json();
+      setExercises(
+        data.exercises.filter(
+          (exercise) => !patientExerciseId.includes(exercise._id)
+        )
+      );
+      console.log(data.exercises);
+    }
+    getpatient().then((data) => fetchExercises(data));
   }, []);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -178,8 +185,8 @@ function AddExercise(props) {
                   {exercise.upperproblem[0].problem !== "" &&
                     exercise.upperproblem.map((problem) => (
                       // <div className=" flex flex-col gap-1">
-                      <div>
-                        <div className="flex flex-col gap-1 flex-shrink-0">
+                      <div className="flex flex-col gap-1 flex-shrink-0">
+                        <div className="flex flex-row items-center rounded-xl border-primary border-2 px-2">
                           <img
                             src={fitnessLogo}
                             className="h-3"
@@ -188,28 +195,24 @@ function AddExercise(props) {
                           <h2 className="ml-1 font-plusMedium text-[0.7rem]">
                             {problem.problem}
                           </h2>
-                          {/* </div> */}
                         </div>
                       </div>
                       // </div>
                     ))}
                   {exercise.lowerproblem[0].problem !== "" &&
                     exercise.lowerproblem.map((problem) => (
-                      <div className=" flex flex-col gap-1">
-                        <div>
-                          <div className="flex flex-col gap-1 flex-shrink-0">
-                            <img
-                              src={fitnessLogo}
-                              className="h-3"
-                              alt="bodyPartHit"
-                            ></img>
-                            <h2 className="ml-1 font-plusMedium text-[0.7rem]">
-                              {problem.problem}
-                            </h2>
-                          </div>
+                      <div className="flex flex-col gap-1 flex-shrink-0">
+                        <div className="flex flex-row items-center rounded-xl border-primary border-2 px-2">
+                          <img
+                            src={fitnessLogo}
+                            className="h-3"
+                            alt="bodyPartHit"
+                          ></img>
+                          <h2 className="ml-1 font-plusMedium text-[0.7rem]">
+                            {problem.problem}
+                          </h2>
                         </div>
                       </div>
-                      // </div>
                     ))}
                 </div>
                 {exercise.specialCondition !== "" && (
