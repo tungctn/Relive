@@ -1,9 +1,4 @@
 import logo from "../../assets/img/landingPage/ReliveLogo.png";
-import dashboard from "../../assets/img/dashboard/dashboard.jpeg";
-import reports from "../../assets/img/dashboard/report2_pbl.png";
-import patient_history from "../../assets/img/dashboard/patient_history.jpeg";
-import patient_profile from "../../assets/img/dashboard/patient2_pbl.png";
-import video_upload from "../../assets/img/dashboard/add_doctor.png";
 import logoutimg from "../../assets/img/dashboard/logout.png";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { MdDashboard, MdUpload } from "react-icons/md";
@@ -11,7 +6,7 @@ import { useState } from "react";
 const DashboardSidebar = (props) => {
   const navigate = useNavigate();
   const logout = async () => {
-    const res = await fetch("/logout");
+    await fetch("/logout");
     props.settoastCondition({
       status: "success",
       message: "Logged out Successfully!!!",
@@ -22,8 +17,8 @@ const DashboardSidebar = (props) => {
 
   const [Toggle, setToggle] = useState("Dashboard");
   return (
-    <div className="fixed h-[100vh] overflow-y-auto w-screen grid grid-cols-12">
-      <div className="side_bar bg-white shadow-md col-span-2">
+    <div className="fixed h-[100vh] w-screen grid grid-cols-12">
+      <div className="side_bar bg-white shadow-md col-span-2 relative">
         <div className="flex m-2 mt-4 ">
           <div className="logo m-2  ">
             <img src={logo} className="w-16" alt="logo"></img>
@@ -68,13 +63,15 @@ const DashboardSidebar = (props) => {
           </Link>
         </nav>
 
-        <div className=" mx-auto my-[230%] py-2  flex justify-center  bg-secondary  rounded-xl font-plusBold  shadow-sm hover:bg-bgsecondary w-4/5  ">
+        <div className=" mx-auto py-2  flex justify-center  bg-secondary  rounded-xl font-plusBold  shadow-sm hover:bg-bgsecondary w-4/5 absolute bottom-2.5 left-1/2 transform -translate-x-1/2">
           <button className="flex items-center" onClick={logout}>
             <img src={logoutimg} className="h-4 px-2 " alt="logout"></img>Logout
           </button>
         </div>
       </div>
-      <Outlet />
+      <div className="col-span-10 overflow-y-auto">
+        <Outlet />
+      </div>
     </div>
   );
 };

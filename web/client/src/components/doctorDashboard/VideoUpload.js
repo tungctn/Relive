@@ -4,17 +4,12 @@ import minus_logo from "../../assets/img/dashboard/minus2_pbl.png";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 import SwiperCore from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Rings } from "react-loader-spinner";
-
-const images = [
-  "https://picsum.photos/id/1018/1000/600/",
-  "https://picsum.photos/id/1015/1000/600/",
-  "https://picsum.photos/id/1019/1000/600/",
-];
+import axios from "axios";
 
 SwiperCore.use([Navigation]);
 const VideoUpload = () => {
@@ -26,23 +21,12 @@ const VideoUpload = () => {
   const fileInputRef = useRef(null);
   const [isShowUpper, setIsShowUpper] = useState(false);
   const [isShowLower, setIsShowLower] = useState(false);
-  const [loadPose, setLoadPose] = useState(false);
   const [isLoadingImages, setIsLoadingImages] = useState(false);
   const [images, setImages] = useState([]);
   const navigate = useNavigate();
-  const swiperRef = useRef(null);
-
-  const initialData = [
-    { stt: 1, bodyPart: "Part 1", angle: 45, tolerance: 0.1 },
-    { stt: 2, bodyPart: "Part 2", angle: 60, tolerance: 0.2 },
-    { stt: 3, bodyPart: "Part 3", angle: 30, tolerance: 0.05 },
-    { stt: 4, bodyPart: "Part 4", angle: 75, tolerance: 0.15 },
-    { stt: 5, bodyPart: "Part 5", angle: 90, tolerance: 0.3 },
-  ];
-
-  const [data, setData] = useState(initialData);
   const [angles, setAngles] = useState([]);
   const [angleIndex, setAngleIndex] = useState(0);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const handleToleranceChange = (index, newValue) => {
     const updatedData = [...angles];
@@ -83,23 +67,37 @@ const VideoUpload = () => {
   const uploadVideo = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
-
-    const response = await fetch("http://117.1.29.174:4000/upload-video", {
-      method: "POST",
-      body: formData,
-    });
-    const data = await response.json();
-    if (response.status == 200) {
+    const response = await axios.post(
+      "http://117.1.29.174:4000/upload-video",
+      formData,
+      {
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+          setUploadProgress(percentCompleted);
+        },
+      }
+    );
+    const data = response.data;
+    if (response.status === 200) {
       setIsLoadingImages(true);
       console.log("Video uploaded successfully. URL:", data.videoUrl);
-      // setVideoSrc(data.videoUrl);
-      const responseLandmark = await fetch(
+      const responseLandmark = await axios.post(
         `http://117.1.29.174:8000/landmark-prediction/${data.filePath}?o=${data.fileOutput}`,
         {
-          method: "GET",
+          onUploadProgress: (progressEvent) => {
+            console.log(progressEvent.loaded);
+            console.log(progressEvent.total);
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            setUploadProgress(percentCompleted);
+          },
         }
       );
-      const dataLandmark = await responseLandmark.json();
+      const dataLandmark = responseLandmark.data;
+
       console.log(
         dataLandmark.angles.map((angle) => {
           return {
@@ -120,8 +118,12 @@ const VideoUpload = () => {
             };
           })
         );
-        console.log(`http://117.1.29.174:8000/file/${dataLandmark.output_video_path}`);
-        setVideoSrc(`http://117.1.29.174:8000/file/${dataLandmark.output_video_path}`);
+        console.log(
+          `http://117.1.29.174:8000/file/${dataLandmark.output_video_path}`
+        );
+        setVideoSrc(
+          `http://117.1.29.174:8000/file/${dataLandmark.output_video_path}`
+        );
         setIsLoadingImages(false);
       } else {
         toast.error("Lỗi khi xử lý video");
@@ -129,58 +131,11 @@ const VideoUpload = () => {
     } else {
       toast.error("Lỗi khi upload video");
     }
-
-    // .then((response) => response.json())
-    // .then((data) => {
-    //   console.log("Video uploaded successfully. URL:", data.videoUrl);
-    //   // setVideoSrc(data.videoUrl);
-    //   setIsLoadingImages(true);
-    //   fetch(
-    //     `http://117.1.29.174:8000/landmark-prediction/${data.filePath}?o=${data.fileOutput}`,
-    //     {
-    //       method: "GET",
-    //     }
-    //   )
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //       console.log(
-    //         data.angles.map((angle) => {
-    //           return {
-    //             ...angle,
-    //             tolerance: Object.keys(angle).map((_) => 10),
-    //             isCheck: Object.keys(angle).map((_) => false),
-    //           };
-    //         })
-    //       );
-    //       setImages(data.images);
-    //       setAngles(
-    //         data.angles.map((angle) => {
-    //           return {
-    //             ...angle,
-    //             tolerance: Object.keys(angle).map((_) => 10),
-    //             isCheck: Object.keys(angle).map((_) => false),
-    //           };
-    //         })
-    //       );
-    //       console.log(
-    //         `http://117.1.29.174:8000/file/${data.output_video_path}`
-    //       );
-    //       setVideoSrc(
-    //         `http://117.1.29.174:8000/file/${data.output_video_path}`
-    //       );
-    //       setIsLoadingImages(false);
-    //     });
-    // })
-    // .catch((error) => {
-    //   console.error("Error uploading video:", error);
-    // });
   };
 
   const handleFile = (file) => {
     if (file && file.type.startsWith("video/")) {
-      // const videoUrl = URL.createObjectURL(file);
-      // setVideoSrc(videoUrl);
-      uploadVideo(file); // Gọi hàm upload video
+      uploadVideo(file);
     } else {
       alert("Vui lòng chọn một file video.");
     }
@@ -234,12 +189,11 @@ const VideoUpload = () => {
   };
 
   const handleSlideChange = (swiper) => {
-    console.log("Current Slide Index:", swiper.realIndex);
     setAngleIndex(swiper.realIndex);
   };
 
   return (
-    <div className="w-[1200px] mx-[3vw] flex flex-col">
+    <div className="w-[100%] mx-[3vw] flex flex-col mb-[100px]">
       <h1 className="font-plusBold text-2xl mt-4">Video Upload</h1>
       <div className="overflow-y-auto mt-6">
         <div className="flex">
@@ -275,7 +229,7 @@ const VideoUpload = () => {
             ) : isLoadingImages ? (
               <div className="flex flex-col justify-center items-center">
                 <Rings color="#00BFFF" height={80} width={80} />
-                <h1 className="font-plusMedium">Loading pose video...</h1>
+                <h1 className="font-plusMedium">{`Loading pose images...(${uploadProgress}%)`}</h1>
               </div>
             ) : (
               <div className="flex flex-row items-center">
@@ -595,12 +549,18 @@ const VideoUpload = () => {
 
         <div className="flex min-h-full">
           <div className="w-[45%] overflow-y-auto">
-            <h1 className="text-xl font-plusBold mb-4">{`Pose image (${images.length})`}</h1>
+            <h1 className="text-xl font-plusBold mb-4">{`Pose image (${
+              images.length == 0
+                ? 0
+                : typeof angleIndex == "number"
+                ? angleIndex + 1
+                : 0
+            }/${images.length})`}</h1>
             {isLoadingImages ? (
               // <div>Loading pose images...</div>
               <div className="flex flex-col justify-center items-center">
                 <Rings color="#00BFFF" height={80} width={80} />
-                <h1 className="font-plusMedium">Loading pose images...</h1>
+                <h1 className="font-plusMedium">{`Loading pose images...(${uploadProgress}%)`}</h1>
               </div>
             ) : (
               <Swiper
@@ -641,6 +601,7 @@ const VideoUpload = () => {
               </thead>
               <tbody className="font-plus">
                 {angles.length > 0 &&
+                  typeof angles[angleIndex] === "object" &&
                   Object.keys(angles[angleIndex])?.map((item, index) => {
                     if (item != "tolerance" && item != "isCheck")
                       return (
