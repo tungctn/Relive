@@ -102,7 +102,7 @@ const VideoUpload = () => {
         dataLandmark.angles.map((angle) => {
           return {
             ...angle,
-            tolerance: Object.keys(angle).map((_) => 10),
+            tolerance: Object.keys(angle).map((_) => 20),
             isCheck: Object.keys(angle).map((_) => false),
           };
         })
@@ -113,7 +113,7 @@ const VideoUpload = () => {
           dataLandmark.angles.map((angle) => {
             return {
               ...angle,
-              tolerance: Object.keys(angle).map((_) => 10),
+              tolerance: Object.keys(angle).map((_) => 20),
               isCheck: Object.keys(angle).map((_) => false),
             };
           })
@@ -190,6 +190,37 @@ const VideoUpload = () => {
 
   const handleSlideChange = (swiper) => {
     setAngleIndex(swiper.realIndex);
+  };
+
+  const logItemAngle = (angle) => {
+    let props = Object.keys(angle).map((key) => {
+      if (key != "tolerance" && key != "isCheck") {
+        return {
+          [key]: angle[key],
+        };
+      }
+    });
+    let output = {};
+    for (let i = 0; i < angle["isCheck"].length; i++) {
+      if (angle["isCheck"][i]) {
+        output = {
+          ...output,
+          ...props[i],
+        };
+      }
+    }
+    return output;
+  };
+
+  const logPose = (angles) => {
+    let outputAngles = angles
+      .map((angle, index) => {
+        return {
+          ...logItemAngle(angle),
+        };
+      })
+      .filter((angle) => Object.keys(angle).length > 0);
+    return outputAngles;
   };
 
   return (
@@ -613,10 +644,13 @@ const VideoUpload = () => {
                               onChange={(e) => {
                                 console.log(e.target.value);
                                 console.log(e.target.checked);
+                                console.log(angles[angleIndex]);
                                 let updatedData = [...angles];
                                 // updatedData[angleIndex][item] = e.target.checked;
                                 updatedData[angleIndex].isCheck[index] =
                                   e.target.checked;
+                                console.log(updatedData);
+                                console.log(logPose(updatedData));
                                 setAngles(updatedData);
                               }}
                             />
