@@ -20,8 +20,8 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(cookieParser());
 
-const dbURI = process.env.DATABASE;
-const port = process.env.PORT || 6000;
+const dbURI = "mongodb+srv://tung2002:tung2002@cluster0.psjr4nb.mongodb.net/";
+const port = 6000;
 
 mongoose
   .connect(dbURI)
