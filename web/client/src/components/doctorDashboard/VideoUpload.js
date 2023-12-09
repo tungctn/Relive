@@ -122,7 +122,7 @@ const VideoUpload = () => {
           `http://117.1.29.174:8000/file/${dataLandmark.output_video_path}`
         );
         setVideoSrc(
-          `http://117.1.29.174:8000/file/${dataLandmark.output_video_path}`
+          `http://116.103.226.45:8000/file/${dataLandmark.output_video_path}`
         );
         setIsLoadingImages(false);
       } else {
