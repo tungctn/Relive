@@ -83,7 +83,7 @@ const VideoUpload = () => {
     if (response.status === 200) {
       setIsLoadingImages(true);
       console.log("Video uploaded successfully. URL:", data.videoUrl);
-      const responseLandmark = await axios.post(
+      const responseLandmark = await axios.get(
         `http://116.103.226.45:8000/landmark-prediction/${data.filePath}?o=${data.fileOutput}`,
         {
           onUploadProgress: (progressEvent) => {
