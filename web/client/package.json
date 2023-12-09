@@ -1,6 +1,6 @@
 {
   "name": "health-home",
-  "proxy": "http://116.103.226.45:6000/",
+  "proxy": "http://116.103.226.45:6000",
   "homepage": ".",
   "version": "0.1.0",
   "private": true,
