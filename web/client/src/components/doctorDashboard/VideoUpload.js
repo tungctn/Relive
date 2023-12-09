@@ -68,7 +68,7 @@ const VideoUpload = () => {
     const formData = new FormData();
     formData.append("file", file);
     const response = await axios.post(
-      "http://117.1.29.174:4000/upload-video",
+      "http://116.103.226.45:4000/upload-video",
       formData,
       {
         onUploadProgress: (progressEvent) => {
@@ -84,7 +84,7 @@ const VideoUpload = () => {
       setIsLoadingImages(true);
       console.log("Video uploaded successfully. URL:", data.videoUrl);
       const responseLandmark = await axios.post(
-        `http://117.1.29.174:8000/landmark-prediction/${data.filePath}?o=${data.fileOutput}`,
+        `http://116.103.226.45:8000/landmark-prediction/${data.filePath}?o=${data.fileOutput}`,
         {
           onUploadProgress: (progressEvent) => {
             console.log(progressEvent.loaded);
